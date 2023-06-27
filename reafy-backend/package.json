@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@vercel/postgres-kysely": "^0.3.2",
+    "eslint": "^8.43.0",
+    "kysely": "^0.25.0"
+  }
+}
