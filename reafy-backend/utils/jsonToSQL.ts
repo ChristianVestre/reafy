@@ -1,15 +1,4 @@
-type JSONValue =
-    | string
-    | number
-    | boolean
-    | JSONObject
-    | JSONArray;
-
-interface JSONObject {
-    [x: string]: JSONValue;
-}
-
-interface JSONArray extends Array<JSONObject> { }
+import { JSONArray, JSONValue } from "../types/json-types";
 
 export const jsonToSql = (arr:JSONArray,id?:JSONValue) => {
     const array : JSONValue[][] = [];
@@ -21,10 +10,8 @@ export const jsonToSql = (arr:JSONArray,id?:JSONValue) => {
                 array[index].push(value)
             })
     })
-
     if(id){
         array.push([])
-        console.log(array)
         arr.forEach(() => {
             array[array.length-1].push(id)
         })

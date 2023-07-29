@@ -35,7 +35,7 @@ export default async function handler(
         create table participant_table (
             participant_id INT GENERATED ALWAYS AS IDENTITY,
             participant_name VARCHAR(255),
-            company_id INT references company_table(company_id),
+            company_name VARCHAR(255),
             PRIMARY KEY (participant_id)
         );
         create table company_whitelist_table (
@@ -45,8 +45,8 @@ export default async function handler(
             PRIMARY KEY (company_whitelist_id)
         );
         create table people_whitelist_table (
-            people_whitelist_id  INT GENERATED ALWAYS AS IDENTITY,
-            company_id INT references company_table(company_id),
+            people_whitelist_id  VARCHAR(255),
+            company_name VARCHAR(255),
             participant_id INT references participant_table(participant_id),
             PRIMARY KEY (people_whitelist_id)
         );
