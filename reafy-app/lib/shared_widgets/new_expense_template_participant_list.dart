@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reafy/components/new_expense_object_intent.dart';
-import 'package:reafy/views/expense_object_view.dart';
+import 'package:reafy/shared_widgets/new_expense_template_intent.dart';
+import 'package:reafy/views/expense_view/expense_view.dart';
 
-import '../views/new_expense_object_view.dart';
-import 'new_expense_object_list_tile.dart';
+import '../models/enums.dart';
+import '../models/expense_template.dart';
+import 'new_expense_template_list_tile.dart';
 
 class NewExpenseObjectParticipantList extends StatelessWidget {
   const NewExpenseObjectParticipantList(
       {Key? key, required this.data, required this.state})
       : super(key: key);
 
-  final NewExpenseObjectData data;
-  final ValueNotifier<NewExpenseObjectStateEnum> state;
+  final NewExpenseTemplateData data;
+  final ValueNotifier<NewExpenseTemplateStateEnum> state;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class NewExpenseObjectParticipantList extends StatelessWidget {
                   CupertinoButton(
                       child: Text(data.intent ?? ""),
                       onPressed: () => {
-                            state.value = NewExpenseObjectStateEnum.intent,
+                            state.value = NewExpenseTemplateStateEnum.intent,
                             data.intent = intentItems.contains(data.intent)
                                 ? data.intent
                                 : data.intent = "Other"
@@ -75,7 +76,7 @@ class NewExpenseObjectParticipantList extends StatelessWidget {
                     ],
                   ),
                   onPressed: () =>
-                      {state.value = NewExpenseObjectStateEnum.input}),
+                      {state.value = NewExpenseTemplateStateEnum.input}),
             ],
           ),
           Container(
@@ -85,7 +86,7 @@ class NewExpenseObjectParticipantList extends StatelessWidget {
                   onPressed: () => {
                         Navigator.of(context).push(
                           CupertinoPageRoute(
-                            builder: (context) => const ExpenseObjectView(),
+                            builder: (context) => const ExpenseView(),
                           ),
                         )
                       }))

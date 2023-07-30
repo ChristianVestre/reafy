@@ -1,15 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../views/new_expense_object_view.dart';
+import '../models/enums.dart';
+import '../models/expense_template.dart';
+import '../models/participant.dart';
+import '../views/new_expense_template_view.dart';
 
 class NewExpenseObjectParticipantInput extends StatelessWidget {
   NewExpenseObjectParticipantInput(
       {Key? key, required this.data, required this.state})
       : super(key: key);
 
-  final NewExpenseObjectData data;
-  final ValueNotifier<NewExpenseObjectStateEnum> state;
+  final NewExpenseTemplateData data;
+  final ValueNotifier<NewExpenseTemplateStateEnum> state;
   final _nameEditingController = TextEditingController();
   final _companyEditingController = TextEditingController();
   final _participantFormKey = GlobalKey<FormState>();
@@ -63,7 +66,7 @@ class NewExpenseObjectParticipantInput extends StatelessWidget {
                 onPressed: () => {
                       if (_participantFormKey.currentState!.validate())
                         {
-                          state.value = NewExpenseObjectStateEnum.list,
+                          state.value = NewExpenseTemplateStateEnum.list,
                           data.participants.value.add(Participant(
                               name: _nameEditingController.text,
                               company: _companyEditingController.text))

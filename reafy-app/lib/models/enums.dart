@@ -1,6 +1,6 @@
-enum NewExpenseObjectStateEnum { list, input, intent }
+enum NewExpenseTemplateStateEnum { list, input, intent }
 
-enum NewExpenseObjectTypeEnum {
+enum NewExpenseTemplateTypeEnum {
   fradragsberettigetRepresentasjon,
   ikkeFradragsberettigetRepresentasjon,
   velferd

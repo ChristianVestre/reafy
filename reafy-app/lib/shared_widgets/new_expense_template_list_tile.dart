@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reafy/views/new_expense_object_view.dart';
+import '../models/expense_template.dart';
+import '../models/participant.dart';
 
 class NewExpenseObjectListTile extends StatelessWidget {
   const NewExpenseObjectListTile(
@@ -11,7 +12,7 @@ class NewExpenseObjectListTile extends StatelessWidget {
       required this.index})
       : super(key: key);
 
-  final NewExpenseObjectData data;
+  final NewExpenseTemplateData data;
   final Participant participant;
   final int index;
   final bool? deletable;

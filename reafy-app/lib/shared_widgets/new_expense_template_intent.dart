@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reafy/components/new_expense_object_intent_picker.dart';
-import 'package:reafy/components/new_expense_object_intent_radio_group.dart';
+import 'package:reafy/shared_widgets/new_expense_template_intent_picker.dart';
+import 'package:reafy/shared_widgets/new_expense_template_intent_radio_group.dart';
 
-import '../views/new_expense_object_view.dart';
+import '../models/enums.dart';
+import '../models/expense_template.dart';
+import '../views/new_expense_template_view.dart';
 
 const List<String> intentItems = <String>[
   'Møteservering',
@@ -13,7 +15,7 @@ const List<String> intentItems = <String>[
   'Other'
 ];
 
-int selectedIntentItemHelper(NewExpenseObjectData data) {
+int selectedIntentItemHelper(NewExpenseTemplateData data) {
   if (intentItems.contains(data.intent)) {
     return intentItems.indexOf(data.intent!);
   } else {
@@ -26,8 +28,8 @@ class NewExpenseObjectIntent extends StatelessWidget {
   NewExpenseObjectIntent({Key? key, required this.data, required this.state})
       : super(key: key);
 
-  final NewExpenseObjectData data;
-  final ValueNotifier<NewExpenseObjectStateEnum> state;
+  final NewExpenseTemplateData data;
+  final ValueNotifier<NewExpenseTemplateStateEnum> state;
   final _textEditingController = TextEditingController();
   ValueNotifier<int> selectedItemState = ValueNotifier(0);
 
@@ -37,7 +39,7 @@ class NewExpenseObjectIntent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(children: [
-          NewExpenseObjectIntentPicker(
+          NewExpenseTemplateIntentPicker(
               data: data,
               selectedIntentItem: selectedItemState =
                   ValueNotifier(selectedIntentItemHelper(data)),
@@ -76,7 +78,8 @@ class NewExpenseObjectIntent extends StatelessWidget {
           margin: const EdgeInsets.all(16),
           child: CupertinoButton.filled(
               child: const Text("Done"),
-              onPressed: () => {state.value = NewExpenseObjectStateEnum.list}),
+              onPressed: () =>
+                  {state.value = NewExpenseTemplateStateEnum.list}),
         )
       ],
     );

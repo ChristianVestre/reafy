@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:reafy/views/new_expense_object_view.dart';
+import 'package:reafy/views/new_expense_template_view.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../models/enums.dart';
+import '../models/expense_template.dart';
 
 class NewExpenseObjectIntentRadioGroup extends StatelessWidget {
   const NewExpenseObjectIntentRadioGroup({Key? key, required this.data})
       : super(key: key);
 
-  final NewExpenseObjectData data;
+  final NewExpenseTemplateData data;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +26,10 @@ class NewExpenseObjectIntentRadioGroup extends StatelessWidget {
                   scale: 1.2,
                   child: CupertinoRadio(
                       activeColor: const Color(0xFFD499B9),
-                      value: NewExpenseObjectTypeEnum
+                      value: NewExpenseTemplateTypeEnum
                           .ikkeFradragsberettigetRepresentasjon,
                       groupValue: data.type.value,
-                      onChanged: (NewExpenseObjectTypeEnum? value) =>
+                      onChanged: (NewExpenseTemplateTypeEnum? value) =>
                           {data.type.value = value!})),
               const SizedBox(width: 8),
               const Text("Ikke fradragsberettiget representasjon",
@@ -38,10 +41,10 @@ class NewExpenseObjectIntentRadioGroup extends StatelessWidget {
                   scale: 1.2,
                   child: CupertinoRadio(
                       activeColor: const Color(0xFFD499B9),
-                      value: NewExpenseObjectTypeEnum
+                      value: NewExpenseTemplateTypeEnum
                           .fradragsberettigetRepresentasjon,
                       groupValue: data.type.value,
-                      onChanged: (NewExpenseObjectTypeEnum? value) =>
+                      onChanged: (NewExpenseTemplateTypeEnum? value) =>
                           {data.type.value = value!})),
               const SizedBox(width: 8),
               const Text("Fradragsberettiget representasjon",
@@ -53,9 +56,9 @@ class NewExpenseObjectIntentRadioGroup extends StatelessWidget {
                   scale: 1.2,
                   child: CupertinoRadio(
                       activeColor: const Color(0xFFD499B9),
-                      value: NewExpenseObjectTypeEnum.velferd,
+                      value: NewExpenseTemplateTypeEnum.velferd,
                       groupValue: data.type.value,
-                      onChanged: (NewExpenseObjectTypeEnum? value) =>
+                      onChanged: (NewExpenseTemplateTypeEnum? value) =>
                           {data.type.value = value!})),
               const SizedBox(width: 8),
               const Text("Velferd", style: TextStyle(fontSize: 20)),

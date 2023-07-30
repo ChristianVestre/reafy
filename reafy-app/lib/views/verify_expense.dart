@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:reafy/views/expense_object_view.dart';
+import 'package:reafy/views/expense_view.dart';
 import '../components/expense_items.dart';
 import '../components/reafy_nav_bar.dart';
 
 class VerifyExpenseView extends StatelessWidget {
   const VerifyExpenseView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -42,7 +41,7 @@ class VerifyExpenseView extends StatelessWidget {
                     onPressed: () => {
                           Navigator.of(context).push(
                             CupertinoPageRoute(
-                              builder: (context) => const ExpenseObjectView(),
+                              builder: (context) => const ExpenseView(),
                             ),
                           )
                         })

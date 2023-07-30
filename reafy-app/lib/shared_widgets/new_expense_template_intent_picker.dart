@@ -1,28 +1,29 @@
 import 'package:flutter/cupertino.dart';
 
-import '../views/new_expense_object_view.dart';
+import '../models/expense_template.dart';
+import '../views/new_expense_template_view.dart';
 
 const double _kItemExtent = 32.0;
 
-class NewExpenseObjectIntentPicker extends StatefulWidget {
-  const NewExpenseObjectIntentPicker(
+class NewExpenseTemplateIntentPicker extends StatefulWidget {
+  const NewExpenseTemplateIntentPicker(
       {Key? key,
       required this.data,
       required this.selectedIntentItem,
       required this.intentItems})
       : super(key: key);
 
-  final NewExpenseObjectData data;
+  final NewExpenseTemplateData data;
   final ValueNotifier<int> selectedIntentItem;
   final List<String> intentItems;
 
   @override
-  State<NewExpenseObjectIntentPicker> createState() =>
-      _NewExpenseObjectIntentPickerState();
+  State<NewExpenseTemplateIntentPicker> createState() =>
+      _NewExpenseTemplateIntentPickerState();
 }
 
-class _NewExpenseObjectIntentPickerState
-    extends State<NewExpenseObjectIntentPicker> {
+class _NewExpenseTemplateIntentPickerState
+    extends State<NewExpenseTemplateIntentPicker> {
   // This shows a CupertinoModalPopup with a reasonable fixed height which hosts CupertinoPicker.
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
@@ -65,7 +66,6 @@ class _NewExpenseObjectIntentPickerState
               ),
               CupertinoButton(
                 padding: EdgeInsets.zero,
-                // Display a CupertinoPicker with list of fruits.
                 onPressed: () => _showDialog(
                   CupertinoPicker(
                     magnification: 1.22,

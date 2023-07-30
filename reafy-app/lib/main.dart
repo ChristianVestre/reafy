@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:reafy/views/verify_expense.dart';
-import 'views/expense_object_view.dart';
+import 'package:provider/provider.dart';
+import 'package:reafy/provider/data_provider.dart';
+import 'package:reafy/views/expense_view/expense_view.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => DataProvider()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,9 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CupertinoApp(
-      title: 'Flutter Demo',
+      title: 'Reafy',
       theme: CupertinoThemeData(primaryColor: Color(0xFFD499B9)),
-      home: VerifyExpenseView(),
+      home: ExpenseView(),
     );
   }
 }

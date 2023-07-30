@@ -1,32 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import '../components/new_expense_object_intent.dart';
-import '../components/new_expense_object_participant_input.dart';
-import '../components/new_expense_object_participant_list.dart';
-import '../components/reafy_nav_bar.dart';
-
-enum NewExpenseObjectStateEnum { list, input, intent }
-
-enum NewExpenseObjectTypeEnum {
-  fradragsberettigetRepresentasjon,
-  ikkeFradragsberettigetRepresentasjon,
-  velferd
-}
-
-class Participant {
-  String name;
-  String? company;
-
-  Participant({required this.name, this.company});
-}
-
-class NewExpenseObjectData {
-  ValueNotifier<List<Participant>> participants;
-  String? intent;
-  ValueNotifier<NewExpenseObjectTypeEnum> type;
-
-  NewExpenseObjectData(
-      {required this.participants, required this.intent, required this.type});
-}
+import '../shared_widgets/new_expense_template_intent.dart';
+import '../shared_widgets/new_expense_template_participant_input.dart';
+import '../shared_widgets/new_expense_template_participant_list.dart';
+import '../shared_widgets/reafy_nav_bar.dart';
+import '../models/enums.dart';
+import '../models/expense_template.dart';
+import '../models/participant.dart';
 
 class NewExpenseObjectView extends StatefulWidget {
   const NewExpenseObjectView({Key? key}) : super(key: key);
@@ -36,13 +15,13 @@ class NewExpenseObjectView extends StatefulWidget {
 }
 
 class NewExpenseObjectViewState extends State<NewExpenseObjectView> {
-  final widgetState = ValueNotifier(NewExpenseObjectStateEnum.intent);
+  final widgetState = ValueNotifier(NewExpenseTemplateStateEnum.intent);
 
-  NewExpenseObjectData data = NewExpenseObjectData(
+  NewExpenseTemplateData data = NewExpenseTemplateData(
       participants: ValueNotifier(
           [Participant(name: "Christian Vestre", company: "ScaleupXQ")]),
       type: ValueNotifier(
-          NewExpenseObjectTypeEnum.ikkeFradragsberettigetRepresentasjon),
+          NewExpenseTemplateTypeEnum.ikkeFradragsberettigetRepresentasjon),
       intent: "Møteservering");
 
   @override
@@ -57,18 +36,18 @@ class NewExpenseObjectViewState extends State<NewExpenseObjectView> {
                     duration: const Duration(milliseconds: 100),
                     child: (() {
                       switch (value) {
-                        case NewExpenseObjectStateEnum.list:
+                        case NewExpenseTemplateStateEnum.list:
                           {
                             return NewExpenseObjectParticipantList(
                                 data: data, state: widgetState);
                           }
 
-                        case NewExpenseObjectStateEnum.input:
+                        case NewExpenseTemplateStateEnum.input:
                           {
                             return NewExpenseObjectParticipantInput(
                                 data: data, state: widgetState);
                           }
-                        case NewExpenseObjectStateEnum.intent:
+                        case NewExpenseTemplateStateEnum.intent:
                           {
                             return NewExpenseObjectIntent(
                                 data: data, state: widgetState);
