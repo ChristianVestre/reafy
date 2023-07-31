@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
-import 'package:reafy/views/expense_view.dart';
-import '../components/expense_items.dart';
-import '../components/reafy_nav_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:reafy/views/expense_view/expense_view.dart';
+import '../shared_widgets/expense_items.dart';
+import '../shared_widgets/reafy_nav_bar.dart';
 
 class VerifyExpenseView extends StatelessWidget {
   const VerifyExpenseView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const ReafyNavBar(),
-      child: Center(
+    return Scaffold(
+      appBar: const ReafyNavBar(),
+      body: Center(
           child: Column(children: [
         const Text("New expense",
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500)),

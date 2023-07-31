@@ -5,3 +5,5 @@ enum NewExpenseTemplateTypeEnum {
   ikkeFradragsberettigetRepresentasjon,
   velferd
 }
+
+enum Sizes { big, medium, small }

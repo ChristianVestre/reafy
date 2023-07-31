@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/enums.dart';
+
 class ReafyTextButton extends StatelessWidget {
-  const ReafyTextButton(
-      {Key? key,
-      required this.text,
-      this.plusIcon = false,
-      required this.onPressed})
-      : super(key: key);
+  const ReafyTextButton({
+    Key? key,
+    required this.text,
+    this.plusIcon = false,
+    required this.onPressed,
+  }) : super(key: key);
 
   final String text;
   final bool plusIcon;
@@ -16,7 +18,7 @@ class ReafyTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-        onPressed: onPressed(),
+        onPressed: () => onPressed,
         child: plusIcon
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,

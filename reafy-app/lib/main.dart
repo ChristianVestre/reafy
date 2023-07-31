@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reafy/provider/data_provider.dart';
 import 'package:reafy/views/expense_view/expense_view.dart';
@@ -15,10 +16,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
+    return MaterialApp(
       title: 'Reafy',
-      theme: CupertinoThemeData(primaryColor: Color(0xFFD499B9)),
-      home: ExpenseView(),
+      theme: ThemeData(
+          primaryColor: const Color(0xFFD499B9),
+          textTheme: const TextTheme(displayLarge: TextStyle(fontSize: 10))),
+      home: const ExpenseView(),
     );
   }
 }

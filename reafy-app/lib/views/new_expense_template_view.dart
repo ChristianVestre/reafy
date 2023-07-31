@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../shared_widgets/new_expense_template_intent.dart';
 import '../shared_widgets/new_expense_template_participant_input.dart';
 import '../shared_widgets/new_expense_template_participant_list.dart';
@@ -26,9 +26,9 @@ class NewExpenseObjectViewState extends State<NewExpenseObjectView> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const ReafyNavBar(),
-      child: SafeArea(
+    return Scaffold(
+      appBar: const ReafyNavBar(),
+      body: SafeArea(
           child: ValueListenableBuilder(
               valueListenable: widgetState,
               builder: (context, value, _) {

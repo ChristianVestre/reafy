@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:reafy/shared_widgets/buttons/reafy_text_button.dart';
 import 'package:reafy/shared_widgets/reafy_nav_bar.dart';
 import 'package:reafy/views/expense_view/widgets/expense_detail.dart';
@@ -8,9 +8,9 @@ class ExpenseView extends StatelessWidget {
   const ExpenseView({super.key});
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        navigationBar: const ReafyNavBar(),
-        child: SafeArea(
+    return Scaffold(
+        appBar: const ReafyNavBar(),
+        body: SafeArea(
             child: Center(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -19,12 +19,12 @@ class ExpenseView extends StatelessWidget {
               ReafyTextButton(
                   onPressed: () => {
                         Navigator.of(context).push(
-                          CupertinoPageRoute(
+                          MaterialPageRoute(
                             builder: (context) => const NewExpenseObjectView(),
                           ),
                         )
                       },
-                  text: "New expense template")
+                  text: "Prepare for new expense")
             ]))));
   }
 }

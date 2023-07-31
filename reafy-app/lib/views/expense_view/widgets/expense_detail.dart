@@ -19,11 +19,11 @@ class ExpenseDetail extends StatelessWidget {
       ),
       const Text("Mesh Youngstorget 31.05.23"),
       const SizedBox(height: 20),
-      Expanded(
-          child: ListView.builder(
-              itemCount: items.length,
-              itemBuilder: ((context, index) =>
-                  ExpenseLineItem(item: items[index]))))
+      ListView.builder(
+          shrinkWrap: true,
+          itemCount: items.length,
+          itemBuilder: ((context, index) =>
+              ExpenseLineItem(item: items[index])))
     ]));
   }
 }

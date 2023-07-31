@@ -1,8 +1,6 @@
 import 'dart:developer';
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:reafy/models/response_data.dart';
