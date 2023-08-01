@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/enums.dart';
 import '../models/expense_template.dart';
 import '../models/participant.dart';
-import '../views/new_expense_template_view.dart';
+import '../views/new_expense_template/new_expense_template_view.dart';
 
 class NewExpenseObjectParticipantInput extends StatelessWidget {
   NewExpenseObjectParticipantInput(
@@ -66,10 +66,10 @@ class NewExpenseObjectParticipantInput extends StatelessWidget {
                 onPressed: () => {
                       if (_participantFormKey.currentState!.validate())
                         {
-                          state.value = NewExpenseTemplateStateEnum.list,
+                          /*     state.value = NewExpenseTemplateStateEnum.list,
                           data.participants.value.add(Participant(
                               name: _nameEditingController.text,
-                              company: _companyEditingController.text))
+                              company: _companyEditingController.text)) */
                         }
                     }))
       ],

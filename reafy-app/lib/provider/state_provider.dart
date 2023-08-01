@@ -1,12 +1,38 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:reafy/models/enums.dart';
+import 'package:reafy/models/participant.dart';
 
-class State with ChangeNotifier {
-  int _count = 0;
+import '../models/new_expense_template_state.dart';
 
-  int get count => _count;
+class StateProvider with ChangeNotifier {
+  final ExpenseTemplateState _expenseTemplateState = ExpenseTemplateState();
 
-  void increment() {
-    _count++;
+  ExpenseTemplateState get newExepenseTemplateState => _expenseTemplateState;
+
+  updateNewExpenseTemplateParticipants(List<Participant> participants) {
+    _expenseTemplateState.tempData?.participants = participants;
+  }
+
+  updateNewExpenseTemplateSearchResult(List<Participant> searchResult) {
+    _expenseTemplateState.searchResult = searchResult;
+  }
+
+  updateNewExpenseTemplateStateStep(NewExpenseTemplateStateEnum newStep) {
+    _expenseTemplateState.step = newStep;
     notifyListeners();
+  }
+
+  addNewExpenseTemplateParticipant(Participant participant) {
+    _expenseTemplateState.tempData?.participants?.add(participant);
+    notifyListeners();
+  }
+
+  removeNewExpenseTemplateParticipant(Participant participant) {
+    _expenseTemplateState.tempData?.participants?.remove(participant);
+    notifyListeners();
+  }
+
+  updateNewExpenseTemplateType(NewExpenseTemplateTypeEnum type) {
+    _expenseTemplateState.tempData?.type = type;
   }
 }

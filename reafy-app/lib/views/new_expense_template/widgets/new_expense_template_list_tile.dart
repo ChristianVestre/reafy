@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../models/expense_template.dart';
-import '../models/participant.dart';
+import '../../../models/expense_template.dart';
+import '../../../models/participant.dart';
 
 class NewExpenseObjectListTile extends StatelessWidget {
   const NewExpenseObjectListTile(
@@ -30,13 +30,13 @@ class NewExpenseObjectListTile extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Row(children: [
             Text(
-              participant.name,
+              participant.participantName!,
             ),
             const SizedBox(width: 20),
             Text(
               (() {
-                if (participant.company != null) {
-                  return participant.company!;
+                if (participant.companyName != null) {
+                  return participant.companyName!;
                 }
                 return " ";
               })(),
@@ -48,9 +48,10 @@ class NewExpenseObjectListTile extends StatelessWidget {
               child: CupertinoButton(
                   child: const Icon(CupertinoIcons.xmark, size: 20),
                   onPressed: () => {
+                        /*
                         data.participants.value.remove(participant),
                         data.participants.value =
-                            List.from(data.participants.value)
+                            List.from(data.participants.value) */
                       }))
         ]));
   }

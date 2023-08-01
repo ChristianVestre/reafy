@@ -1,32 +1,16 @@
-class ResponseData {
-  List<Data>? data;
+import 'package:reafy/models/participant.dart';
 
-  ResponseData({this.data});
+class ResponseData {
+  List<Participant>? participants;
+
+  ResponseData({this.participants});
 
   ResponseData.fromJson(Map<String, dynamic> json) {
     if (json['body'] != null) {
-      data = <Data>[];
+      participants = <Participant>[];
       json['body'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        participants!.add(Participant.fromJson(v));
       });
     }
-  }
-}
-
-class Data {
-  String? companyName;
-  String? participantName;
-  int? participantId;
-
-  Data({
-    this.companyName,
-    this.participantName,
-    this.participantId,
-  });
-
-  Data.fromJson(Map<String, dynamic> json) {
-    companyName = json['company_name'];
-    participantName = json['participant_name'];
-    participantId = json['participant_id'];
   }
 }

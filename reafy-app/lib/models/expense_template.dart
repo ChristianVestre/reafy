@@ -3,9 +3,9 @@ import 'package:reafy/models/enums.dart';
 import 'package:reafy/models/participant.dart';
 
 class NewExpenseTemplateData with ChangeNotifier {
-  ValueNotifier<List<Participant>> participants;
+  List<Participant>? participants;
   String? intent;
-  ValueNotifier<NewExpenseTemplateTypeEnum> type;
+  NewExpenseTemplateTypeEnum? type;
 
   NewExpenseTemplateData(
       {required this.participants, required this.intent, required this.type});

@@ -5,7 +5,7 @@ import 'package:reafy/shared_widgets/new_expense_template_intent_radio_group.dar
 
 import '../models/enums.dart';
 import '../models/expense_template.dart';
-import '../views/new_expense_template_view.dart';
+import '../views/new_expense_template/new_expense_template_view.dart';
 
 const List<String> intentItems = <String>[
   'Møteservering',
@@ -68,11 +68,11 @@ class NewExpenseObjectIntent extends StatelessWidget {
             "Expense type",
             style: TextStyle(fontSize: 24),
           ),
-          ValueListenableBuilder(
+          /*   ValueListenableBuilder(
               valueListenable: data.type,
               builder: (context, value, _) {
                 return NewExpenseObjectIntentRadioGroup(data: data);
-              })
+              }) */
         ]),
         Container(
           margin: const EdgeInsets.all(16),

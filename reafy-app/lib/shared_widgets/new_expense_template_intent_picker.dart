@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../models/expense_template.dart';
-import '../views/new_expense_template_view.dart';
+import '../views/new_expense_template/new_expense_template_view.dart';
 
 const double _kItemExtent = 32.0;
 

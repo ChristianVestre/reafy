@@ -14,9 +14,10 @@ class DataProvider with ChangeNotifier {
   bool isLoading = false;
 
   getUser() async {
-    isLoading = true;
+    //isLoading = true;
     responseData = await getAllData();
-    isLoading = false;
+    //isLoading = false;
+
     notifyListeners();
   }
 

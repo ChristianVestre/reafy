@@ -1,48 +1,60 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:reafy/models/participant.dart';
+import 'package:reafy/provider/expense_template_provider.dart';
+import 'package:reafy/provider/state_provider.dart';
 import 'package:reafy/shared_widgets/new_expense_template_intent.dart';
 import 'package:reafy/views/expense_view/expense_view.dart';
+import 'package:reafy/views/new_expense_template/widgets/search.dart';
+import 'package:reafy/views/new_expense_template/widgets/search_result_tile.dart';
 
-import '../models/enums.dart';
-import '../models/expense_template.dart';
+import '../../../models/enums.dart';
+import '../../../models/expense_template.dart';
+import '../../../provider/data_provider.dart';
+import '../../../provider/state_provider.dart';
 import 'new_expense_template_list_tile.dart';
 
-class NewExpenseObjectParticipantList extends StatelessWidget {
-  const NewExpenseObjectParticipantList(
-      {Key? key, required this.data, required this.state})
-      : super(key: key);
-
-  final NewExpenseTemplateData data;
-  final ValueNotifier<NewExpenseTemplateStateEnum> state;
+class NewExpenseTemplateParticipantList extends StatelessWidget {
+  const NewExpenseTemplateParticipantList({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-          Column(
-            children: [
-              const Text(
-                "Participants",
-                style: TextStyle(fontSize: 24),
-              ),
-              const Text("Mesh Youngstorget 31.05.23"),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Intent: "),
-                  CupertinoButton(
-                      child: Text(data.intent ?? ""),
-                      onPressed: () => {
-                            state.value = NewExpenseTemplateStateEnum.intent,
-                            data.intent = intentItems.contains(data.intent)
-                                ? data.intent
-                                : data.intent = "Other"
-                          }),
-                ],
-              ),
-              NewExpenseObjectListTile(
+    return Consumer<ExpenseTemplateProvider>(
+        builder: (context, expenseTemplateProvider, child) {
+      return expenseTemplateProvider.isLoading
+          ? const CircularProgressIndicator()
+          : Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                  Column(children: [
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const Text(
+                      "Participants",
+                      style: TextStyle(fontSize: 24),
+                    ),
+                    const Search(),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: expenseTemplateProvider
+                            .expenseTemplateState.searchResult.length,
+                        itemBuilder: ((context, index) => SearchResultTile(
+                            participant: expenseTemplateProvider
+                                .expenseTemplateState.searchResult[index])))
+                  ])
+                ]));
+    });
+  }
+}
+    
+    
+    
+             /* NewExpenseObjectListTile(
                 data: data,
                 participant: data.participants.value[0],
                 index: 0,
@@ -89,7 +101,4 @@ class NewExpenseObjectParticipantList extends StatelessWidget {
                             builder: (context) => const ExpenseView(),
                           ),
                         )
-                      }))
-        ]));
-  }
-}
+                      }))*/

@@ -13,17 +13,21 @@ class ReafyTextButton extends StatelessWidget {
 
   final String text;
   final bool plusIcon;
-  final Function onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-        onPressed: () => onPressed,
+        onPressed: onPressed,
         child: plusIcon
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(CupertinoIcons.plus),
+                  Icon(
+                    Icons.add,
+                    color: Theme.of(context).primaryColor,
+                    size: 32,
+                  ),
                   const SizedBox(width: 10),
                   Text(
                     text,
