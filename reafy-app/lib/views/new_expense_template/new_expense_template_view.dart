@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
 import 'package:reafy/provider/state_provider.dart';
-import '../../shared_widgets/new_expense_template_intent.dart';
-import '../../shared_widgets/new_expense_template_participant_input.dart';
-import 'widgets/new_expense_template_participant_list.dart';
+import 'package:reafy/views/new_expense_template/widgets/intent/new_expense_template_intent.dart';
+import 'package:reafy/views/new_expense_template/widgets/overview/new_expense_template_overview.dart';
+import 'package:reafy/views/new_expense_template/widgets/participation_list/new_expense_template_participant_list.dart';
+import 'package:reafy/views/new_expense_template/widgets/type/new_expense_template_type.dart';
 import '../../shared_widgets/reafy_appbar.dart';
 import '../../models/enums.dart';
-import '../../models/expense_template.dart';
-import '../../models/participant.dart';
 
 class NewExpenseTemplateView extends StatefulWidget {
   const NewExpenseTemplateView({
@@ -21,8 +20,6 @@ class NewExpenseTemplateView extends StatefulWidget {
 
 class _NewExpenseTemplateViewState extends State<NewExpenseTemplateView> {
   @override
-  bool search = false;
-
   @override
   void initState() {
     super.initState();
@@ -44,12 +41,24 @@ class _NewExpenseTemplateViewState extends State<NewExpenseTemplateView> {
                       duration: const Duration(milliseconds: 100),
                       child: (() {
                         switch (context
-                            .watch<StateProvider>()
-                            .newExepenseTemplateState
+                            .watch<ExpenseTemplateProvider>()
+                            .expenseTemplateState
                             .step) {
                           case NewExpenseTemplateStateEnum.list:
                             {
                               return const NewExpenseTemplateParticipantList();
+                            }
+                          case NewExpenseTemplateStateEnum.intent:
+                            {
+                              return const NewExpenseTemplateIntent();
+                            }
+                          case NewExpenseTemplateStateEnum.type:
+                            {
+                              return const NewExpenseTemplateType();
+                            }
+                          case NewExpenseTemplateStateEnum.overview:
+                            {
+                              return NewExpenseTemplateOverview();
                             }
                           default:
                             {

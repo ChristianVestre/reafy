@@ -4,7 +4,7 @@ import 'package:reafy/models/participant.dart';
 
 class NewExpenseTemplateData with ChangeNotifier {
   List<Participant>? participants;
-  String? intent;
+  NewExpenseTemplateIntentEnum? intent;
   NewExpenseTemplateTypeEnum? type;
 
   NewExpenseTemplateData(

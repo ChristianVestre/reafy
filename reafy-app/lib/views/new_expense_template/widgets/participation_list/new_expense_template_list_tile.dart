@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../models/expense_template.dart';
-import '../../../models/participant.dart';
+import 'package:reafy/models/expense_template.dart';
+import 'package:reafy/models/participant.dart';
 
 class NewExpenseObjectListTile extends StatelessWidget {
   const NewExpenseObjectListTile(

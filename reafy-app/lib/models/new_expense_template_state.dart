@@ -7,11 +7,13 @@ class ExpenseTemplateState {
   NewExpenseTemplateStateEnum step;
   NewExpenseTemplateData? tempData;
   List<Participant> searchResult;
-  TextEditingController? searchQuery;
+  TextEditingController? searchQuery = TextEditingController();
+  TextEditingController? otherIntentController = TextEditingController();
 
   ExpenseTemplateState(
-      {this.step = NewExpenseTemplateStateEnum.intent,
+      {this.step = NewExpenseTemplateStateEnum.list,
       this.tempData,
       this.searchQuery,
+      this.otherIntentController,
       this.searchResult = const []});
 }

@@ -5,10 +5,12 @@ import 'package:reafy/provider/expense_template_provider.dart';
 import 'package:reafy/theme/colors.dart';
 
 class SearchResultTile extends StatelessWidget {
-  const SearchResultTile({Key? key, required this.participant})
+  const SearchResultTile(
+      {Key? key, required this.participant, this.selectable = true})
       : super(key: key);
 
   final Participant participant;
+  final bool selectable;
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +18,13 @@ class SearchResultTile extends StatelessWidget {
         builder: (context, expenseTemplateProvider, child) {
       return GestureDetector(
           onTap: () => {
-                expenseTemplateProvider
-                    .updateNewExpenseTemplateSelectedParticipants(participant)
+                selectable
+                    ? expenseTemplateProvider
+                        .updateSelectedParticipants(participant)
+                    : null
               },
           child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
               decoration: BoxDecoration(
                   border: participant.selected!
                       ? Border.all(color: Theme.of(context).primaryColor)
@@ -46,9 +50,10 @@ class SearchResultTile extends StatelessWidget {
                         activeColor: Colors.white,
                         value: participant.selected,
                         onChanged: (check) => {
-                              expenseTemplateProvider
-                                  .updateNewExpenseTemplateSelectedParticipants(
-                                      participant)
+                              selectable
+                                  ? expenseTemplateProvider
+                                      .updateSelectedParticipants(participant)
+                                  : null
                             })),
                 Text(
                   participant.participantName.toString(),
