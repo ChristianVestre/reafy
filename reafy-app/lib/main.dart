@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:reafy/provider/auth_provider.dart';
 import 'package:reafy/provider/data_provider.dart';
-import 'package:reafy/provider/state_provider.dart';
-import 'package:reafy/views/expense_view/expense_view.dart';
+import 'package:reafy/views/login/auth_view.dart';
+import 'package:reafy/views/login/login_view.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => StateProvider()),
+    ChangeNotifierProvider(create: (_) => AuthProvider()),
     ChangeNotifierProxyProvider(
       create: (BuildContext context) => DataProvider(),
       update: (context, value, previous) => DataProvider(),
     ),
-  ], child: const MyApp()));
+  ], child: const ReafyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ReafyApp extends StatelessWidget {
+  const ReafyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
           progressIndicatorTheme:
               const ProgressIndicatorThemeData(color: Color(0xFFD499B9)),
           unselectedWidgetColor: const Color(0xFFBDBDBD),
+          appBarTheme: const AppBarTheme(
+            color: Colors.transparent,
+          ),
           iconTheme: const IconThemeData(color: Color(0xFFD499B9)),
           textTheme: const TextTheme(
               titleLarge: TextStyle(
@@ -50,7 +54,7 @@ class MyApp extends StatelessWidget {
               headlineSmall: TextStyle(fontSize: 12),
               bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
               bodyMedium: TextStyle(fontSize: 12))),
-      home: const ExpenseView(),
+      home: const AuthView(),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:reafy/models/enums.dart';
 import 'package:reafy/models/participant.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
+import 'package:reafy/shared_widgets/buttons/primary_button.dart';
 import 'package:reafy/shared_widgets/buttons/reafy_text_button.dart';
 import 'package:reafy/theme/colors.dart';
 import 'package:reafy/views/new_expense_template/widgets/participation_list/search_result_tile.dart';
@@ -20,17 +21,12 @@ class NewExpenseTemplateOverview extends StatelessWidget {
           .expenseTemplateState.tempData?.participants
           ?.where((item) => item.selected == true)
           .toList();
-      expenseTemplateProvider.expenseTemplateState.tempData?.participants
-          ?.forEach((i) => print(i.participantName));
-      expenseTemplateProvider.expenseTemplateState.searchResult
-          .forEach((i) => print(i.participantName));
 
       return Container(
           margin: const EdgeInsets.all(16),
-          child: Center(
-              child: Column(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(height: 8),
               Column(
                 children: [
                   Text(
@@ -69,7 +65,7 @@ class NewExpenseTemplateOverview extends StatelessWidget {
                                 .tempData!.intent!.stringValues,
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           Row(
                             children: [
                               Text(
@@ -121,9 +117,10 @@ class NewExpenseTemplateOverview extends StatelessWidget {
                         ],
                       ))
                 ],
-              )
+              ),
+              ReafyPrimaryButton(text: "Save", onPressed: () => {})
             ],
-          )));
+          ));
     });
   }
 }
