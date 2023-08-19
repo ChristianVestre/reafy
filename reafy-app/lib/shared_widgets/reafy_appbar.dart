@@ -8,7 +8,6 @@ class ReafyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthProvider>(builder: (context, authProvider, child) {
-      print(authProvider.user.company);
       return SafeArea(
           child: AppBar(
         automaticallyImplyLeading: false,

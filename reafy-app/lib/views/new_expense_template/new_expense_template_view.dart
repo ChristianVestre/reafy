@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
-import 'package:reafy/provider/state_provider.dart';
 import 'package:reafy/views/new_expense_template/widgets/intent/new_expense_template_intent.dart';
 import 'package:reafy/views/new_expense_template/widgets/overview/new_expense_template_overview.dart';
 import 'package:reafy/views/new_expense_template/widgets/participation_list/new_expense_template_participant_list.dart';
@@ -64,19 +63,6 @@ class _NewExpenseTemplateViewState extends State<NewExpenseTemplateView> {
                             {
                               return const NewExpenseTemplateParticipantList();
                             }
-/*
-                    case NewExpenseTemplateStateEnum.input:
-                      {
-                        return NewExpenseObjectParticipantInput();
-                      }
-                    case NewExpenseTemplateStateEnum.intent:
-                      {
-                        return NewExpenseObjectIntent();
-                      }
-                    default:
-                      {
-                        return NewExpenseObjectIntent();
-                      }*/
                         }
                       })()));
         }));

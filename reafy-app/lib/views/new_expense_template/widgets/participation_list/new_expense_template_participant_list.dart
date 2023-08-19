@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:reafy/models/enums.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
 import 'package:reafy/shared_widgets/buttons/primary_button.dart';
+import 'package:reafy/shared_widgets/reafy_nav_footer.dart';
 import 'package:reafy/views/new_expense_template/widgets/participation_list/filter_row.dart';
 import 'package:reafy/views/new_expense_template/widgets/participation_list/search.dart';
 import 'package:reafy/views/new_expense_template/widgets/participation_list/search_result_tile.dart';
@@ -56,15 +57,18 @@ class NewExpenseTemplateParticipantList extends StatelessWidget {
                                     .expenseTemplateState
                                     .searchResult[index]))))
                   ]),
-                  ReafyPrimaryButton(
-                      text: "Next",
-                      onPressed: () => {
-                            expenseTemplateProvider.updateParticipants(
-                                expenseTemplateProvider
-                                    .expenseTemplateState.searchResult),
-                            expenseTemplateProvider.updateStateStep(
-                                NewExpenseTemplateStateEnum.intent)
-                          })
+                  ReafyNavFooter(
+                    forwardText: "Next",
+                    forwardOnPressed: () => {
+                      expenseTemplateProvider.updateParticipants(
+                          expenseTemplateProvider
+                              .expenseTemplateState.searchResult),
+                      expenseTemplateProvider
+                          .updateStateStep(NewExpenseTemplateStateEnum.intent),
+                    },
+                    backText: "Cancel",
+                    backOnPressed: () => Navigator.pop(context),
+                  ),
                 ]));
     });
   }

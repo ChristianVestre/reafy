@@ -7,7 +7,7 @@ import 'package:reafy/views/expense_view/widgets/expense_detail.dart';
 import 'package:reafy/views/expense_view/widgets/no_expense.dart';
 import 'package:reafy/views/new_expense_template/new_expense_template_view.dart';
 
-final bool expense = false;
+final bool expense = true;
 
 class ExpenseView extends StatelessWidget {
   const ExpenseView({super.key});

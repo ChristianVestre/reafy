@@ -7,11 +7,15 @@ class ExpenseLineItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      dense: true,
-      visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-      leading: Text(item),
-      trailing: Text("23"),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text(
+          item,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        Text("23", style: Theme.of(context).textTheme.bodyLarge)
+      ]),
     );
   }
 }

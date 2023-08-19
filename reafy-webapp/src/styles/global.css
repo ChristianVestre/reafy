@@ -1,0 +1,46 @@
+:root {
+    --primary-color: #D499B9;
+    --border-color: #BDBDBD;
+    --light-gray-color: #F2F2F2;
+    --text-body-large: 16px;
+    --text-body-medium: 12px;
+    --text-body-small: 10px;
+    --text-headline-xlarge: 32px;
+    --text-headline-large: 24px;
+    --text-headline-medium: 20px;
+    --text-headline-small: 12px;
+    --text-title-large: 32px;
+    --text-title-medium: 24px;
+    --text-title-small: 16px;
+    --text-font-light: 200;
+    --text-font-regular: 400;
+    --text-font-medium: 500;
+    --text-font-bold: 700;
+    --spacing-micro: 4px;
+    --spacing-small: 8px;
+    --spacing-medium: 16px;
+    --spacing-large: 24px;
+    --spacing-xlarge: 32px;
+}
+
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.reafy-logo {
+    font-size: 32px;
+    font-weight: 700;
+    src: url('%sveltekit.assets%/fonts/PlayfairDisplay-Bold.tff');
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.reafy-text {
+    src: url('%sveltekit.assets%/fonts/PlayfairDisplay-Regular.tff');
+    color: var(--primary-color);
+    text-decoration: none;
+}

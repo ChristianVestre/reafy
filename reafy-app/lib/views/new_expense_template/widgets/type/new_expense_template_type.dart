@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:reafy/models/enums.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
 import 'package:reafy/shared_widgets/buttons/primary_button.dart';
+import 'package:reafy/shared_widgets/reafy_nav_footer.dart';
 import 'package:reafy/views/new_expense_template/widgets/type/new_expense_template_type_radio_group.dart';
 
 class NewExpenseTemplateType extends StatelessWidget {
@@ -23,17 +24,20 @@ class NewExpenseTemplateType extends StatelessWidget {
                 ),
                 Text(
                   "Expense Type",
-                  style: Theme.of(context).textTheme.headlineLarge,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 const NewExpenseTemplateTypeRadioGroup()
               ],
             ),
-            ReafyPrimaryButton(
-                text: "Next",
-                onPressed: () => expenseTemplateProvider
+            ReafyNavFooter(
+                backText: "Back",
+                forwardText: "Next",
+                backOnPressed: () => expenseTemplateProvider
+                    .updateStateStep(NewExpenseTemplateStateEnum.intent),
+                forwardOnPressed: () => expenseTemplateProvider
                     .updateStateStep(NewExpenseTemplateStateEnum.overview))
           ]));
     });

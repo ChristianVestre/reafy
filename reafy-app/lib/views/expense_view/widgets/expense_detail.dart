@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:reafy/shared_widgets/buttons/primary_button.dart';
+import 'package:reafy/shared_widgets/buttons/secondary_button.dart';
 import 'package:reafy/theme/colors.dart';
 import 'package:reafy/views/expense_view/widgets/expense_line_item.dart';
+import 'package:reafy/views/select_expense_template/select_expense_template.dart';
 
-final items = ["Test 1", "test 2", "test 3"];
+final items = ["Test 1", "Test 2", "Test 3"];
 
 class ExpenseDetail extends StatelessWidget {
   const ExpenseDetail({super.key, this.data});
@@ -39,7 +42,26 @@ class ExpenseDetail extends StatelessWidget {
                 itemCount: items.length,
                 itemBuilder: ((context, index) =>
                     ExpenseLineItem(item: items[index]))),
-          ])))
+            const SizedBox(
+              height: 40,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ReafySecondaryButton(text: "Deny", onPressed: () => {}),
+                ReafyPrimaryButton(
+                    text: "Accept",
+                    onPressed: () => {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const SelectExpenseTemplate(),
+                            ),
+                          )
+                        })
+              ],
+            )
+          ]))),
     ]);
   }
 }

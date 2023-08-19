@@ -1,0 +1,128 @@
+```mermaid
+erDiagram
+user {
+    int user_id
+    varchar name
+    int company_id
+    enum company_role
+    int participant_id
+}
+
+company {
+    int company_id
+    varchar name
+    varchar contact_email
+    int people_whitelist_id
+    int company_whitelist_id
+    int org_number
+}
+
+company ||--|{  user : employs
+
+expense {
+    int expense_id
+    int establishment_id
+    int settled_by
+    datetime expense_timestamp
+    int total_expense
+    int gross_expense
+    int net_expense
+    bool active
+    enum currency
+    int tip
+}
+
+expense_object{
+    int expense_object_id
+    varchar expense_intent
+    enum expense_type
+    int created_by
+    bool active
+    bool require_permission
+}
+
+expense_rules{
+    int expense_rule_id
+    varchar rule_type
+    int max_expense
+    int created_by
+    bool active
+    bool require_permission
+}
+
+expense_rules ||--|{  company : has 
+
+expense_object ||--|{  expense : has 
+
+user ||--|{  expense_object : creates 
+
+expense ||--|{  expense_line_item : contains 
+establishment ||--|{  expense : served 
+
+
+expense_line_item {
+    int line_item_id
+    varchar name
+    int number_purchased
+    int cost_per_item
+}
+
+establishment {
+    int establishment_id
+    varchar name
+    int org_number
+    varchar address
+    varchar contact_email
+}
+
+people_whitelist {
+    int people_whitelist_id
+    int company_id
+    int participant_id
+}
+company ||--||  people_whitelist : has 
+
+people_whitelist ||--||  participant : has 
+
+participant {
+    int participant_id
+    varchar participant_name
+    varchar relationship
+    int company_id
+    int owner_company_id
+}
+
+expense_object }|--|{  participant : has 
+
+company_whitelist {
+    int company_whitelist_id
+    int company_id
+    int participant_id
+    int owner_company_id
+
+}
+company ||--||  company_whitelist : has 
+
+company_whitelist ||--||  participant : has 
+
+participant_log_table {
+    int log_id
+    int participant_id
+    int expense_id
+    int people_whitelist_id
+    int company_whitelist_id
+
+}
+
+expense ||--||  participant_log_table : has 
+participant ||--||  participant_log_table : has 
+
+establishment ||--|{ establishment_client_table : has 
+company ||--|{ establishment_client_table : has 
+
+establishment_client_table {
+    int establishment_client_id
+    int establishment_id
+    int client_company_id
+}
+```mermaid

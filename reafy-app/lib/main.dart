@@ -47,7 +47,7 @@ class ReafyApp extends StatelessWidget {
               titleSmall: TextStyle(
                   fontSize: 16,
                   fontFamily: 'PlayfairDisplay',
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w500,
                   color: Color(0xFFD499B9)),
               headlineLarge: TextStyle(fontSize: 24, color: Colors.black),
               headlineMedium: TextStyle(fontSize: 16, color: Colors.black),

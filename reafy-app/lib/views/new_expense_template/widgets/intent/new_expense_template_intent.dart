@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reafy/models/enums.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
-import 'package:reafy/shared_widgets/buttons/primary_button.dart';
+import 'package:reafy/shared_widgets/reafy_nav_footer.dart';
 import 'package:reafy/shared_widgets/reafy_text_field.dart';
 import 'package:reafy/theme/colors.dart';
 
@@ -25,10 +25,10 @@ class NewExpenseTemplateIntent extends StatelessWidget {
                   ),
                   Text(
                     "Intent",
-                    style: Theme.of(context).textTheme.headlineLarge,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 24,
                   ),
                   InputDecorator(
                       decoration: InputDecoration(
@@ -37,7 +37,7 @@ class NewExpenseTemplateIntent extends StatelessWidget {
                           border: OutlineInputBorder(
                               borderSide: BorderSide(
                                   width: 0.5,
-                                  color: Theme.of(context).borderColor))),
+                                  color: Theme.of(context).lightGray))),
                       child: DropdownButtonHideUnderline(
                           child: DropdownButton<NewExpenseTemplateIntentEnum>(
                               borderRadius: BorderRadius.circular(5),
@@ -83,9 +83,12 @@ class NewExpenseTemplateIntent extends StatelessWidget {
                     ),
                 ],
               ),
-              ReafyPrimaryButton(
-                  text: "Next",
-                  onPressed: () => expenseTemplateProvider
+              ReafyNavFooter(
+                  backText: "Back",
+                  forwardText: "Next",
+                  backOnPressed: () => expenseTemplateProvider
+                      .updateStateStep(NewExpenseTemplateStateEnum.list),
+                  forwardOnPressed: () => expenseTemplateProvider
                       .updateStateStep(NewExpenseTemplateStateEnum.type))
             ]),
       );

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:reafy/models/enums.dart';
 import 'package:reafy/models/expense_template.dart';
@@ -41,7 +40,7 @@ class ExpenseTemplateProvider with ChangeNotifier {
       final response = await http.get(Uri.parse(
           "https://reafy-christianvestre.vercel.app/api/whitelist/get-people-whitelist"));
       if (response.statusCode == 200) {
-        final item = json.decode(response.body);
+        final item = json.decode(utf8.decode(response.body.runes.toList()));
         responseData = ResponseData.fromJson(item);
         notifyListeners();
       } else {
