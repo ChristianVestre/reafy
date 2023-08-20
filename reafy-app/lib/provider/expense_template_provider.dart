@@ -91,7 +91,6 @@ class ExpenseTemplateProvider with ChangeNotifier {
 
   updateStateStep(NewExpenseTemplateStateEnum newStep) {
     _expenseTemplateState.step = newStep;
-    print(_expenseTemplateState.step);
     notifyListeners();
   }
 

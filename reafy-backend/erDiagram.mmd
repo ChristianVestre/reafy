@@ -1,25 +1,33 @@
-```mermaid
 erDiagram
-user {
+user_table {
     int user_id
-    varchar name
+    varchar user_name
+		varchar user_identifier
     int company_id
     enum company_role
     int participant_id
 }
 
-company {
+establishement_user_table {
+		int establishment_user_id
+		int establishment_id
+		varchar establishment_user_name
+		
+}
+
+company_table {
     int company_id
-    varchar name
+    varchar company_name
+		varchar company_identifier
     varchar contact_email
     int people_whitelist_id
     int company_whitelist_id
     int org_number
 }
 
-company ||--|{  user : employs
+company_table ||--|{  user_table : employs
 
-expense {
+expense_table {
     int expense_id
     int establishment_id
     int settled_by
@@ -32,8 +40,8 @@ expense {
     int tip
 }
 
-expense_object{
-    int expense_object_id
+expense_template_table{
+    int expense_template_id
     varchar expense_intent
     enum expense_type
     int created_by
@@ -41,69 +49,71 @@ expense_object{
     bool require_permission
 }
 
-expense_rules{
-    int expense_rule_id
-    varchar rule_type
-    int max_expense
-    int created_by
-    bool active
-    bool require_permission
+expense_rules_table{
+	int expense_rule_id
+	varchar rule_name
+	varchar employee_role
+	int company_id
+	json rule_data
+	int created_by
+	bool active
 }
 
-expense_rules ||--|{  company : has 
+expense_rules_table ||--|{  company_table : has 
 
-expense_object ||--|{  expense : has 
+expense_template_table ||--|{  expense_table : has 
 
-user ||--|{  expense_object : creates 
+user_table ||--|{  expense_template_table : creates 
 
-expense ||--|{  expense_line_item : contains 
-establishment ||--|{  expense : served 
+expense_table ||--|{  expense_line_item_table : contains 
+establishment_table ||--|{  expense_table : served 
 
 
-expense_line_item {
+expense_line_item_table {
     int line_item_id
     varchar name
     int number_purchased
     int cost_per_item
 }
 
-establishment {
+establishment_table {
     int establishment_id
-    varchar name
+    varchar establishment_name
     int org_number
     varchar address
     varchar contact_email
 }
 
-people_whitelist {
+people_whitelist_table {
     int people_whitelist_id
     int company_id
     int participant_id
 }
-company ||--||  people_whitelist : has 
+company_table ||--||  people_whitelist_table : has 
 
-people_whitelist ||--||  participant : has 
+people_whitelist_table ||--||  participant_table : has 
 
-participant {
+participant_table {
     int participant_id
     varchar participant_name
+		varchar participant_identifier
     varchar relationship
     int company_id
     int owner_company_id
 }
 
-expense_object }|--|{  participant : has 
+expense_template_table }|--|{  participant_table : has 
 
-company_whitelist {
+company_whitelist_table {
     int company_whitelist_id
     int company_id
     int participant_id
     int owner_company_id
 
 }
-company ||--||  company_whitelist : has 
+company_table ||--||  company_whitelist_table : has 
 
-company_whitelist ||--||  participant : has 
+company_whitelist_table ||--||  participant_table : has 
 
 participant_log_table {
     int log_id
@@ -114,15 +124,23 @@ participant_log_table {
 
 }
 
-expense ||--||  participant_log_table : has 
-participant ||--||  participant_log_table : has 
+expense_table ||--||  participant_log_table : has 
+participant_table ||--||  participant_log_table : has 
 
-establishment ||--|{ establishment_client_table : has 
-company ||--|{ establishment_client_table : has 
+establishment_table ||--|{ establishment_client_table : has 
+company_table ||--|{ establishment_client_table : has 
 
 establishment_client_table {
     int establishment_client_id
     int establishment_id
     int client_company_id
 }
-```mermaid
+
+participant_relations_table {
+	int participant_relation_id
+	int company_id
+	int participant_id
+	varchar relation
+}
+
+participant_table ||--|{ participant_relations_table : has 

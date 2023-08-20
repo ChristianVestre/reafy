@@ -6,7 +6,7 @@ export const config = {
 };
 
 
-export default async function expense(
+export default async function getPeopleWhitelist(
   request: VercelRequest,
 ) {
 

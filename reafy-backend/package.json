@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "dependencies": {
     "@vercel/node": "^2.15.6",
     "@vercel/postgres": "^0.4.1",
