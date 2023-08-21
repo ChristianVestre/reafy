@@ -1,9 +1,12 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
 import { sql } from '@vercel/postgres';
 
+export const config = {
+    runtime: 'edge',
+};
+
+
 export default async function createDatabase(
-    request: VercelRequest,
-    response: VercelResponse,
+    request: Request
 ) {
     try {
         let result;
@@ -22,6 +25,7 @@ export default async function createDatabase(
             participant_name VARCHAR(255),
             participant_identifier VARCHAR(255),
             company_id INT references company_table(company_id),
+            owner_company_id INT references company_table(company_id),
             PRIMARY KEY (participant_id)
         );`
         result = await sql`create table user_table (
@@ -101,7 +105,7 @@ export default async function createDatabase(
         result = await sql`
         create table establishment_user_table (
             establishment_user_id INT GENERATED ALWAYS AS IDENTITY,
-            establishemnt_id INT references establishment_table(establishment_id),
+            establishment_id INT references establishment_table(establishment_id),
             establishment_user_name VARCHAR(255),
             establishment_user_email VARCHAR(255),
             establishment_user_device_id VARCHAR(255),
@@ -142,10 +146,10 @@ export default async function createDatabase(
             PRIMARY KEY (line_item_id)
         );
         `
-        return response.status(200).json({ result });
+        return new Response(JSON.stringify({ result }));
     } catch (error) {
         console.log(error)
-        return response.status(500).json({ error });
+        return new Response(JSON.stringify({ error }));
     }
 }
 

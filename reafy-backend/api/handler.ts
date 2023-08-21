@@ -1,13 +1,16 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
- 
-export default function handler(
-  request: VercelRequest,
-  response: VercelResponse,
+export const config = {
+  runtime: 'edge',
+};
+
+export default async function handler(
+  request: Request,
 ) {
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    body = null;
+  }
   console.log(request.body)
-  response.status(200).json({
-    body: request.body,
-    query: request.query,
-    cookies: request.cookies,
-  });
+  return new Response(JSON.stringify(body));
 }

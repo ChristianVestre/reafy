@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:reafy/models/enums.dart';
@@ -37,8 +39,13 @@ class ExpenseTemplateProvider with ChangeNotifier {
 
   Future<ResponseData> getAllData() async {
     try {
-      final response = await http.get(Uri.parse(
-          "https://reafy-christianvestre.vercel.app/api/whitelist/get-people-whitelist"));
+      final response = await http.get(
+          Uri.parse(
+              "https://reafy-christianvestre.vercel.app/api/whitelist/get-people-whitelist"),
+          headers: {
+            "authorization":
+                JWT("").sign(SecretKey(dotenv.env['SECRET_TOKEN']!))
+          });
       if (response.statusCode == 200) {
         final item = json.decode(utf8.decode(response.body.runes.toList()));
         responseData = ResponseData.fromJson(item);

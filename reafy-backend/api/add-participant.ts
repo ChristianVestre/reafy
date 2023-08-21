@@ -1,5 +1,5 @@
 import { sql } from '@vercel/postgres';
-import { Participant } from '../types/crudTypes';
+import type { Participant } from '../types/crudTypes';
 
 export const config = {
     runtime: 'edge',
@@ -15,7 +15,7 @@ export default async function handler(
     } catch (e) {
         body = null;
     }
-    console.log(body)
+
     let company = await sql`
     SELECT row_to_json(company_table) FROM company_table WHERE company_name = (${body?.companyName});
     `
@@ -26,33 +26,35 @@ export default async function handler(
       `
     }
 
-    const participant = await sql`
-      INSERT INTO participant_table
-      (participant_name, company_id)
-      SELECT ${body?.participantName},${company.rows[0]!.row_to_json!.company_id}
-      WHERE
-          NOT EXISTS (
-              SELECT participant_name FROM participant_table WHERE participant_name = ${body?.participantName}
-          )
-      RETURNING row_to_json(participant_table)    
-      ;
+    const participant_identifier = body?.participantName.toLocaleLowerCase().split(" ").join("")
+    console.log(participant_identifier)
+    let participant = await sql`
+    SELECT row_to_json(participant_table) FROM participant_table WHERE participant_identifier = (${participant_identifier});
     `
 
+    if (participant.rowCount == 0) {
+        participant = await sql`
+        INSERT INTO participant_table 
+        (participant_name, participant_identifier, company_id, owner_company_id) 
+        VALUES (${body?.participantName}, ${participant_identifier}, ${company.rows[0]!.row_to_json!.company_id}) 
+        RETURNING row_to_json(participant_table);
+        `
+    }
+
+    console.log(participant)
+    const participant_relation_id = `${company.rows[0]!.row_to_json!.company_id}_${participant.rows[0]!.row_to_json!.participant_id}`
     const participantRelation = await sql`
       INSERT INTO participant_relation_table
-      (participant_name, company_id, relation)
-      SELECT ${body?.participantName},${company.rows[0]!.row_to_json!.company_id}, ${body?.relation}
+      (participant_relation_id, participant_id, company_id, relation)
+      SELECT ${participant_relation_id},${participant.rows[0]!.row_to_json!.participant_id},${company.rows[0]!.row_to_json!.company_id},${body?.relation}
       WHERE
           NOT EXISTS (
-              SELECT participant_name FROM participant_table WHERE participant_name = ${body?.participantName}
+              SELECT participant_relation_id FROM participant_relation_table WHERE participant_relation_id = ${participant_relation_id}
           )
-      RETURNING row_to_json(participant_table)    
+      RETURNING row_to_json(participant_relation_table)    
       ;
     `
-
-    console.log(company)
-
     return new Response(
-        JSON.stringify({ participant })
+        JSON.stringify({ participantRelation })
     );
 }

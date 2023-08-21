@@ -4,8 +4,10 @@ import 'package:reafy/provider/auth_provider.dart';
 import 'package:reafy/provider/data_provider.dart';
 import 'package:reafy/views/login/auth_view.dart';
 import 'package:reafy/views/login/login_view.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: ".env");
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => AuthProvider()),
     ChangeNotifierProxyProvider(

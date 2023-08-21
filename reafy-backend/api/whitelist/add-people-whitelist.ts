@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { jsonToSql } from '../../utils/jsonToSQL';
 import { sql } from '@vercel/postgres';
-import { JSONArray } from '../../types/jsonTypes';
+import type { JSONArray } from '../../types/jsonTypes';
 
 export default async function expense(
   request: VercelRequest,
