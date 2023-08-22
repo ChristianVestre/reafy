@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres';
-import { User } from '../types/authTypes';
 import { createIdentifier } from '../helpers/helperFunctions';
+import type { AddUserRequest } from '../types/crudTypes';
 
 export const config = {
   runtime: 'edge',
@@ -10,7 +10,7 @@ export const config = {
 export default async function handler(
   request: Request,
 ) {
-  let body: User;
+  let body: AddUserRequest;
   try {
     body = await request.json();
   } catch (e) {
@@ -23,7 +23,7 @@ export default async function handler(
     SELECT row_to_json(company_table) FROM company_table WHERE company_name = (${body.companyName});
     `
 
-    if (company.rowCount == 0) {
+    if (company.rowCount == 0 && body.companyName != null) {
       company = await sql`
       INSERT INTO company_table (company_name) VALUES (${body.companyName}) RETURNING row_to_json(company_table);
       `
@@ -67,7 +67,8 @@ export default async function handler(
       user
     ));
   } catch (e) {
-    new Response(JSON.stringify(
+    console.log(e)
+    return new Response(JSON.stringify(
       e
     ));
   }

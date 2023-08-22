@@ -76,7 +76,7 @@ export default async function createDatabase(
         );`
         result = await sql`
         create table people_whitelist_table (
-            people_whitelist_id  VARCHAR(255),
+            people_whitelist_id VARCHAR(255),
             company_id INT references company_table(company_id),
             participant_id INT references participant_table(participant_id),
             owner_company_id INT references company_table(company_id),
@@ -99,11 +99,11 @@ export default async function createDatabase(
             establishment_name VARCHAR(255),
             org_number INT,
             address VARCHAR(255),
-            contact_name VARCHAR(255),
+            contact_email VARCHAR(255),
             PRIMARY KEY (establishment_id)
         );`
         result = await sql`
-        create table establishment_user_table (
+        create table establishment_user_table (
             establishment_user_id INT GENERATED ALWAYS AS IDENTITY,
             establishment_id INT references establishment_table(establishment_id),
             establishment_user_name VARCHAR(255),

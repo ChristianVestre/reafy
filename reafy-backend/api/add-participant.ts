@@ -1,5 +1,5 @@
 import { sql } from '@vercel/postgres';
-import type { Participant } from '../types/crudTypes';
+import type { ParticipantRequest } from '../types/crudTypes';
 
 export const config = {
     runtime: 'edge',
@@ -9,7 +9,7 @@ export const config = {
 export default async function handler(
     request: Request,
 ) {
-    let body: Participant;
+    let body: ParticipantRequest;
     try {
         body = await request.json();
     } catch (e) {
@@ -27,7 +27,6 @@ export default async function handler(
     }
 
     const participant_identifier = body?.participantName.toLocaleLowerCase().split(" ").join("")
-    console.log(participant_identifier)
     let participant = await sql`
     SELECT row_to_json(participant_table) FROM participant_table WHERE participant_identifier = (${participant_identifier});
     `
@@ -41,7 +40,6 @@ export default async function handler(
         `
     }
 
-    console.log(participant)
     const participant_relation_id = `${company.rows[0]!.row_to_json!.company_id}_${participant.rows[0]!.row_to_json!.participant_id}`
     const participantRelation = await sql`
       INSERT INTO participant_relation_table
@@ -54,7 +52,15 @@ export default async function handler(
       RETURNING row_to_json(participant_relation_table)    
       ;
     `
+
     return new Response(
-        JSON.stringify({ participantRelation })
+        JSON.stringify({
+            "participantId": participant.rows[0]!.row_to_json!.participant_id,
+            "participantRelationId": participant_relation_id,
+            "participantName": participant.rows[0]!.row_to_json!.participant_name,
+            "company_id": company.rows[0]!.row_to_json!.company_id,
+            "relation": participantRelation.rows[0].row_to_json.relation,
+            "ownerCompanyId": participant.rows[0]!.row_to_json!.owner_company_id
+        })
     );
 }
