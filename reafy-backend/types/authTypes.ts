@@ -6,4 +6,4 @@ export type User = {
     companyName: string
     companyRole: string
     relation: string
-}
+} | null

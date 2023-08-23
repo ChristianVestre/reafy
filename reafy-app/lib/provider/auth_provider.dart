@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:reafy/helper/constants.dart';
+import 'package:reafy/helpers/constants.dart';
 import 'package:reafy/models/user.dart';
 
 class AuthProvider with ChangeNotifier {

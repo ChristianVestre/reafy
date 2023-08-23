@@ -1,26 +1,23 @@
-export type EstablishmentRequest = {
+export type PostEstablishment = {
     establishmentName: string
     orgNumber: number
     address: string
     contactEmail: string
-}
+} | null
 
-export type EstablishmentUserRequest = {
+export type PostEstablishmentUser = {
     userName: string
     establishmentName: string
     email: string
-}
+} | null
 
-export type EstablishmentLoginRequest = {
+export type PostEstablishmentLogin = {
     userName: string
     sub: number
-}
+} | null
 
-export type EstablishmentAddClientRequest = {
+export type PostEstablishmentClient = {
     establishmentId: number
     companyId: number
-}
+} | null
 
-export type GetEstablishmentClientsRequest = {
-    establishmentId: number
-}

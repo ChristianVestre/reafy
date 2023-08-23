@@ -9,7 +9,7 @@ export default async function middleware(req: Request,) {
     // validate the user is authenticated
 
     const jswToken = req.headers.get("authorization")
-    const verifiedToken = await jwtVerify(jswToken.substring(jswToken.indexOf(" ") + 1), new TextEncoder().encode(process.env.USER_TOKEN)).catch((err) => {
+    const verifiedToken = await jwtVerify(jswToken!.substring(jswToken!.indexOf(" ") + 1), new TextEncoder().encode(process.env.USER_TOKEN)).catch((err) => {
         console.error(err.message)
     })
 

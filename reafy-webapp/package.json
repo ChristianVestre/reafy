@@ -29,6 +29,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"svelte-google-auth": "^0.7.2",
 		"svelte-icons": "^2.1.0"
 	}
 }
