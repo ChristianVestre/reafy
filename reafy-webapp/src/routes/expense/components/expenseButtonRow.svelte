@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
-	import PrimaryButton from 'app/lib/buttons/primaryButton.svelte';
-	import SecondaryButton from 'app/lib/buttons/secondaryButton.svelte';
+	import PrimaryButton from 'app/lib/components/buttons/primaryButton.svelte';
+	import SecondaryButton from 'app/lib/components/buttons/secondaryButton.svelte';
 </script>
 
 <section>

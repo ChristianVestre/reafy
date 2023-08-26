@@ -8,8 +8,11 @@ export const config = {
 export default async function establishment(
     request: Request,
 ) {
-    if (request.method == "POST") {
+    if (request.method === 'OPTIONS') {
+        return new Response(JSON.stringify({ "status": "ok" }))
 
+    }
+    if (request.method == "POST") {
         try {
             let body: PostEstablishment = await request.json();
 

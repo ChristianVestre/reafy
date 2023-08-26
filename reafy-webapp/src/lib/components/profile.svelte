@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
+	export let onClick: () => void;
 </script>
 
-<div class="profile">
+<div on:click={() => onClick()} class="profile">
 	<div class="circle" />
 	<p>Christian Vestre</p>
 </div>

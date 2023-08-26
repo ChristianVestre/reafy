@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { convertCurrency } from 'app/lib/helpers/currencyConverter';
+	import { convertCurrency } from 'app/lib/components/helpers/currencyConverter';
 	import type { ExpenseLineItem } from 'app/types/expense';
 
 	export let expenseLineItem: ExpenseLineItem;

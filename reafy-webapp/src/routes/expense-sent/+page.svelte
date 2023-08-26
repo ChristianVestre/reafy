@@ -1,5 +1,5 @@
 <script>
-	import Title from 'app/lib/title.svelte';
+	import Title from 'app/lib/components/title.svelte';
 </script>
 
 <section>

@@ -9,7 +9,6 @@ export const config = {
 export default async function users(
     request: Request
 ) {
-
     if (request.method == "GET") {
         try {
             const params = getUrlParams(request.url)

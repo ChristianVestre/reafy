@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ReafyNavBar from 'app/lib/reafyNavBar.svelte';
+	import ReafyNavBar from 'app/lib/components/reafyNavBar.svelte';
 	import 'app/styles/global.css';
 </script>
 

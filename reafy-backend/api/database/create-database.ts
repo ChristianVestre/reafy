@@ -34,7 +34,7 @@ export default async function createDatabase(
             user_identifier VARCHAR(255),
             user_email VARCHAR(255),
             user_device_id VARCHAR(255),
-            user_sub INT,
+            user_sub BIGINT,
             company_id INT references company_table(company_id),
             company_role VARCHAR(255),
             participant_id INT references participant_table(participant_id),
@@ -109,7 +109,7 @@ export default async function createDatabase(
             establishment_user_name VARCHAR(255),
             establishment_user_email VARCHAR(255),
             establishment_user_device_id VARCHAR(255),
-            establishment_user_sub INT,
+            establishment_user_sub BIGINT,
             establishment_user_role VARCHAR(255),
             PRIMARY KEY (establishment_user_id)
         );`

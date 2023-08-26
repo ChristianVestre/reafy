@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import CompanyCard from 'app/lib/tiles/listTile.svelte';
-	import Title from 'app/lib/title.svelte';
+	import CompanyCard from 'app/lib/components/tiles/listTile.svelte';
+	import Title from 'app/lib/components/title.svelte';
 	const employees: string[] = ['Lars Johan Bjørkvoll', 'Fridtjof Høvik', 'Vivien Pixa'];
 </script>
 

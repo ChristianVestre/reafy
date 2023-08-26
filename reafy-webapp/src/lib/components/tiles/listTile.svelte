@@ -1,7 +1,6 @@
 <script lang="ts">
 	export let title: String;
 	import ChevronRight from 'svelte-icons/fa/FaChevronRight.svelte';
-
 	export let onPressed: () => void;
 </script>
 

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import PayedLabel from 'app/lib/labels/payedLabel.svelte';
+	import PayedLabel from 'app/lib/components/labels/payedLabel.svelte';
 	import type { ExpenseData } from 'app/types/expense';
 	import { LabelEnum } from 'app/types/enums';
 	import ExpenseLineItem from './expenseLineItem.svelte';
-	import { convertCurrency } from 'app/lib/helpers/currencyConverter';
 	import ExpenseButtonRow from './expenseButtonRow.svelte';
+	import { convertCurrency } from 'app/lib/components/helpers/currencyConverter';
 
 	const data: ExpenseData = {
 		lineItems: [

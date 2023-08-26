@@ -1,10 +1,10 @@
-<script>
-	import { goto } from '$app/navigation';
+<script lang="ts">
+	export let onClick: () => void;
 
 	const googleLogo = new URL('/google-icon.png', import.meta.url).href;
 </script>
 
-<button on:click={() => goto('/expense')}>
+<button on:click={() => onClick()} type="submit">
 	<img alt="Google logo" src={googleLogo} />
 	Login with google
 </button>
