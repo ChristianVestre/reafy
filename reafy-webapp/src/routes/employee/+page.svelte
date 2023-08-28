@@ -1,15 +1,29 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { goto } from '$app/navigation';
-	import CompanyCard from 'app/lib/components/tiles/listTile.svelte';
+	import ListTile from 'app/lib/components/tiles/listTile.svelte';
 	import Title from 'app/lib/components/title.svelte';
-	const employees: string[] = ['Lars Johan Bjørkvoll', 'Fridtjof Høvik', 'Vivien Pixa'];
+	export let data;
 </script>
 
 <Title title="Select employee" />
 <section>
-	{#each employees as employee}
-		<CompanyCard title={employee} onPressed={() => goto('/expense-sent')} />
-	{/each}
+	<form
+		method="POST"
+		use:enhance={({ formData, submitter }) => {
+			//@ts-ignore
+			formData.append('userId', submitter?.value);
+			return () => goto('/expense-sent');
+		}}
+	>
+		{#each data.employees as employee}
+			<ListTile
+				title={employee.userName}
+				value={employee.userId}
+				onPressed={() => goto('/expense-sent')}
+			/>
+		{/each}
+	</form>
 </section>
 
 <style>

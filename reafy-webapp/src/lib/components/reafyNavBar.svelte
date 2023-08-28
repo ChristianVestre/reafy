@@ -1,13 +1,16 @@
-<script>
+<script lang="ts">
 	import { signOut } from '@auth/sveltekit/client';
 	import Profile from 'app/lib/components/profile.svelte';
-
-	// your script goes here
+	import type { User } from '@auth/core/types';
+	import { getContext } from 'svelte';
+	const user: User = getContext('user');
 </script>
 
 <div>
 	<a href="/" class="reafy-logo wrapper"> reafy </a>
-	<h2>Mesh</h2>
+	{#if user}
+		<h2>{user?.establishmentName}</h2>
+	{/if}
 	<Profile onClick={() => signOut({ callbackUrl: '/' })} />
 </div>
 

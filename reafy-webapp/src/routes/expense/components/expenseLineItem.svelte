@@ -7,7 +7,7 @@
 
 <div>
 	<h5>{expenseLineItem.name}</h5>
-	<p>{expenseLineItem.number} x: {convertCurrency(expenseLineItem.pricePerItem)} kr</p>
+	<p>{expenseLineItem.numberPurchased} x: {convertCurrency(expenseLineItem.costPerItem)} kr</p>
 </div>
 
 <style>

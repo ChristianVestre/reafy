@@ -2,9 +2,10 @@
 	export let title: String;
 	import ChevronRight from 'svelte-icons/fa/FaChevronRight.svelte';
 	export let onPressed: () => void;
+	export let value: string;
 </script>
 
-<button on:click={() => onPressed()}>
+<button on:click={() => onPressed()} {value}>
 	<h4>{title}</h4>
 	<div class="chevron">
 		<ChevronRight />

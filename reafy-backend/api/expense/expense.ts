@@ -1,6 +1,7 @@
 import { sql } from '@vercel/postgres';
 import { jsonToSql } from '../../utils/jsonToSQL';
 import { PostExpense } from '../../types/crudTypes';
+import { getUrlParams } from '../../helpers/helperFunctions';
 
 export const config = {
   runtime: 'edge',
@@ -9,6 +10,39 @@ export const config = {
 export default async function expense(
   request: Request
 ) {
+  if (request.method == "GET") {
+    try {
+      const params = getUrlParams(request.url)
+      console.log(params)
+      const expense = await sql`
+         SELECT row_to_json(expense_table) FROM expense_table WHERE establishment_id = ${params.id} AND active = true
+       `
+      const expenseLineItems = await sql`
+                SELECT row_to_json(expense_line_item_table)
+                FROM expense_line_item_table
+                WHERE expense_id = ${expense.rows[0].row_to_json.expense_id};
+      `
+
+      const data = {
+        totalExpense: expense.rows[0].row_to_json.total_expense,
+        expenseId: expense.rows[0].row_to_json.expense_id,
+        lineItems: expenseLineItems.rows.map((i) => {
+          return { "name": i.row_to_json.line_item_name, "numberPurchased": i.row_to_json.number_purchased, "costPerItem": i.row_to_json.cost_per_item }
+        })
+      }
+
+      console.log(expense)
+      console.log(expenseLineItems)
+      return new Response(
+        JSON.stringify(data)
+      )
+    } catch (e) {
+      console.log(e)
+      return Response.error()
+    }
+  }
+
+
   if (request.method == "POST") {
     try {
       const body: PostExpense = await request.json();
@@ -34,7 +68,6 @@ export default async function expense(
 
 
       const text = "INSERT INTO expense_line_item_table (line_item_name,number_purchased,cost_per_item, expense_id) SELECT * FROM UNNEST ($1::text[],$2::int[],$3::int[],$4::int[])"
-      const values = [['Beer', 'Coca Cola', "Sandwich"], [1, 1, 1], [1, 1, 2], [1, 1, 3]]
       const lineItemValues = jsonToSql(body!.lineItems, expense.rows[0].row_to_json.expense_id)
       const test1 = await sql.query(text, lineItemValues)
 
@@ -42,6 +75,7 @@ export default async function expense(
         JSON.stringify(test1)
       )
     } catch (e) {
+      console.log(e)
       return Response.error()
     }
   }

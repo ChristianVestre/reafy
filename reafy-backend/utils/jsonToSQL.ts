@@ -1,19 +1,20 @@
-import { JSONArray, JSONValue } from "../types/json-types";
+import { JSONArray, JSONValue } from '../types/jsonTypes'
 
-export const jsonToSql = (arr:JSONArray,id?:JSONValue) => {
-    const array : JSONValue[][] = [];
-        arr.forEach((row) => {
-            Object.values(row).forEach((value,index) => {
-                if(!array[index]){
-                    array.push([])
-                }
-                array[index].push(value)
-            })
+
+export const jsonToSql = (arr: JSONArray, id?: JSONValue) => {
+    const array: JSONValue[][] = [];
+    arr.forEach((row) => {
+        Object.values(row).forEach((value, index) => {
+            if (!array[index]) {
+                array.push([])
+            }
+            array[index].push(value)
+        })
     })
-    if(id){
+    if (id) {
         array.push([])
         arr.forEach(() => {
-            array[array.length-1].push(id)
+            array[array.length - 1].push(id)
         })
     }
 

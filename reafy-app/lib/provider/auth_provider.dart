@@ -29,7 +29,6 @@ class AuthProvider with ChangeNotifier {
     print(isLoggedIn);
 
     final storedUser = await _secureStorage.read(key: "user");
-    print(storedUser);
     if (storedUser == null) {
       isLoading = false;
       notifyListeners();
@@ -136,18 +135,6 @@ class AuthProvider with ChangeNotifier {
         log(e.toString());
       }
 
-      // Send request to backend with access token
-      // final url = Uri.https(
-      //   'api.your-server.com',
-      //   '/v1/social-authentication',
-      //   {
-      //     'access_token': googleAccessToken,
-      //   },
-      // );
-      // final response = await http.get(url);
-      // final backendToken = response.token
-
-      // Let's assume it has been successful and a valid token has been returned
       const String backendToken = 'TOKEN';
       if (backendToken != null) {
         await _secureStorage.write(

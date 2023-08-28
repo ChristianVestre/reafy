@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
-	import PrimaryButton from 'app/lib/buttons/primaryButton.svelte';
-	import Title from 'app/lib/title.svelte';
+	import PrimaryButton from 'app/lib/components/buttons/primaryButton.svelte';
+	import Title from 'app/lib/components/title.svelte';
 </script>
 
 <section>

@@ -1,11 +1,18 @@
 <script lang="ts">
+	import type { User } from '@auth/core/types';
+	import { getContext } from 'svelte';
 	export let onClick: () => void;
+	const user: User = getContext('user');
 </script>
 
-<div on:click={() => onClick()} class="profile">
-	<div class="circle" />
-	<p>Christian Vestre</p>
-</div>
+{#if user}
+	<div on:click={() => onClick()} class="profile">
+		<img src={user.image} class="circle" />
+		<p>{user.name}</p>
+	</div>
+{:else}
+	<div class="profile" />
+{/if}
 
 <style>
 	.profile {

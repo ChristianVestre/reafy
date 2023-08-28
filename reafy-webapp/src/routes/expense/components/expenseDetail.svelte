@@ -1,25 +1,18 @@
 <script lang="ts">
 	import PayedLabel from 'app/lib/components/labels/payedLabel.svelte';
-	import type { ExpenseData } from 'app/types/expense';
+	import type { ExpenseData, ExpenseProcess } from 'app/types/expense';
 	import { LabelEnum } from 'app/types/enums';
 	import ExpenseLineItem from './expenseLineItem.svelte';
 	import ExpenseButtonRow from './expenseButtonRow.svelte';
 	import { convertCurrency } from 'app/lib/components/helpers/currencyConverter';
-
-	const data: ExpenseData = {
-		lineItems: [
-			{ name: 'Aass Pils', number: 3, pricePerItem: 700 },
-			{ name: 'Maarud snacks', number: 5, pricePerItem: 500 },
-			{ name: 'Pianøtter', number: 4, pricePerItem: 450 }
-		],
-		totalCost: 6400,
-		mva: 1280
-	};
+	import { goto } from '$app/navigation';
+	import { enhance } from '$app/forms';
+	export let data: ExpenseData;
 </script>
 
 <div class="container">
 	<section class="first-section">
-		<h3>Mesh Yungstorget</h3>
+		<h3>{data.establishmentName}</h3>
 		<h4>31.05.2023</h4>
 		<h4>Time: 23:20</h4>
 		<div class="spacer" />
@@ -36,16 +29,28 @@
 		</div>
 		<div class="line-item">
 			<h4 class="subsection-headline">Total cost:</h4>
-			<p>{convertCurrency(data.totalCost)} kr</p>
+			<p>{convertCurrency(data.totalExpense)} kr</p>
 		</div>
 	</section>
-	<ExpenseButtonRow />
+	<form method="POST" use:enhance={() => goto('/company')} class="button-row">
+		<ExpenseButtonRow
+			secondaryText="Deny"
+			primaryText="Send"
+			primaryOnPressed={() => {}}
+			secondaryOnPressed={() => {}}
+		/>
+	</form>
 </div>
 
 <style>
 	p {
 		margin: 0;
 		padding: 0;
+	}
+	.button-row {
+		display: flex;
+		justify-content: center;
+		width: 100%;
 	}
 	.line-item {
 		display: flex;

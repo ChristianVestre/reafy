@@ -1,19 +1,39 @@
-<script>
+<script lang="ts">
 	import Title from 'app/lib/components/title.svelte';
-	import { getContext } from 'svelte';
 	import ExpenseDetail from './components/expenseDetail.svelte';
-
-	const user = getContext('user');
-	console.log(
-		'test2'
-		/*	user.subscribe((v) => {
-			console.log(v);
-		})*/
-	);
+	import type { ExpenseData } from 'app/types/expense';
+	import { SpinLine } from 'svelte-loading-spinners';
+	import { navigating } from '$app/stores';
+	export let data: ExpenseData;
+	console.log(data);
 </script>
 
-<Title title="New Expense" />
-<ExpenseDetail />
+<section>
+	{#if $navigating}
+		<div class="loadingWrapper">
+			<SpinLine color="#D499B9" />
+		</div>
+	{:else if data.expenseId}
+		<Title title="New Expense" />
+		<ExpenseDetail {data} />
+	{:else}
+		<Title title="No Expenses" />
+	{/if}
+</section>
 
 <style>
+	section {
+		display: flex;
+		height: 100%;
+		width: 100%;
+		flex-direction: column;
+		align-items: center;
+		justify-content: start;
+	}
+	.loadingWrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+	}
 </style>

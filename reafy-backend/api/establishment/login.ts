@@ -13,7 +13,6 @@ export default async function login(
     if (request.method == "POST") {
         try {
             const body: PostEstablishmentLogin = await request.json()
-            console.log(body)
             let user = await sql`
                 SELECT json_build_object(
                 'userName',u.establishment_user_name,
@@ -28,7 +27,7 @@ export default async function login(
 
             if (user.rowCount == 0) {
                 return new Response(
-                    JSON.stringify({ "error": "user not found" }),
+                    JSON.stringify({ "forbidden": "user not found" }),
                     { status: 403 }
                 )
             }
@@ -36,21 +35,20 @@ export default async function login(
             //add sub if user has not logged in before
             if (user.rows[0].json_build_object.sub == null) {
                 //todo implement adding the sub
-                console.log(body?.sub)
                 try {
                     sql`UPDATE establishment_user_table SET establishment_user_sub = ${body!.sub} WHERE establishment_user_name=${body!.userName}`
                 } catch (e) {
                     console.log(e)
                     return new Response(
                         JSON.stringify({ "error": "an error has occured" }),
-                        { status: 400 }
+                        { status: 401 }
 
                     )
                 }
                 //if there is a sub, dont allow login if its not the same as the one coming with the request.
             } else if (user.rows[0].json_build_object.sub != body!.sub) {
                 return new Response(
-                    JSON.stringify({ "error": "establishment user is not recognised" }),
+                    JSON.stringify({ "forbidden": "establishment user is not recognised" }),
                     { status: 403 }
 
                 )

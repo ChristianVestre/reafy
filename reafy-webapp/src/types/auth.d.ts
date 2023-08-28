@@ -13,12 +13,7 @@ declare module "next-auth" {
     }
 }
 
-declare module "next-auth/jwt" {
-    interface JWT {
-        role?: Role;
-        subscribed: boolean;
-    }
-}
+
 
 declare module "auth" {
     interface EstablishmentUser extends User {

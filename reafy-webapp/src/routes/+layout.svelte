@@ -1,6 +1,10 @@
 <script lang="ts">
 	import ReafyNavBar from 'app/lib/components/reafyNavBar.svelte';
 	import 'app/styles/global.css';
+	import { setContext } from 'svelte';
+	export let data;
+	console.log(data.session);
+	setContext('user', data.session?.user);
 </script>
 
 <ReafyNavBar />

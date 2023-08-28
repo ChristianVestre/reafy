@@ -9,7 +9,7 @@ const token = await new SignJWT({})
     .setProtectedHeader({ alg })
     .sign(secret);
 
-const base: string = 'http://localhost:3000/api/'
+const base: string = 'http://localhost:3000/api'
 
 async function send({ method, path, data }: ({ method: string, path: string, data?: any, token: string })) {
     const opts: {
@@ -27,20 +27,27 @@ async function send({ method, path, data }: ({ method: string, path: string, dat
         opts.headers['Authorization'] = `Bearer ${token}`;
     }
 
-    const res = await fetch(`${base}/${path}`, opts);
-    if (res.ok || res.status === 422) {
-        const text = await res.text();
-        return text ? JSON.parse(text) : {};
-    }
+    try {
+        const res = await fetch(`${base}/${path}`, opts);
 
-    throw error(res.status);
+
+        if (res.ok || res.status === 422) {
+            const text = await res.text();
+            return text ? JSON.parse(text) : {};
+        }
+
+        throw error(res.status);
+    }
+    catch (e) {
+        console.log(e)
+    }
 }
 
-export function get({ path }: { path: string, token: string }) {
+export function get({ path }: { path: string }) {
     return send({ method: 'GET', path, token });
 }
 
-export function del({ path }: { path: string, token: string }) {
+export function del({ path }: { path: string }) {
     return send({ method: 'DELETE', path, token });
 }
 
@@ -48,6 +55,6 @@ export function post({ path, data }: { path: string, data: Object }) {
     return send({ method: 'POST', path, data, token });
 }
 
-export function put({ path, data }: { path: string, token: string, data: any }) {
+export function put({ path, data }: { path: string, data: any }) {
     return send({ method: 'PUT', path, data, token });
 }

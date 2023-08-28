@@ -1,22 +1,19 @@
 import { SvelteKitAuth } from "@auth/sveltekit";
 import Google from "@auth/core/providers/google";
 import client_secret from '../client_secret.json';
-import GitHub from "@auth/core/providers/github";
 import { redirect, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import { SignJWT } from "jose";
-import type { EstablishmentUser } from "./types/user";
 
 const secret = new TextEncoder().encode('DetteErReafySecurityToken!!');
 const alg = 'HS256';
 
 async function authorization({ event, resolve }) {
     // Protect any routes under /authenticated
-    console.log(event.url)
     if (event.url.pathname != "/") {
-        console.log("test what")
         const session = await event.locals.getSession();
         if (!session) {
+            console.log("redirect")
             throw redirect(303, "/");
         }
     }
@@ -57,12 +54,13 @@ export const handle = sequence(
 
                 return true
             },
-            redirect: async ({ url, baseUrl }) => {
-                if (url.startsWith("/")) return `${baseUrl}${url}`
-                // Allows callback URLs on the same origin
-                else if (new URL(url).origin === baseUrl) return url
-                return baseUrl
-            },
+            /*  redirect: async ({ url, baseUrl }) => {
+                  if (url.startsWith("/")) return `${baseUrl}${url}`
+                  // Allows callback URLs on the same origin
+                  else if (new URL(url).origin === baseUrl) return url
+                  return baseUrl
+              },*/
+            //@ts - ignore 
             session: async ({ session, token }) => {
                 if (!session) return;
                 if (token && session.user) {
@@ -72,7 +70,6 @@ export const handle = sequence(
                     session.user.establishmentName = token.establishmentName;
                 }
                 return session
-
             },
             jwt: async ({ user, token, profile }) => {
                 if (user) {

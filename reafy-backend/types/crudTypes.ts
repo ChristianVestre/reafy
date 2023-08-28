@@ -1,3 +1,5 @@
+import { JSONArray } from "./jsonTypes"
+
 export type Participant = {
     participantId: number | null,
     participantName: string,
@@ -36,7 +38,7 @@ export type PostExpense = {
     active: boolean
     tip: number
     currency: string
-    lineItems: ExpenseLineItem[]
+    lineItems: JSONArray
 } | null
 
 export type ExpenseLineItem = {
