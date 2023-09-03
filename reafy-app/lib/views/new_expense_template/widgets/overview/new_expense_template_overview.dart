@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reafy/models/enums.dart';
 import 'package:reafy/models/participant.dart';
+import 'package:reafy/provider/auth_provider.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
 import 'package:reafy/shared_widgets/buttons/primary_button.dart';
 import 'package:reafy/shared_widgets/buttons/reafy_text_button.dart';
@@ -16,10 +17,10 @@ class NewExpenseTemplateOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ExpenseTemplateProvider>(
-        builder: (context, expenseTemplateProvider, child) {
+    return Consumer2<ExpenseTemplateProvider, AuthProvider>(
+        builder: (context, expenseTemplateProvider, authProvider, child) {
       selectedParticipants = expenseTemplateProvider
-          .expenseTemplateState.tempData?.participants
+          .expenseTemplateState.tempData?.participants!.participants
           ?.where((item) => item.selected == true)
           .toList();
 
@@ -121,8 +122,12 @@ class NewExpenseTemplateOverview extends StatelessWidget {
               backText: "Back",
               forwardText: "Save",
               backOnPressed: () => expenseTemplateProvider
-                  .updateStateStep(NewExpenseTemplateStateEnum.type),
-              forwardOnPressed: () => Navigator.pop(context))
+                  .updateStateStep(NewExpenseTemplateStateEnum.list),
+              forwardOnPressed: () => {
+                    expenseTemplateProvider
+                        .submitExpenseTemplate(authProvider.reafyUser.userId!),
+                    Navigator.pop(context)
+                  })
         ],
       );
     });

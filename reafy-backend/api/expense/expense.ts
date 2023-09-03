@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres';
 import { jsonToSql } from '../../utils/jsonToSQL';
-import { PostExpense } from '../../types/crudTypes';
+import { PostExpense } from '../../types/expenseTypes';
 import { getUrlParams } from '../../helpers/helperFunctions';
 
 export const config = {
@@ -13,26 +13,26 @@ export default async function expense(
   if (request.method == "GET") {
     try {
       const params = getUrlParams(request.url)
-      console.log(params)
       const expense = await sql`
-         SELECT row_to_json(expense_table) FROM expense_table WHERE establishment_id = ${params.id} AND active = true
+         SELECT json_build_object('totalExpense',ex.total_expense,'expenseId',ex.expense_id, 'establishmentName',es.establishment_name) FROM expense_table ex
+         INNER JOIN establishment_table es ON es.establishment_id = ex.establishment_id
+         WHERE ex.expense_id = ${params.id} AND ex.active = true
        `
       const expenseLineItems = await sql`
                 SELECT row_to_json(expense_line_item_table)
                 FROM expense_line_item_table
-                WHERE expense_id = ${expense.rows[0].row_to_json.expense_id};
+                WHERE expense_id = ${expense.rows[0].json_build_object.expenseId};
       `
 
       const data = {
-        totalExpense: expense.rows[0].row_to_json.total_expense,
-        expenseId: expense.rows[0].row_to_json.expense_id,
+        totalExpense: expense.rows[0].json_build_object.totalExpense,
+        expenseId: expense.rows[0].json_build_object.expenseId,
+        establishmentName: expense.rows[0].json_build_object.establishmentName,
         lineItems: expenseLineItems.rows.map((i) => {
           return { "name": i.row_to_json.line_item_name, "numberPurchased": i.row_to_json.number_purchased, "costPerItem": i.row_to_json.cost_per_item }
         })
       }
 
-      console.log(expense)
-      console.log(expenseLineItems)
       return new Response(
         JSON.stringify(data)
       )

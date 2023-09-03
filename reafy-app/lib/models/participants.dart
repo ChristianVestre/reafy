@@ -1,14 +1,14 @@
 import 'package:reafy/models/participant.dart';
 
-class ResponseData {
+class Participants {
   List<Participant>? participants;
 
-  ResponseData({this.participants});
+  Participants({this.participants});
 
-  ResponseData.fromJson(Map<String, dynamic> json) {
-    if (json['body'] != null) {
+  Participants.fromJson(Map<String, dynamic> json) {
+    if (json['data'] != null) {
       participants = <Participant>[];
-      json['body'].forEach((v) {
+      json['data'].forEach((v) {
         participants!.add(Participant.fromJson(v));
       });
     }

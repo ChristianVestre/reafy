@@ -3,13 +3,14 @@
 	import Profile from 'app/lib/components/profile.svelte';
 	import type { User } from '@auth/core/types';
 	import { getContext } from 'svelte';
-	const user: User = getContext('user');
+	import type { EstablishmentUser } from 'app/types/user';
+	const user: EstablishmentUser = getContext('user');
 </script>
 
 <div>
 	<a href="/" class="reafy-logo wrapper"> reafy </a>
 	{#if user}
-		<h2>{user?.establishmentName}</h2>
+		<h2>{user.establishmentName}</h2>
 	{/if}
 	<Profile onClick={() => signOut({ callbackUrl: '/' })} />
 </div>

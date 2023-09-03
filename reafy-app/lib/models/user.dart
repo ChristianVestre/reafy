@@ -1,32 +1,76 @@
 import 'dart:convert';
 
-class User {
+class GoogleUser {
   String? email;
   String? name;
+  String? sub;
   String? company;
   String? picture;
   String? id;
 
-  User({this.email, this.name, this.company, this.picture, this.id});
+  GoogleUser(
+      {this.email, this.name, this.sub, this.company, this.picture, this.id});
 
-  User.fromJson(Map<String, dynamic> json) {
+  GoogleUser.fromJson(Map<String, dynamic> json) {
     email = json['email'];
     name = json['name'];
-    company = json['email'].substring(
-        json['email'].indexOf('@') + 1, json['email'].lastIndexOf('.'));
+    sub = json['sub'];
     picture = json['picture'];
-    id = json['sub'];
   }
 
-  static Map<String, dynamic> toMap(User model) => <String, dynamic>{
+  static Map<String, dynamic> toMap(GoogleUser model) => <String, dynamic>{
         'email': model.email,
         'name': model.name,
+        'sub': model.sub,
         'company': model.company,
         'picture': model.picture,
-        'id': model.id,
       };
 
-  static String serialize(User model) => json.encode(User.toMap(model));
+  static String serialize(GoogleUser model) =>
+      json.encode(GoogleUser.toMap(model));
 
-  static User deserialize(String json) => User.fromJson(jsonDecode(json));
+  static GoogleUser deserialize(String json) =>
+      GoogleUser.fromJson(jsonDecode(json));
+}
+
+class ReafyUser {
+  String? email;
+  String? userName;
+  int? userId;
+  int? companyId;
+  String? companyName;
+  int? participantId;
+
+  ReafyUser(
+      {this.email,
+      this.userName,
+      this.userId,
+      this.companyName,
+      this.companyId,
+      this.participantId});
+
+  ReafyUser.fromJson(Map<String, dynamic> json) {
+    print(json);
+    email = json['email'];
+    userName = json['userName'];
+    userId = json['userId'];
+    companyId = json['companyId'];
+    companyName = json['companyName'];
+    participantId = json['participantId'];
+  }
+
+  static Map<String, dynamic> toMap(ReafyUser model) => <String, dynamic>{
+        'email': model.email,
+        'userName': model.userName,
+        'userId': model.userId,
+        'companyId': model.companyId,
+        'companyName': model.companyName,
+        'participantId': model.participantId
+      };
+
+  static String serialize(ReafyUser model) =>
+      json.encode(ReafyUser.toMap(model));
+
+  static ReafyUser deserialize(String json) =>
+      ReafyUser.fromJson(jsonDecode(json));
 }

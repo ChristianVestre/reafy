@@ -5,15 +5,14 @@
 	import { onMount } from 'svelte';
 	export let data;
 	onMount(() => {
-		async function fetchData(interval) {
+		async function fetchData() {
 			const response = await get({ path: `expense/expense-payed?id=${data.expenseId}` });
-			console.log(response);
 			if (response.active == false) {
 				goto('/expense-verified');
 			}
 		}
 		const interval = setInterval(fetchData, 30000);
-		fetchData(interval);
+		fetchData();
 		return () => clearInterval(interval);
 	});
 </script>

@@ -1,5 +1,5 @@
 import { sql } from '@vercel/postgres';
-import { PostUsers } from '../types/crudTypes';
+import { PostUsers } from '../types/expenseTypes';
 import { getUrlParams } from '../helpers/helperFunctions';
 
 export const config = {

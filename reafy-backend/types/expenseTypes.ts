@@ -3,13 +3,13 @@ import { JSONArray } from "./jsonTypes"
 export type Participant = {
     participantId: number | null,
     participantName: string,
-    companyName: string,
+    companyId: string,
     relation: string | null
 } | null
 
 export type ParticipantRequest = {
     participantName: string
-    companyName: string
+    companyId: string
     relation: string
 } | null
 
@@ -47,3 +47,10 @@ export type ExpenseLineItem = {
     costPerItem: number
     expenseId: number
 } | null
+
+export type PostExpenseTemplate = {
+    expenseIntent: string
+    expenseType: string
+    createdBy: string //user id
+    participants: JSONArray
+}

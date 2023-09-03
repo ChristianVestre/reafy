@@ -1,23 +1,35 @@
 import { JSONArray, JSONValue } from '../types/jsonTypes'
 
 
-export const jsonToSql = (arr: JSONArray, id?: JSONValue) => {
+export const jsonToSql = (arr: JSONArray, id?: JSONValue, numberOfColumns?: number) => {
     const array: JSONValue[][] = [];
     arr.forEach((row) => {
-        Object.values(row).forEach((value, index) => {
-            if (!array[index]) {
-                array.push([])
-            }
-            array[index].push(value)
-        })
+        if (numberOfColumns) {
+            Object.values(row).forEach((value, index) => {
+                if (index < numberOfColumns) {
+                    if (!array[index]) {
+                        array.push([])
+                    }
+
+                    array[index].push(value)
+                }
+            })
+        } else {
+            Object.values(row).forEach((value, index) => {
+                if (!array[index]) {
+                    array.push([])
+                }
+                array[index].push(value)
+            })
+        }
     })
     if (id) {
+        console.log("runds")
         array.push([])
         arr.forEach(() => {
             array[array.length - 1].push(id)
         })
     }
-
     return array
 }
 

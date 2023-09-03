@@ -1,5 +1,5 @@
 import { sql } from '@vercel/postgres';
-import { PostCompany } from '../types/crudTypes';
+import { PostCompany } from '../types/expenseTypes';
 
 export const config = {
   runtime: 'edge',

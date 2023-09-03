@@ -1,26 +1,13 @@
 import { SvelteKitAuth } from "@auth/sveltekit";
 import Google from "@auth/core/providers/google";
 import client_secret from '../client_secret.json';
-import { redirect, type Handle } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import { SignJWT } from "jose";
 
+
 const secret = new TextEncoder().encode('DetteErReafySecurityToken!!');
 const alg = 'HS256';
-
-async function authorization({ event, resolve }) {
-    // Protect any routes under /authenticated
-    if (event.url.pathname != "/") {
-        const session = await event.locals.getSession();
-        if (!session) {
-            console.log("redirect")
-            throw redirect(303, "/");
-        }
-    }
-
-    // If the request is still here, just proceed as normally
-    return resolve(event);
-}
 
 export const handle = sequence(
     SvelteKitAuth({
@@ -49,6 +36,7 @@ export const handle = sequence(
                 }
                 const body = await response.json()
                 profile!.userId = body?.userId
+                profile!.userName = body?.userName
                 profile!.establishmentId = body?.establishmentId
                 profile!.establishmentName = body?.establishmentName
 
@@ -62,25 +50,42 @@ export const handle = sequence(
               },*/
             //@ts - ignore 
             session: async ({ session, token }) => {
-                if (!session) return;
+
                 if (token && session.user) {
                     session.user.userId = token.userId;
-                    session.user.name = token.name;
+                    session.user.userName = token.userName;
                     session.user.establishmentId = token.establishmentId;
                     session.user.establishmentName = token.establishmentName;
                 }
                 return session
             },
             jwt: async ({ user, token, profile }) => {
-                if (user) {
-                    token.userId = profile?.userId
-                    token.name = profile?.name
-                    token.establishmentId = profile?.establishmentId
-                    token.establishmentName = profile?.establishmentName
+                if (user && profile) {
+                    token.userId = profile.userId
+                    token.userName = profile.userName
+                    token.establishmentId = profile.establishmentId
+                    token.establishmentName = profile.establishmentName
                 }
                 return token
             }
         }
     }),
-    authorization
+    async function authorization({ event, resolve }) {
+        // Protect any routes under /authenticated
+        if (event.url.pathname != "/") {
+            const session = await event.locals.getSession();
+            if (!session) {
+                throw redirect(303, "/");
+            }
+        }
+        if (event.url.pathname == "/") {
+            const session = await event.locals.getSession();
+            if (session) {
+                throw redirect(303, "/expense")
+            }
+        }
+
+        // If the request is still here, just proceed as normally
+        return resolve(event);
+    }
 );

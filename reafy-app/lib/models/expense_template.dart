@@ -1,12 +1,24 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:reafy/models/enums.dart';
+import 'package:reafy/models/new_expense_template.dart';
 import 'package:reafy/models/participant.dart';
+import 'package:reafy/models/participants.dart';
 
-class NewExpenseTemplateData with ChangeNotifier {
-  List<Participant>? participants;
-  NewExpenseTemplateIntentEnum? intent;
-  NewExpenseTemplateTypeEnum? type;
+class ExpenseTemplate {
+  ExpenseTemplateIntentEnum? intent;
+  ExpenseTemplateTypeEnum? type;
+  Participants? participants;
+  int? expenseTemplateId;
 
-  NewExpenseTemplateData(
-      {required this.participants, required this.intent, required this.type});
+  ExpenseTemplate(
+      {this.intent, this.type, this.participants, this.expenseTemplateId});
+
+  ExpenseTemplate.fromJson(Map<String, dynamic> json) {
+    expenseTemplateId = json['expenseTemplateId'];
+    intent = json['intent'];
+    type = json['type'];
+    json['participants'].forEach((v) {
+      participants!.participants!.add(Participant.fromJson(v));
+    });
+  }
 }

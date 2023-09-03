@@ -1,28 +1,33 @@
-import NextAuth, { DefaultSession, User } from "next-auth";
+import type { DefaultSession, User, Profile } from "@auth/core/types";
+import type { JWT } from '@auth/core/jwt'
 
 
-declare module "next-auth" {
+declare module "@auth/core/types" {
     interface EstablishmentUser extends User {
-        userId?: number;
-        establishmentId?: number;
+        userId: number;
+        userName: string;
+        establishmentId: number;
         establishmentName: string;
     }
+    interface Profile {
+        userId: number;
+        userName: string;
+        establishmentId: number;
+        establishmentName: string;
+    }
+
 
     interface Session extends DefaultSession {
         user?: EstablishmentUser;
     }
 }
 
-
-
-declare module "auth" {
-    interface EstablishmentUser extends User {
-        userId?: number;
-        establishmentId?: number;
+declare module "@auth/core/jwt" {
+    interface JWT {
+        userId: number;
+        userName: string;
+        establishmentId: number;
         establishmentName: string;
-    }
 
-    interface Session extends DefaultSession {
-        user?: EstablishmentUser;
     }
 }

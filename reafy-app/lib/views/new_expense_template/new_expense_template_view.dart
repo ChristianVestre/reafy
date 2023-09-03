@@ -19,7 +19,6 @@ class NewExpenseTemplateView extends StatefulWidget {
 
 class _NewExpenseTemplateViewState extends State<NewExpenseTemplateView> {
   @override
-  @override
   void initState() {
     super.initState();
     final expenseTemplateProvider =

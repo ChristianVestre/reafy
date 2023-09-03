@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:reafy/models/enums.dart';
 import 'package:reafy/models/expense_template.dart';
+import 'package:reafy/models/new_expense_template.dart';
 import 'package:reafy/theme/colors.dart';
 
 class SelectExpenseTemplateCard extends StatelessWidget {
@@ -63,7 +64,7 @@ class SelectExpenseTemplateCard extends StatelessWidget {
             ),
             Flexible(
                 child: Text(
-              expenseTemplate.participants!
+              expenseTemplate.participants!.participants!
                   .map((item) => item.participantName)
                   .toString(),
             ))

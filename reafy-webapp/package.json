@@ -34,5 +34,8 @@
 		"@auth/sveltekit": "^0.3.6",
 		"jose": "^4.14.4",
 		"svelte-icons": "^2.1.0"
+	},
+	"overrides": {
+		"@auth/core": "^0.12.0"
 	}
 }

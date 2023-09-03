@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../models/enums.dart';
-import '../models/expense_template.dart';
+import '../models/new_expense_template.dart';
 import '../models/participant.dart';
 import '../views/new_expense_template/new_expense_template_view.dart';
 

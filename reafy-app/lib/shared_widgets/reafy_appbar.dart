@@ -43,7 +43,8 @@ class ReafyAppBar extends StatelessWidget implements PreferredSizeWidget {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               fit: BoxFit.contain,
-                              image: NetworkImage(authProvider.user.picture!),
+                              image: NetworkImage(
+                                  authProvider.googleUser.picture!),
                             ),
                           )))))
           //child: Image(

@@ -1,26 +1,25 @@
 enum NewExpenseTemplateStateEnum { list, input, intent, type, overview }
 
-enum NewExpenseTemplateTypeEnum {
+enum ExpenseTemplateTypeEnum {
   fradragsberettigetRepresentasjon,
   ikkeFradragsberettigetRepresentasjon,
   velferd
 }
 
-extension NewExpenseTemplateTypeEnumStringExtension
-    on NewExpenseTemplateTypeEnum {
+extension ExpenseTemplateTypeEnumStringExtension on ExpenseTemplateTypeEnum {
   String get stringValues {
     switch (this) {
-      case NewExpenseTemplateTypeEnum.fradragsberettigetRepresentasjon:
+      case ExpenseTemplateTypeEnum.fradragsberettigetRepresentasjon:
         return 'Fradragsberettiget representasjon';
-      case NewExpenseTemplateTypeEnum.ikkeFradragsberettigetRepresentasjon:
+      case ExpenseTemplateTypeEnum.ikkeFradragsberettigetRepresentasjon:
         return 'Ikke fradragsberettiget representasjon';
-      case NewExpenseTemplateTypeEnum.velferd:
+      case ExpenseTemplateTypeEnum.velferd:
         return 'Velferd';
     }
   }
 }
 
-enum NewExpenseTemplateIntentEnum {
+enum ExpenseTemplateIntentEnum {
   meeting,
   clientHospitality,
   recruitment,
@@ -28,19 +27,19 @@ enum NewExpenseTemplateIntentEnum {
   other
 }
 
-extension NewExpenseTemplateIntentEnumStringExtension
-    on NewExpenseTemplateIntentEnum {
+extension ExpenseTemplateIntentEnumStringExtension
+    on ExpenseTemplateIntentEnum {
   String get stringValues {
     switch (this) {
-      case NewExpenseTemplateIntentEnum.meeting:
+      case ExpenseTemplateIntentEnum.meeting:
         return 'Møteservering';
-      case NewExpenseTemplateIntentEnum.clientHospitality:
+      case ExpenseTemplateIntentEnum.clientHospitality:
         return 'Kundepleie';
-      case NewExpenseTemplateIntentEnum.recruitment:
+      case ExpenseTemplateIntentEnum.recruitment:
         return 'Rekrutering';
-      case NewExpenseTemplateIntentEnum.partnerHospitality:
+      case ExpenseTemplateIntentEnum.partnerHospitality:
         return 'Partnerpleie';
-      case NewExpenseTemplateIntentEnum.other:
+      case ExpenseTemplateIntentEnum.other:
         return 'Annet';
     }
   }

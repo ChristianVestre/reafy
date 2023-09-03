@@ -1,5 +1,8 @@
 import 'dart:io' show Platform;
 
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 const REFRESH_TOKEN_KEY = 'refresh_token';
 const BACKEND_TOKEN_KEY = 'backend_token';
 const GOOGLE_ISSUER = 'https://accounts.google.com';
@@ -28,3 +31,7 @@ String redirectUrl() {
   }
   return '';
 }
+
+const baseApiUrl = 'http://localhost:3000/api';
+final pw = dotenv.env['SECRET_TOKEN']!;
+final key = SecretKey(pw);

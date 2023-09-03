@@ -14,7 +14,7 @@ class NewExpenseTemplateIntent extends StatelessWidget {
     return Consumer<ExpenseTemplateProvider>(
         builder: (context, expenseTemplateProvider, child) {
       return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 0),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -30,40 +30,44 @@ class NewExpenseTemplateIntent extends StatelessWidget {
                   const SizedBox(
                     height: 24,
                   ),
-                  InputDecorator(
-                      decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 0),
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 0.5,
-                                  color: Theme.of(context).lightGray))),
-                      child: DropdownButtonHideUnderline(
-                          child: DropdownButton<NewExpenseTemplateIntentEnum>(
-                              borderRadius: BorderRadius.circular(5),
-                              value: expenseTemplateProvider
-                                  .expenseTemplateState.tempData!.intent,
-                              elevation: 2,
-                              style: const TextStyle(color: Colors.black),
-                              onChanged: (NewExpenseTemplateIntentEnum? value) {
-                                expenseTemplateProvider.updateIntent(value!);
-                              },
-                              items: NewExpenseTemplateIntentEnum.values.map<
-                                      DropdownMenuItem<
-                                          NewExpenseTemplateIntentEnum>>(
-                                  (NewExpenseTemplateIntentEnum value) {
-                                return DropdownMenuItem<
-                                    NewExpenseTemplateIntentEnum>(
-                                  value: value,
-                                  child: Text(value.stringValues),
-                                );
-                              }).toList()))),
+                  Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16),
+                      child: InputDecorator(
+                          decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 0),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 0.5,
+                                      color: Theme.of(context).lightGray))),
+                          child: DropdownButtonHideUnderline(
+                              child: DropdownButton<ExpenseTemplateIntentEnum>(
+                                  borderRadius: BorderRadius.circular(5),
+                                  value: expenseTemplateProvider
+                                      .expenseTemplateState.tempData!.intent,
+                                  elevation: 2,
+                                  style: const TextStyle(color: Colors.black),
+                                  onChanged:
+                                      (ExpenseTemplateIntentEnum? value) {
+                                    expenseTemplateProvider
+                                        .updateIntent(value!);
+                                  },
+                                  items: ExpenseTemplateIntentEnum.values.map<
+                                          DropdownMenuItem<
+                                              ExpenseTemplateIntentEnum>>(
+                                      (ExpenseTemplateIntentEnum value) {
+                                    return DropdownMenuItem<
+                                        ExpenseTemplateIntentEnum>(
+                                      value: value,
+                                      child: Text(value.stringValues),
+                                    );
+                                  }).toList())))),
                   const SizedBox(
                     height: 32,
                   ),
                   if (expenseTemplateProvider
                           .expenseTemplateState.tempData!.intent ==
-                      NewExpenseTemplateIntentEnum.other)
+                      ExpenseTemplateIntentEnum.other)
                     Column(
                       children: [
                         const Text(
@@ -87,9 +91,9 @@ class NewExpenseTemplateIntent extends StatelessWidget {
                   backText: "Back",
                   forwardText: "Next",
                   backOnPressed: () => expenseTemplateProvider
-                      .updateStateStep(NewExpenseTemplateStateEnum.list),
+                      .updateStateStep(NewExpenseTemplateStateEnum.type),
                   forwardOnPressed: () => expenseTemplateProvider
-                      .updateStateStep(NewExpenseTemplateStateEnum.type))
+                      .updateStateStep(NewExpenseTemplateStateEnum.list))
             ]),
       );
     });

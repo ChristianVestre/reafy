@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres';
 import { createIdentifier } from '../helpers/helperFunctions';
-import type { PostUser } from '../types/crudTypes';
+import type { PostUser } from '../types/expenseTypes';
 
 export const config = {
   runtime: 'edge',

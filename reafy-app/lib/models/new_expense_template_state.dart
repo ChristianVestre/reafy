@@ -1,19 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:reafy/models/enums.dart';
-import 'package:reafy/models/expense_template.dart';
+import 'package:reafy/models/new_expense_template.dart';
 import 'package:reafy/models/participant.dart';
+import 'package:reafy/models/participants.dart';
 
-class ExpenseTemplateState {
+class NewExpenseTemplateState {
   NewExpenseTemplateStateEnum step;
   NewExpenseTemplateData? tempData;
-  List<Participant> searchResult;
+  Participants? searchResult;
   TextEditingController? searchQuery = TextEditingController();
   TextEditingController? otherIntentController = TextEditingController();
 
-  ExpenseTemplateState(
-      {this.step = NewExpenseTemplateStateEnum.list,
+  NewExpenseTemplateState(
+      {this.step = NewExpenseTemplateStateEnum.type,
       this.tempData,
       this.searchQuery,
       this.otherIntentController,
-      this.searchResult = const []});
+      this.searchResult});
 }

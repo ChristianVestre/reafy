@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reafy/models/enums.dart';
+import 'package:reafy/models/participant.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
-import 'package:reafy/shared_widgets/buttons/primary_button.dart';
 import 'package:reafy/shared_widgets/reafy_nav_footer.dart';
 import 'package:reafy/views/new_expense_template/widgets/participation_list/filter_row.dart';
 import 'package:reafy/views/new_expense_template/widgets/participation_list/search.dart';
@@ -17,6 +17,21 @@ class NewExpenseTemplateParticipantList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ExpenseTemplateProvider>(
         builder: (context, expenseTemplateProvider, child) {
+      final List<Participant>? searchResults;
+
+      if (expenseTemplateProvider.expenseTemplateState.tempData!.type ==
+          ExpenseTemplateTypeEnum.velferd) {
+        searchResults = expenseTemplateProvider
+            .expenseTemplateState.tempData?.participants!.participants
+            ?.where((item) =>
+                item.companyId ==
+                expenseTemplateProvider.authProvider.reafyUser.companyId)
+            .toList();
+      } else {
+        searchResults = expenseTemplateProvider
+            .expenseTemplateState.tempData?.participants!.participants;
+      }
+      print(searchResults);
       return expenseTemplateProvider.isLoading
           ? Center(
               child: CircularProgressIndicator(
@@ -50,24 +65,38 @@ class NewExpenseTemplateParticipantList extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: expenseTemplateProvider
-                                .expenseTemplateState.searchResult.length,
+                            itemCount: searchResults!.length,
                             itemBuilder: ((context, index) => SearchResultTile(
-                                participant: expenseTemplateProvider
-                                    .expenseTemplateState
-                                    .searchResult[index]))))
+                                participant: searchResults![index]))))
                   ]),
                   ReafyNavFooter(
                     forwardText: "Next",
                     forwardOnPressed: () => {
-                      expenseTemplateProvider.updateParticipants(
-                          expenseTemplateProvider
-                              .expenseTemplateState.searchResult),
-                      expenseTemplateProvider
-                          .updateStateStep(NewExpenseTemplateStateEnum.intent),
+                      if (expenseTemplateProvider
+                          .expenseTemplateState.searchResult!.participants!
+                          .where((item) => item.selected == true)
+                          .toList()
+                          .isEmpty)
+                        {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                                  content: Center(
+                            child: Text(
+                                'Please make sure you have selected a participant.'),
+                          )))
+                        }
+                      else
+                        {
+                          expenseTemplateProvider.updateParticipants(
+                              expenseTemplateProvider
+                                  .expenseTemplateState.searchResult!),
+                          expenseTemplateProvider.updateStateStep(
+                              NewExpenseTemplateStateEnum.overview),
+                        }
                     },
-                    backText: "Cancel",
-                    backOnPressed: () => Navigator.pop(context),
+                    backText: "Back",
+                    backOnPressed: () => expenseTemplateProvider
+                        .updateStateStep(NewExpenseTemplateStateEnum.intent),
                   ),
                 ]));
     });

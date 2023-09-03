@@ -24,14 +24,12 @@ export default async function login(
                 INNER JOIN establishment_table et ON u.establishment_id = et.establishment_id
                 WHERE u.establishment_user_name = ${body!.userName};
             `
-
             if (user.rowCount == 0) {
                 return new Response(
                     JSON.stringify({ "forbidden": "user not found" }),
                     { status: 403 }
                 )
             }
-
             //add sub if user has not logged in before
             if (user.rows[0].json_build_object.sub == null) {
                 //todo implement adding the sub
@@ -42,7 +40,6 @@ export default async function login(
                     return new Response(
                         JSON.stringify({ "error": "an error has occured" }),
                         { status: 401 }
-
                     )
                 }
                 //if there is a sub, dont allow login if its not the same as the one coming with the request.
@@ -50,7 +47,6 @@ export default async function login(
                 return new Response(
                     JSON.stringify({ "forbidden": "establishment user is not recognised" }),
                     { status: 403 }
-
                 )
             }
 

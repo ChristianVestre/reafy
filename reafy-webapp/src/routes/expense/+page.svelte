@@ -5,7 +5,6 @@
 	import { SpinLine } from 'svelte-loading-spinners';
 	import { navigating } from '$app/stores';
 	export let data: ExpenseData;
-	console.log(data);
 </script>
 
 <section>

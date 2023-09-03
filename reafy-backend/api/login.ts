@@ -17,7 +17,7 @@ export default async function login(
         } catch (e) {
             body = null;
         }
-
+        console.log(body)
         const identifier = createIdentifier(body!.userName)
 
         let user = await sql`
@@ -26,9 +26,10 @@ export default async function login(
             'sub',u.user_sub,
             'userId',u.user_id,
             'companyName',c.company_name,
-            'companyId', c.company_id)
-            FROM user_table u
-            INNER JOIN company_table c ON u.company_id = c.company_id
+            'companyId', c.company_id,
+            'participantId', u.participant_id)
+            FROM user_table AS u
+            INNER JOIN company_table AS c ON u.company_id = c.company_id
             WHERE u.user_identifier = ${identifier};
         `
 
@@ -61,9 +62,11 @@ export default async function login(
             "userId": user.rows[0].json_build_object.userId,
             "userSub": user.rows[0].json_build_object.sub,
             "companyName": user.rows[0].json_build_object.companyName,
-            "companyId": user.rows[0].json_build_object.companyId
+            "companyId": user.rows[0].json_build_object.companyId,
+            "participantId": user.rows[0].json_build_object.participantId,
         }
 
+        console.log(data)
         return new Response(
             JSON.stringify(data)
         );

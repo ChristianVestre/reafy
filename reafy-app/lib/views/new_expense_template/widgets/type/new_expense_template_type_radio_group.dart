@@ -23,55 +23,55 @@ class NewExpenseTemplateTypeRadioGroup extends StatelessWidget {
               Row(children: [
                 Transform.scale(
                     scale: 1.2,
-                    child: Radio<NewExpenseTemplateTypeEnum>(
+                    child: Radio<ExpenseTemplateTypeEnum>(
                         activeColor: const Color(0xFFD499B9),
-                        value: NewExpenseTemplateTypeEnum
+                        value: ExpenseTemplateTypeEnum
                             .ikkeFradragsberettigetRepresentasjon,
                         groupValue: expenseTemplateProvider
                             .expenseTemplateState.tempData!.type,
-                        onChanged: (NewExpenseTemplateTypeEnum? value) =>
+                        onChanged: (ExpenseTemplateTypeEnum? value) =>
                             {expenseTemplateProvider.updateType(value!)})),
                 const SizedBox(width: 8),
                 Text("Ikke fradragsberettiget representasjon",
                     style: TextStyle(
                         fontSize:
-                            Theme.of(context).textTheme.bodyLarge!.fontSize)),
+                            Theme.of(context).textTheme.bodyMedium!.fontSize)),
               ]),
               const SizedBox(height: 4),
               Row(children: [
                 Transform.scale(
                     scale: 1.2,
-                    child: Radio<NewExpenseTemplateTypeEnum>(
+                    child: Radio<ExpenseTemplateTypeEnum>(
                         activeColor: const Color(0xFFD499B9),
-                        value: NewExpenseTemplateTypeEnum
+                        value: ExpenseTemplateTypeEnum
                             .fradragsberettigetRepresentasjon,
                         groupValue: expenseTemplateProvider
                             .expenseTemplateState.tempData!.type,
-                        onChanged: (NewExpenseTemplateTypeEnum? value) =>
+                        onChanged: (ExpenseTemplateTypeEnum? value) =>
                             {expenseTemplateProvider.updateType(value!)})),
                 const SizedBox(width: 8),
                 Text("Fradragsberettiget representasjon",
                     style: TextStyle(
                         fontSize:
-                            Theme.of(context).textTheme.bodyLarge!.fontSize)),
+                            Theme.of(context).textTheme.bodyMedium!.fontSize)),
               ]),
               const SizedBox(height: 4),
               Row(children: [
                 Transform.scale(
                     scale: 1.2,
-                    child: Radio<NewExpenseTemplateTypeEnum>(
+                    child: Radio<ExpenseTemplateTypeEnum>(
                         activeColor: const Color(0xFFD499B9),
-                        value: NewExpenseTemplateTypeEnum.velferd,
+                        value: ExpenseTemplateTypeEnum.velferd,
                         groupValue: expenseTemplateProvider
                             .expenseTemplateState.tempData!.type,
-                        onChanged: (NewExpenseTemplateTypeEnum? value) =>
+                        onChanged: (ExpenseTemplateTypeEnum? value) =>
                             {expenseTemplateProvider.updateType(value!)})),
                 const SizedBox(width: 8),
                 Text(
                   "Velferd",
                   style: TextStyle(
                       fontSize:
-                          Theme.of(context).textTheme.bodyLarge!.fontSize),
+                          Theme.of(context).textTheme.bodyMedium!.fontSize),
                 ),
               ]),
             ],

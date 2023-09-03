@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'dart:async';
 import 'dart:convert';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:reafy/helpers/constants.dart';
@@ -12,7 +14,8 @@ import 'package:reafy/models/user.dart';
 class AuthProvider with ChangeNotifier {
   final FlutterAppAuth _appAuth = const FlutterAppAuth();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
-  User user = User();
+  GoogleUser googleUser = GoogleUser();
+  ReafyUser reafyUser = ReafyUser();
   bool isLoggedIn = false;
   bool isLoading = false;
 
@@ -50,7 +53,6 @@ class AuthProvider with ChangeNotifier {
       );
 
       isLoggedIn = await _handleAuthResult(result);
-      print(isLoggedIn);
       isLoading = false;
       notifyListeners();
       return isLoggedIn;
@@ -120,12 +122,30 @@ class AuthProvider with ChangeNotifier {
 
         if (userInfoResponse.statusCode == 200) {
           final item = json.decode(userInfoResponse.body);
-          print(item);
-          user = User.fromJson(item);
-          print(user.name);
-          if (user.name != null) {
+          googleUser = GoogleUser.fromJson(item);
+          final pw = dotenv.env['SECRET_TOKEN']!;
+          final key = SecretKey(pw);
+
+          final Map data = {"userName": googleUser.name, "sub": googleUser.sub};
+
+          final loginInfo = await http.post(
+              Uri.parse('http://localhost:3000/api/login'),
+              body: json.encode(data),
+              headers: {
+                "authorization": 'Bearer ${JWT({
+                      "nameUser": googleUser.name,
+                      "sub": googleUser.sub
+                    }).sign(key, algorithm: JWTAlgorithm.HS256)}'
+              });
+
+          final loginInfoJson = json.decode(loginInfo.body);
+          reafyUser = ReafyUser.fromJson(loginInfoJson);
+
+          if (googleUser.name != null && reafyUser.userName != null) {
             await _secureStorage.write(
-                key: "user", value: User.serialize(user));
+                key: "googleUser", value: GoogleUser.serialize(googleUser));
+            await _secureStorage.write(
+                key: "reafyUser", value: ReafyUser.serialize(reafyUser));
           }
           notifyListeners();
         } else {

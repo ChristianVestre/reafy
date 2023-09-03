@@ -14,11 +14,10 @@ class FilterRow extends StatelessWidget {
         builder: (context, expenseTemplateProvider, child) {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           Expanded(
               child: ReafyFilterButton(
-            text: "Company",
+            text: "Companies",
             active: expenseTemplateProvider.searchFilter ==
                     NewExpenseTemplateSearchFilterEnum.company
                 ? false
@@ -27,7 +26,7 @@ class FilterRow extends StatelessWidget {
             onActivePressed: () =>
                 {expenseTemplateProvider.resetSearchResult()},
           )),
-          Expanded(
+          /*  Expanded(
               child: ReafyFilterButton(
             text: "Personal",
             active: expenseTemplateProvider.searchFilter ==
@@ -46,7 +45,7 @@ class FilterRow extends StatelessWidget {
                 : true,
             onPressed: () => {},
             onActivePressed: () => {},
-          )),
+          )),*/
         ]),
       );
     });

@@ -33,12 +33,11 @@ class NewExpenseTemplateType extends StatelessWidget {
               ],
             ),
             ReafyNavFooter(
-                backText: "Back",
+                backText: "Cancel",
                 forwardText: "Next",
-                backOnPressed: () => expenseTemplateProvider
-                    .updateStateStep(NewExpenseTemplateStateEnum.intent),
+                backOnPressed: () => Navigator.pop(context),
                 forwardOnPressed: () => expenseTemplateProvider
-                    .updateStateStep(NewExpenseTemplateStateEnum.overview))
+                    .updateStateStep(NewExpenseTemplateStateEnum.intent))
           ]));
     });
   }
