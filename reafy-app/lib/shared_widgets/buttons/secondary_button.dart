@@ -21,7 +21,7 @@ class ReafySecondaryButton extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(color: Theme.of(context).primaryColor),
-                color: Colors.transparent),
+                color: Colors.white),
             child: Text(
               text,
               textAlign: TextAlign.center,

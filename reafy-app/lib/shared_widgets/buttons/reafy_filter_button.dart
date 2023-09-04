@@ -29,7 +29,7 @@ class ReafyFilterButton extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               )
             : SizedBox(
-                width: MediaQuery.of(context).size.width / 5,
+                width: MediaQuery.of(context).size.width / 4,
                 child: GestureDetector(
                     onTap: onActivePressed,
                     child: Container(

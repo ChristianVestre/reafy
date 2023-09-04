@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:reafy/helpers/constants.dart';
 import 'package:reafy/models/expense_template.dart';
+import 'package:reafy/models/expense_templates.dart';
 import '../models/expense.dart';
 
 class ExpenseProvider with ChangeNotifier {
   Expense expense = Expense();
-  List<ExpenseTemplate> expenseTemplates = [];
+  ExpenseTemplates expenseTemplates = ExpenseTemplates();
+  ExpenseTemplate selectedExpenseTemplate = ExpenseTemplate();
   bool isLoading = false;
   Future<bool> getExpense() async {
     try {
@@ -45,8 +47,7 @@ class ExpenseProvider with ChangeNotifier {
 
       if (expenseResponse.statusCode == 200) {
         final expenseInfoJson = json.decode(expenseResponse.body);
-        //  expenseTemplates =
-        //      expenseInfoJson['data'].map((i) => ExpenseTemplate.fromJson(i));
+        expenseTemplates = ExpenseTemplates.fromJson(expenseInfoJson);
       }
       isLoading = false;
       notifyListeners();
@@ -55,5 +56,10 @@ class ExpenseProvider with ChangeNotifier {
       log(e.toString());
       return false;
     }
+  }
+
+  updateSelectedExpenseTemplate(ExpenseTemplate expenseTemplate) {
+    selectedExpenseTemplate = expenseTemplate;
+    notifyListeners();
   }
 }

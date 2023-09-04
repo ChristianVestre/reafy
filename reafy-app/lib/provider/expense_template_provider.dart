@@ -8,6 +8,7 @@ import 'package:reafy/helpers/constants.dart';
 import 'package:reafy/models/enums.dart';
 import 'package:reafy/models/new_expense_template.dart';
 import 'package:reafy/models/new_expense_template_state.dart';
+import 'package:reafy/models/new_participant.dart';
 import 'package:reafy/models/participant.dart';
 import 'package:reafy/models/participants.dart';
 import 'package:reafy/provider/auth_provider.dart';
@@ -27,12 +28,14 @@ class ExpenseTemplateProvider with ChangeNotifier {
         type: ExpenseTemplateTypeEnum.velferd),
   );
 
+  final _newParticipant = NewParticipant();
+
   NewExpenseTemplateState get expenseTemplateState => _expenseTemplateState;
+  NewParticipant get newParticipant => _newParticipant;
 
   getParticipantList() async {
     isLoading = true;
     participantsResponse = await getParticipants();
-    print("participants");
     _expenseTemplateState.searchResult = participantsResponse;
     _expenseTemplateState.tempData!.participants = participantsResponse;
     isLoading = false;
@@ -50,7 +53,6 @@ class ExpenseTemplateProvider with ChangeNotifier {
         final item = await json.decode(response.body);
         //            await json.decode(utf8.decode(response.body.runes.toList()));
         participantsResponse = Participants.fromJson(item);
-        print(participantsResponse.participants);
         notifyListeners();
       } else {
         print("else");
@@ -159,6 +161,12 @@ class ExpenseTemplateProvider with ChangeNotifier {
 
   updateIntent(ExpenseTemplateIntentEnum type) {
     _expenseTemplateState.tempData?.intent = type;
+    notifyListeners();
+  }
+
+  updateParticipantCompany(String companyName) {
+    print(companyName);
+    _newParticipant.companyName = companyName;
     notifyListeners();
   }
 }

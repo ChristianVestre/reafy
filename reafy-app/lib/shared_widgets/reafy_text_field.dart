@@ -3,11 +3,11 @@ import 'package:reafy/theme/colors.dart';
 
 class ReafyTextField extends StatelessWidget {
   const ReafyTextField(
-      {Key? key, this.controller, required this.onChanged, this.hintText})
+      {Key? key, this.controller, this.onChanged, this.hintText})
       : super(key: key);
 
   final TextEditingController? controller;
-  final ValueSetter<String> onChanged;
+  final ValueSetter<String>? onChanged;
   final String? hintText;
 
   @override

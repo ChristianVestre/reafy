@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
 import 'package:reafy/views/new_expense_template/widgets/intent/new_expense_template_intent.dart';
 import 'package:reafy/views/new_expense_template/widgets/overview/new_expense_template_overview.dart';
+import 'package:reafy/views/new_expense_template/widgets/participation_list/add_participant.dart';
 import 'package:reafy/views/new_expense_template/widgets/participation_list/new_expense_template_participant_list.dart';
 import 'package:reafy/views/new_expense_template/widgets/type/new_expense_template_type.dart';
 import '../../shared_widgets/reafy_appbar.dart';
@@ -57,6 +58,10 @@ class _NewExpenseTemplateViewState extends State<NewExpenseTemplateView> {
                           case NewExpenseTemplateStateEnum.overview:
                             {
                               return NewExpenseTemplateOverview();
+                            }
+                          case NewExpenseTemplateStateEnum.participant:
+                            {
+                              return const AddParticipant();
                             }
                           default:
                             {

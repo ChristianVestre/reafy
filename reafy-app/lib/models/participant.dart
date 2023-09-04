@@ -15,7 +15,6 @@ class Participant {
       this.selected});
 
   Participant.fromJson(Map<String, dynamic> json) {
-    print(json);
     companyId = json['companyId'];
     companyName = json['companyName'];
     participantName = json['participantName'];

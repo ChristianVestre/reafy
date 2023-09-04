@@ -15,10 +15,10 @@ class ExpenseTemplate {
 
   ExpenseTemplate.fromJson(Map<String, dynamic> json) {
     expenseTemplateId = json['expenseTemplateId'];
-    intent = json['intent'];
-    type = json['type'];
-    json['participants'].forEach((v) {
-      participants!.participants!.add(Participant.fromJson(v));
-    });
+    intent = ExpenseTemplateIntentEnum.values
+        .firstWhere((e) => e.stringValues == json['intent']);
+    type = ExpenseTemplateTypeEnum.values
+        .firstWhere((e) => e.stringValues == json['type']);
+    participants = Participants.fromJson({"data": json['participants']});
   }
 }

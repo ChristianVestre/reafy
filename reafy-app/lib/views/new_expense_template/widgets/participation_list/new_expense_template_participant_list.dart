@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:reafy/models/enums.dart';
 import 'package:reafy/models/participant.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
+import 'package:reafy/shared_widgets/buttons/reafy_text_button.dart';
 import 'package:reafy/shared_widgets/reafy_nav_footer.dart';
+import 'package:reafy/views/new_expense_template/widgets/participation_list/add_participant.dart';
 import 'package:reafy/views/new_expense_template/widgets/participation_list/filter_row.dart';
 import 'package:reafy/views/new_expense_template/widgets/participation_list/search.dart';
 import 'package:reafy/views/new_expense_template/widgets/participation_list/search_result_tile.dart';
@@ -22,7 +24,7 @@ class NewExpenseTemplateParticipantList extends StatelessWidget {
       if (expenseTemplateProvider.expenseTemplateState.tempData!.type ==
           ExpenseTemplateTypeEnum.velferd) {
         searchResults = expenseTemplateProvider
-            .expenseTemplateState.tempData?.participants!.participants
+            .expenseTemplateState.tempData!.participants!.participants
             ?.where((item) =>
                 item.companyId ==
                 expenseTemplateProvider.authProvider.reafyUser.companyId)
@@ -31,7 +33,6 @@ class NewExpenseTemplateParticipantList extends StatelessWidget {
         searchResults = expenseTemplateProvider
             .expenseTemplateState.tempData?.participants!.participants;
       }
-      print(searchResults);
       return expenseTemplateProvider.isLoading
           ? Center(
               child: CircularProgressIndicator(
@@ -69,35 +70,50 @@ class NewExpenseTemplateParticipantList extends StatelessWidget {
                             itemBuilder: ((context, index) => SearchResultTile(
                                 participant: searchResults![index]))))
                   ]),
-                  ReafyNavFooter(
-                    forwardText: "Next",
-                    forwardOnPressed: () => {
-                      if (expenseTemplateProvider
-                          .expenseTemplateState.searchResult!.participants!
-                          .where((item) => item.selected == true)
-                          .toList()
-                          .isEmpty)
-                        {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                                  content: Center(
-                            child: Text(
-                                'Please make sure you have selected a participant.'),
-                          )))
-                        }
-                      else
-                        {
-                          expenseTemplateProvider.updateParticipants(
-                              expenseTemplateProvider
-                                  .expenseTemplateState.searchResult!),
-                          expenseTemplateProvider.updateStateStep(
-                              NewExpenseTemplateStateEnum.overview),
-                        }
-                    },
-                    backText: "Back",
-                    backOnPressed: () => expenseTemplateProvider
-                        .updateStateStep(NewExpenseTemplateStateEnum.intent),
-                  ),
+                  Column(
+                    children: [
+                      ReafyTextButton(
+                          plusIcon: true,
+                          text: "Add new participant",
+                          onPressed: () => {
+                                expenseTemplateProvider.updateStateStep(
+                                    NewExpenseTemplateStateEnum.participant),
+                              }),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      ReafyNavFooter(
+                        forwardText: "Next",
+                        forwardOnPressed: () => {
+                          if (expenseTemplateProvider
+                              .expenseTemplateState.searchResult!.participants!
+                              .where((item) => item.selected == true)
+                              .toList()
+                              .isEmpty)
+                            {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                      content: Center(
+                                child: Text(
+                                    'Please make sure you have selected a participant.'),
+                              )))
+                            }
+                          else
+                            {
+                              expenseTemplateProvider.updateParticipants(
+                                  expenseTemplateProvider
+                                      .expenseTemplateState.searchResult!),
+                              expenseTemplateProvider.updateStateStep(
+                                  NewExpenseTemplateStateEnum.overview),
+                            }
+                        },
+                        backText: "Back",
+                        backOnPressed: () =>
+                            expenseTemplateProvider.updateStateStep(
+                                NewExpenseTemplateStateEnum.intent),
+                      ),
+                    ],
+                  )
                 ]));
     });
   }

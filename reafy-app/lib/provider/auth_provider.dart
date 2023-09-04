@@ -31,7 +31,7 @@ class AuthProvider with ChangeNotifier {
     }
     print(isLoggedIn);
 
-    final storedUser = await _secureStorage.read(key: "user");
+    final storedUser = await _secureStorage.read(key: "googleUser");
     if (storedUser == null) {
       isLoading = false;
       notifyListeners();

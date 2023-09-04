@@ -12,7 +12,7 @@ class NewExpenseTemplateState {
   TextEditingController? otherIntentController = TextEditingController();
 
   NewExpenseTemplateState(
-      {this.step = NewExpenseTemplateStateEnum.type,
+      {this.step = NewExpenseTemplateStateEnum.participant,
       this.tempData,
       this.searchQuery,
       this.otherIntentController,

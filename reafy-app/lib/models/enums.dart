@@ -1,4 +1,11 @@
-enum NewExpenseTemplateStateEnum { list, input, intent, type, overview }
+enum NewExpenseTemplateStateEnum {
+  list,
+  input,
+  intent,
+  type,
+  overview,
+  participant
+}
 
 enum ExpenseTemplateTypeEnum {
   fradragsberettigetRepresentasjon,
@@ -15,6 +22,19 @@ extension ExpenseTemplateTypeEnumStringExtension on ExpenseTemplateTypeEnum {
         return 'Ikke fradragsberettiget representasjon';
       case ExpenseTemplateTypeEnum.velferd:
         return 'Velferd';
+    }
+  }
+
+  ExpenseTemplateTypeEnum get enumValues {
+    switch (this) {
+      case 'Fradragsberettiget representasjon':
+        return ExpenseTemplateTypeEnum.fradragsberettigetRepresentasjon;
+      case 'Ikke fradragsberettiget representasjon':
+        return ExpenseTemplateTypeEnum.ikkeFradragsberettigetRepresentasjon;
+      case 'Velferd':
+        return ExpenseTemplateTypeEnum.velferd;
+      default:
+        return ExpenseTemplateTypeEnum.velferd;
     }
   }
 }
