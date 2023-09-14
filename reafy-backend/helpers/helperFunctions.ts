@@ -1,5 +1,5 @@
 export const createIdentifier = (name: string) => {
-    return name.toLocaleLowerCase().split(" ").join("")
+    return name.toLowerCase().split(" ").join("")
 }
 
 export const getUrlParams = (url: string) => {

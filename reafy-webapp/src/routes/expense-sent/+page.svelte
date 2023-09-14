@@ -6,8 +6,9 @@
 	export let data;
 	onMount(() => {
 		async function fetchData() {
-			const response = await get({ path: `expense/expense-payed?id=${data.expenseId}` });
-			if (response.active == false) {
+			const response = await get({ path: `establishment/expense-paid?id=${data.expenseId}` });
+			console.log(response);
+			if (response == true) {
 				goto('/expense-verified');
 			}
 		}

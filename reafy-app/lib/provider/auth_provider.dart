@@ -140,7 +140,6 @@ class AuthProvider with ChangeNotifier {
 
           final loginInfoJson = json.decode(loginInfo.body);
           reafyUser = ReafyUser.fromJson(loginInfoJson);
-
           if (googleUser.name != null && reafyUser.userName != null) {
             await _secureStorage.write(
                 key: "googleUser", value: GoogleUser.serialize(googleUser));

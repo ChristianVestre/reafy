@@ -1,5 +1,5 @@
 import { sql } from '@vercel/postgres';
-import type { ParticipantRequest } from '../types/expenseTypes';
+import type { } from '../types/expenseTypes';
 import { getUrlParams } from '../helpers/helperFunctions';
 
 export const config = {
@@ -10,13 +10,10 @@ export const config = {
 export default async function participants(
     request: Request,
 ) {
-    console.log("its hit")
-    console.log(request)
+
     if (request.method == "GET") {
         try {
             const params = getUrlParams(request.url)
-            console.log(params)
-            console.log("participants")
             let participants = await sql`
             SELECT  json_build_object('participantName',pt.participant_name,
                 'participantId',pt.participant_id,

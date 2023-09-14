@@ -5,6 +5,7 @@ import 'package:reafy/models/new_expense_template.dart';
 import 'package:reafy/models/participant.dart';
 import 'package:reafy/models/participants.dart';
 import 'package:reafy/provider/auth_provider.dart';
+import 'package:reafy/provider/auth_provider.dart';
 import 'package:reafy/provider/expense_provider.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
 import 'package:reafy/shared_widgets/buttons/primary_button.dart';
@@ -28,9 +29,10 @@ class _SelectExpenseTemplateView extends State<SelectExpenseTemplateView> {
   @override
   void initState() {
     super.initState();
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final expenseProvider =
         Provider.of<ExpenseProvider>(context, listen: false);
-    expenseProvider.getExpenseTemplates();
+    expenseProvider.getExpenseTemplates(authProvider.reafyUser);
   }
 
   @override

@@ -6,8 +6,23 @@ import 'package:reafy/shared_widgets/reafy_nav_footer.dart';
 import 'package:reafy/shared_widgets/reafy_text_field.dart';
 import 'package:reafy/theme/colors.dart';
 
-class NewExpenseTemplateIntent extends StatelessWidget {
+class NewExpenseTemplateIntent extends StatefulWidget {
   const NewExpenseTemplateIntent({Key? key}) : super(key: key);
+
+  @override
+  _NewExpenseTemplateIntentState createState() =>
+      _NewExpenseTemplateIntentState();
+}
+
+class _NewExpenseTemplateIntentState extends State<NewExpenseTemplateIntent> {
+  final otherIntentController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    otherIntentController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,13 +91,16 @@ class NewExpenseTemplateIntent extends StatelessWidget {
                         const SizedBox(
                           height: 8,
                         ),
-                        ReafyTextField(
-                          controller: expenseTemplateProvider
-                              .expenseTemplateState.otherIntentController,
-                          onChanged: (value) => expenseTemplateProvider
-                              .updateSearchResultWithParticipant(value),
-                          hintText: "Intent",
-                        )
+                        Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 16),
+                            child: ReafyTextField(
+                              controller: otherIntentController,
+                              onChanged: (value) => {
+                                expenseTemplateProvider
+                                    .expenseTemplateState.otherIntent = value
+                              },
+                              hintText: "Intent",
+                            ))
                       ],
                     ),
                 ],

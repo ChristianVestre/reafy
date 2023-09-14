@@ -21,3 +21,10 @@ export type PostEstablishmentClient = {
     companyId: number
 } | null
 
+export type PostQueueExpense = {
+    establishmentUserId: number
+    establishmentId: number
+    expenseId: number
+    companyId: number
+    userId: number
+}

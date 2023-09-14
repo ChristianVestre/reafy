@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reafy/provider/auth_provider.dart';
+import 'package:reafy/provider/auth_provider.dart';
 import 'package:reafy/provider/expense_provider.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
 import 'package:reafy/shared_widgets/buttons/reafy_text_button.dart';
@@ -8,8 +9,6 @@ import 'package:reafy/shared_widgets/reafy_appbar.dart';
 import 'package:reafy/views/expense_view/widgets/expense_detail.dart';
 import 'package:reafy/views/expense_view/widgets/no_expense.dart';
 import 'package:reafy/views/new_expense_template/new_expense_template_view.dart';
-
-final bool expense = true;
 
 class ExpenseView extends StatefulWidget {
   const ExpenseView({
@@ -24,9 +23,10 @@ class _ExpenseView extends State<ExpenseView> {
   @override
   void initState() {
     super.initState();
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final expenseProvider =
         Provider.of<ExpenseProvider>(context, listen: false);
-    expenseProvider.getExpense();
+    expenseProvider.getExpense(authProvider.reafyUser);
   }
 
   @override

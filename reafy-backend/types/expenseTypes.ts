@@ -7,10 +7,11 @@ export type Participant = {
     relation: string | null
 } | null
 
-export type ParticipantRequest = {
+export type PostParticipant = {
     participantName: string
-    companyId: string
+    companyName: string
     relation: string
+    ownerCompanyId: number
 } | null
 
 export type PostCompany = {
@@ -53,4 +54,13 @@ export type PostExpenseTemplate = {
     expenseType: string
     createdBy: string //user id
     participants: JSONArray
+}
+
+export type PostExpenseTransaction = {
+    settledById: number
+    establishmentUserId: number
+    expenseId: number
+    expenseTemplateId: number
+    companyId: number
+    establishmentId: number
 }

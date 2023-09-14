@@ -1,34 +1,35 @@
 import { sql } from '@vercel/postgres';
-import type { ParticipantRequest } from '../types/expenseTypes';
+import type { PostParticipant } from '../types/expenseTypes';
+import { createIdentifier } from '../helpers/helperFunctions';
 
 export const config = {
     runtime: 'edge',
 };
 
 
-export default async function handler(
+export default async function participantHandler(
     request: Request,
 ) {
     if (request.method == "POST") {
         try {
-            let body: ParticipantRequest;
+            let body: PostParticipant;
             try {
                 body = await request.json();
             } catch (e) {
                 body = null;
             }
-
+            console.log(body)
             let company = await sql`
-            SELECT row_to_json(company_table) FROM company_table WHERE company_name = (${body?.companyId});
+            SELECT row_to_json(company_table) FROM company_table WHERE company_name = (${body?.companyName});
         `
 
             if (company.rows.length == 0) {
                 company = await sql`
-                    INSERT INTO company_table (company_id) VALUES (${body?.companyId}) RETURNING row_to_json(company_table);
+                    INSERT INTO company_table (company_name) VALUES (${body?.companyName}) RETURNING row_to_json(company_table);
                 `
             }
 
-            const participant_identifier = body?.participantName.toLocaleLowerCase().split(" ").join("")
+            const participant_identifier = createIdentifier(body?.participantName!)
             let participant = await sql`
                 SELECT row_to_json(participant_table) FROM participant_table WHERE participant_identifier = (${participant_identifier});
             `
@@ -37,7 +38,7 @@ export default async function handler(
                 participant = await sql`
                     INSERT INTO participant_table 
                     (participant_name, participant_identifier, company_id, owner_company_id) 
-                    VALUES (${body?.participantName}, ${participant_identifier}, ${company.rows[0]!.row_to_json!.company_id}) 
+                    VALUES (${body?.participantName}, ${participant_identifier}, ${company.rows[0]!.row_to_json!.company_id}, ${body?.ownerCompanyId}) 
                     RETURNING row_to_json(participant_table);
                 `
             }
@@ -54,7 +55,7 @@ export default async function handler(
                 RETURNING row_to_json(participant_relation_table)    
                 ;
             `
-
+            console.log("works")
             return new Response(
                 JSON.stringify({
                     "participantId": participant.rows[0]!.row_to_json!.participant_id,
@@ -66,6 +67,7 @@ export default async function handler(
                 })
             );
         } catch (e) {
+            console.log(e)
             return new Response(JSON.stringify({ "error": e }))
         }
     }

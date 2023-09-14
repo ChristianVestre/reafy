@@ -18,11 +18,12 @@ class _ExpenseTransactionSuccessViewState
     return Scaffold(
       appBar: const ReafyAppBar(),
       body: Center(
-        child: Text(
-          "Transaction complete!",
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
+          child: Container(
+              padding: const EdgeInsets.only(bottom: 80),
+              child: Text(
+                "Transaction complete!",
+                style: Theme.of(context).textTheme.titleMedium,
+              ))),
       floatingActionButton: ReafyPrimaryButton(
         text: "Back",
         onPressed: () => Navigator.of(context)

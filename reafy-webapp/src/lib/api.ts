@@ -15,7 +15,7 @@ async function send({ method, path, data }: ({ method: string, path: string, dat
     const opts: {
         method: string, headers: { "Content-Type"?: string, "Authorization"?: string, "Accept"?: string }, body?: any
     } = { method, headers: {} };
-    console.log(token)
+
     if (data) {
         opts.headers['Content-Type'] = 'application/json';
         opts.headers['Accept'] = 'application/json',

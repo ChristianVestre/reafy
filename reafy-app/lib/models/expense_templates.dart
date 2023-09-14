@@ -7,7 +7,6 @@ class ExpenseTemplates {
   ExpenseTemplates({this.templates});
 
   ExpenseTemplates.fromJson(List<dynamic> json) {
-    print(json);
     templates = <ExpenseTemplate>[];
     json.forEach((v) {
       templates!.add(ExpenseTemplate.fromJson(v));

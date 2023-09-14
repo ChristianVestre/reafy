@@ -46,12 +46,11 @@ class ExpenseTransactionDetailView extends StatelessWidget {
               const SizedBox(height: 32),
               ExpenseDetailRow(
                   leadingText: "Intent",
-                  trailingText: expenseProvider
-                      .selectedExpenseTemplate.intent!.stringValues),
+                  trailingText:
+                      expenseProvider.selectedExpenseTemplate.intent!),
               ExpenseDetailRow(
                   leadingText: "Type",
-                  trailingText: expenseProvider
-                      .selectedExpenseTemplate.type!.stringValues),
+                  trailingText: expenseProvider.selectedExpenseTemplate.type!),
               ExpenseDetailRow(
                   leadingText: "Number of participants",
                   trailingText: expenseProvider.selectedExpenseTemplate
@@ -64,6 +63,7 @@ class ExpenseTransactionDetailView extends StatelessWidget {
             backOnPressed: () => Navigator.of(context).pop(),
             backText: "Back",
             forwardOnPressed: () => {
+              expenseProvider.submitExpenseTransaction(authProvider.reafyUser),
               Navigator.push(
                   context,
                   MaterialPageRoute(

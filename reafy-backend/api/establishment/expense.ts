@@ -2,6 +2,7 @@ import { sql } from '@vercel/postgres';
 import { jsonToSql } from '../../utils/jsonToSQL';
 import { PostExpense } from '../../types/expenseTypes';
 import { getUrlParams } from '../../helpers/helperFunctions';
+import { PostQueueExpense } from '../../types/establishmentTypes';
 
 export const config = {
     runtime: 'edge',
@@ -15,8 +16,8 @@ export default async function expense(
             const params = getUrlParams(request.url)
             console.log(params)
             const expense = await sql`
-         SELECT row_to_json(expense_table) FROM expense_table WHERE establishment_id = ${params.id} AND active = true
-       `
+                SELECT row_to_json(expense_table) FROM expense_table WHERE establishment_id = ${params.id} AND active = true
+            `
             console.log(expense)
             const expenseLineItems = await sql`
                 SELECT row_to_json(expense_line_item_table)
@@ -36,6 +37,23 @@ export default async function expense(
             console.log(expenseLineItems)
             return new Response(
                 JSON.stringify(data)
+            )
+        } catch (e) {
+            console.log(e)
+            return Response.error()
+        }
+    }
+    if (request.method == "POST") {
+        try {
+            let body: PostQueueExpense = await request.json();
+            console.log(body)
+            await sql`
+                INSERT INTO expense_queue_table (user_id,company_id,establishment_user_id,establishment_id,expense_id,queued) 
+                VALUES (${body.userId},${body.companyId},${body.establishmentUserId},${body.establishmentId},${body.expenseId},true)
+            `
+
+            return new Response(
+                JSON.stringify({ status: 200 })
             )
         } catch (e) {
             console.log(e)

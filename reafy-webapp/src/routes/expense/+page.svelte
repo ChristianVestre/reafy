@@ -10,7 +10,7 @@
 <section>
 	{#if $navigating}
 		<div class="loadingWrapper">
-			<SpinLine color="#D499B9" />
+			<SpinLine color="#cabdc9" />
 		</div>
 	{:else if data.expenseId}
 		<Title title="New Expense" />

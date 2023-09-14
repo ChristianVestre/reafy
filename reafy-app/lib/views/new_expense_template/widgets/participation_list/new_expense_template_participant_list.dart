@@ -24,14 +24,14 @@ class NewExpenseTemplateParticipantList extends StatelessWidget {
       if (expenseTemplateProvider.expenseTemplateState.tempData!.type ==
           ExpenseTemplateTypeEnum.velferd) {
         searchResults = expenseTemplateProvider
-            .expenseTemplateState.tempData!.participants!.participants
+            .expenseTemplateState.searchResult!.participants
             ?.where((item) =>
                 item.companyId ==
                 expenseTemplateProvider.authProvider.reafyUser.companyId)
             .toList();
       } else {
         searchResults = expenseTemplateProvider
-            .expenseTemplateState.tempData?.participants!.participants;
+            .expenseTemplateState.searchResult!.participants;
       }
       return expenseTemplateProvider.isLoading
           ? Center(
@@ -58,7 +58,14 @@ class NewExpenseTemplateParticipantList extends StatelessWidget {
                     const SizedBox(
                       height: 8,
                     ),
-                    const FilterRow(),
+                    Visibility(
+                      visible: expenseTemplateProvider
+                                  .expenseTemplateState.tempData!.type !=
+                              ExpenseTemplateTypeEnum.velferd
+                          ? true
+                          : false,
+                      child: const FilterRow(),
+                    ),
                     const SizedBox(
                       height: 4,
                     ),

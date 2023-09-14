@@ -34,7 +34,7 @@ export default async function createDatabase(
             user_identifier VARCHAR(255) UNIQUE,
             user_email VARCHAR(255),
             user_device_id VARCHAR(255),
-            user_sub VARCHAR(30),
+            user_sub VARCHAR(60),
             company_id INT references company_table(company_id),
             company_role VARCHAR(255),
             participant_id INT references participant_table(participant_id),
@@ -144,6 +144,30 @@ export default async function createDatabase(
             cost_per_item INT,
             expense_id INT references expense_table(expense_id),
             PRIMARY KEY (line_item_id)
+        );
+        `
+        result = await sql`
+        create table expense_transaction_table (
+            expense_transaction_id INT GENERATED ALWAYS AS IDENTITY,
+            settled_by_id INT,
+            settled_timestamp timestamp,
+            expense_id INT references expense_table(expense_id),
+            expense_template_id INT references expense_template_table(expense_template_id),
+            establishment_id INT references establishment_table(establishment_id),
+            company_id INT references company_table(company_id),
+            PRIMARY KEY (expense_transaction_id)
+        );
+        `
+        result = await sql`
+        create table expense_queue_table (
+            expense_queue_id INT GENERATED ALWAYS AS IDENTITY,
+            user_id INT references user_table(user_id),
+            company_id INT references company_table(company_id),
+            expense_id INT references expense_table(expense_id),
+            establishment_user_id INT references establishment_user_table,
+            establishment_id INT references establishment_table(establishment_id),
+            queued bool,
+            PRIMARY KEY (expense_queue_id)
         );
         `
         return new Response(JSON.stringify({ result }));

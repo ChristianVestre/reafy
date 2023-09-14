@@ -1,8 +1,8 @@
 import 'package:reafy/models/participant.dart';
 
 class Participants {
-  List<Participant>? participants;
   List<String>? participantCompanies;
+  List<Participant>? participants;
 
   Participants({this.participants, this.participantCompanies});
 

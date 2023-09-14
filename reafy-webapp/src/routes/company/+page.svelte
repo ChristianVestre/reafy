@@ -10,7 +10,7 @@
 
 {#if $navigating}
 	<section class="loadingWrapper">
-		<SpinLine color="#D499B9" />
+		<SpinLine color="#cabdc9" />
 	</section>
 {:else}
 	<Title title="Select company" />

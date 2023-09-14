@@ -18,6 +18,7 @@
 		padding: 0;
 		font-weight: var(--text-font-light);
 		font-size: var(--text-headline-medium);
+		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	}
 
 	.chevron {

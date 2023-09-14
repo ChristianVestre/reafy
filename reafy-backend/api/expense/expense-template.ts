@@ -60,13 +60,20 @@ export default async function expensePayed(
         try {
             let body: PostExpenseTemplate = await request.json();
             console.log(body)
+
             const expense = await sql`
-                INSERT INTO expense_template_table
-                (expense_intent,expense_type,created_by, active)
-                SELECT ${body!.expenseIntent}, ${body.expenseType}, ${body!.createdBy}, true
-                RETURNING row_to_json(expense_template_table)
-            `
-            const participantValues = jsonToSql(body!.participants, expense.rows[0].row_to_json.expense_template_id, 1)
+                 INSERT INTO expense_template_table
+                 (expense_intent,expense_type,created_by, active)
+                 SELECT ${body!.expenseIntent}, ${body.expenseType}, ${body!.createdBy}, true
+                 RETURNING row_to_json(expense_template_table)
+             `
+
+            //todo make new participant values special for this endpoint : only participantId 
+            const participantIds = body.participants.map((i) => i.participantId)
+            console.log(participantIds)
+            const participantValues = [participantIds, participantIds.map((i) => expense.rows[0].row_to_json.expense_template_id)]
+
+            // const participantValues = jsonToSql(body!.participants, expense.rows[0].row_to_json.expense_template_id, 1)
             const insertParticipantQuery = "INSERT INTO participant_log_table (participant_id,expense_template_id) SELECT * FROM UNNEST ($1::int[],$2::int[]) RETURNING row_to_json(participant_log_table)"
             const insertParticipantsResult = await sql.query(insertParticipantQuery, participantValues)
 

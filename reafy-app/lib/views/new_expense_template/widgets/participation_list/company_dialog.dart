@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
 import 'package:reafy/theme/colors.dart';
 
-final listOfCompanies = ["ScaleupXQ", "Tyve", "Code11"];
-
 companyDialog(BuildContext context,
         ExpenseTemplateProvider expenseTemplateProvider) =>
     {
@@ -28,12 +26,21 @@ companyDialog(BuildContext context,
                       ),
                       ListView.builder(
                           shrinkWrap: true,
-                          itemCount: listOfCompanies.length,
+                          itemCount: expenseTemplateProvider
+                              .expenseTemplateState
+                              .tempData!
+                              .participants!
+                              .participantCompanies!
+                              .length,
                           itemBuilder: ((context, index) => GestureDetector(
                               onTap: () => {
                                     expenseTemplateProvider
                                         .updateSearchResultWithCompany(
-                                            listOfCompanies[index]),
+                                            expenseTemplateProvider
+                                                .expenseTemplateState
+                                                .tempData!
+                                                .participants!
+                                                .participantCompanies![index]),
                                     Navigator.pop(context)
                                   },
                               child: Container(
@@ -45,7 +52,12 @@ companyDialog(BuildContext context,
                                         color: Theme.of(context).borderColor),
                                     borderRadius: BorderRadius.circular(5)),
                                 child: Center(
-                                    child: Text(listOfCompanies[index],
+                                    child: Text(
+                                        expenseTemplateProvider
+                                            .expenseTemplateState
+                                            .tempData!
+                                            .participants!
+                                            .participantCompanies![index],
                                         style: TextStyle(
                                             fontSize: Theme.of(context)
                                                 .textTheme

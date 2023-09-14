@@ -9,12 +9,12 @@ class NewExpenseTemplateState {
   NewExpenseTemplateData? tempData;
   Participants? searchResult;
   TextEditingController? searchQuery = TextEditingController();
-  TextEditingController? otherIntentController = TextEditingController();
+  String? otherIntent;
 
   NewExpenseTemplateState(
-      {this.step = NewExpenseTemplateStateEnum.participant,
+      {this.step = NewExpenseTemplateStateEnum.type,
       this.tempData,
       this.searchQuery,
-      this.otherIntentController,
+      this.otherIntent,
       this.searchResult});
 }

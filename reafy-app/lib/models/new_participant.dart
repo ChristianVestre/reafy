@@ -5,14 +5,14 @@ import 'package:reafy/models/participant.dart';
 import 'package:reafy/models/participants.dart';
 
 class NewParticipant {
-  TextEditingController? nameController = TextEditingController();
+  String? participantName;
   String? companyName;
-  TextEditingController? newCompanyController = TextEditingController();
-  TextEditingController? relationController = TextEditingController();
+  String? newCompanyName;
+  String? relation;
 
   NewParticipant(
-      {this.nameController,
-      this.newCompanyController,
-      this.relationController,
+      {this.participantName,
+      this.newCompanyName,
+      this.relation,
       this.companyName});
 }

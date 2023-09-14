@@ -50,7 +50,6 @@ class ReafyUser {
       this.participantId});
 
   ReafyUser.fromJson(Map<String, dynamic> json) {
-    print(json);
     email = json['email'];
     userName = json['userName'];
     userId = json['userId'];

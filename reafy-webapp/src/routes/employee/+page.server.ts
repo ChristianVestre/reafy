@@ -12,10 +12,22 @@ export const load: PageServerLoad = async (event) => {
 
 
 export const actions: Actions = {
-    default: async ({ cookies, request }) => {
+    default: async ({ cookies, request, locals }) => {
         const formData = await request.formData()
-        console.log(formData)
+        const companyId = cookies.get("companyId")
+        const expenseId = cookies.get("expenseId")
+        const session = await locals.getSession()
+
         const userId = formData.get("userId")?.toString() ?? ""
+        await post({
+            path: "/establishment/expense", data: {
+                userId: userId,
+                establishmentId: session?.user?.establishmentId,
+                establishmentUserId: session?.user?.userId,
+                companyId: companyId,
+                expenseId: expenseId
+            }
+        })
         cookies.set('userId', userId);
         return { success: true };
     }

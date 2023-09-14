@@ -5,8 +5,8 @@ import 'package:reafy/models/participant.dart';
 import 'package:reafy/models/participants.dart';
 
 class ExpenseTemplate {
-  ExpenseTemplateIntentEnum? intent;
-  ExpenseTemplateTypeEnum? type;
+  String? intent;
+  String? type;
   Participants? participants;
   int? expenseTemplateId;
 
@@ -15,10 +15,8 @@ class ExpenseTemplate {
 
   ExpenseTemplate.fromJson(Map<String, dynamic> json) {
     expenseTemplateId = json['expenseTemplateId'];
-    intent = ExpenseTemplateIntentEnum.values
-        .firstWhere((e) => e.stringValues == json['intent']);
-    type = ExpenseTemplateTypeEnum.values
-        .firstWhere((e) => e.stringValues == json['type']);
+    intent = json['intent'];
+    type = json['type'];
     participants = Participants.fromJson({"data": json['participants']});
   }
 }

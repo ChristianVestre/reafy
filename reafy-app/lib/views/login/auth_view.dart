@@ -15,6 +15,7 @@ class _AuthViewState extends State<AuthView> {
   @override
   void initState() {
     Provider.of<AuthProvider>(context, listen: false).initAuth();
+
     super.initState();
   }
 

@@ -16,7 +16,7 @@
 		<h4>31.05.2023</h4>
 		<h4>Time: 23:20</h4>
 		<div class="spacer" />
-		<PayedLabel text="Not Payed" labelType={LabelEnum.NotPayed} />
+		<PayedLabel text="Not paid" labelType={LabelEnum.NotPayed} />
 	</section>
 	<section class="second-section">
 		<h4 class="subsection-headline">Items:</h4>
@@ -32,7 +32,15 @@
 			<p>{convertCurrency(data.totalExpense)} kr</p>
 		</div>
 	</section>
-	<form method="POST" use:enhance={() => goto('/company')} class="button-row">
+	<form
+		method="POST"
+		use:enhance={({ formData }) => {
+			//@ts-ignore
+			formData.append('expenseId', data.expenseId);
+			return goto('/company');
+		}}
+		class="button-row"
+	>
 		<ExpenseButtonRow
 			secondaryText="Deny"
 			primaryText="Send"

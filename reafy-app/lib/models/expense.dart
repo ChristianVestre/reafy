@@ -16,6 +16,7 @@ class Expense {
   int? totalExpense;
   int? expenseId;
   String? establishmentName;
+  int? establishmentId;
   int? mva;
   List<LineItem>? lineItems;
 
@@ -24,6 +25,7 @@ class Expense {
       this.expenseId,
       this.mva,
       this.lineItems,
+      this.establishmentId,
       this.establishmentName});
 
   Expense.fromJson(Map<String, dynamic> json) {
@@ -31,6 +33,7 @@ class Expense {
     expenseId = json['expenseId'];
     mva = json['mva'];
     establishmentName = json['establishmentName'];
+    establishmentId = json['establishmentId'];
     lineItems = <LineItem>[];
     json['lineItems'].forEach((v) {
       lineItems!.add(LineItem.fromJson(v));

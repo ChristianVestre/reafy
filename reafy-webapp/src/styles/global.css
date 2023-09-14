@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #D499B9;
+    --primary-color: #cabdc9;
     --border-color: #BDBDBD;
     --light-gray-color: #F2F2F2;
     --text-body-large: 16px;
@@ -29,6 +29,13 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    font-family: 'Gill sans', sans-serif;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Playfair Display';
 }
 
 .reafy-logo {
@@ -37,10 +44,26 @@ body {
     src: url('%sveltekit.assets%/fonts/PlayfairDisplay-Bold.tff');
     color: var(--primary-color);
     text-decoration: none;
+    font-weight: medium;
+    font-family: 'Playfair Display';
 }
 
 .reafy-text {
     src: url('%sveltekit.assets%/fonts/PlayfairDisplay-Regular.tff');
     color: var(--primary-color);
     text-decoration: none;
+}
+
+@font-face {
+    font-family: "Playfair Display";
+    src: url('%sveltekit.assets%/fonts/PlayfairDisplay-Regular.tff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Playfair Display";
+    src: url('%sveltekit.assets%/fonts/PlayfairDisplay-Bold.tff');
+    font-weight: 600;
+    font-style: medium;
 }

@@ -21,6 +21,7 @@ class ExpenseTemplateProvider with ChangeNotifier {
   bool isLoading = false;
   NewExpenseTemplateSearchFilterEnum searchFilter =
       NewExpenseTemplateSearchFilterEnum.none;
+
   final NewExpenseTemplateState _expenseTemplateState = NewExpenseTemplateState(
     tempData: NewExpenseTemplateData(
         participants: null,
@@ -44,13 +45,16 @@ class ExpenseTemplateProvider with ChangeNotifier {
 
   Future<Participants> getParticipants() async {
     try {
-      final response =
-          await http.get(Uri.parse('$baseApiUrl/participants?id=1'), headers: {
-        "authorization":
-            'Bearer ${JWT({}).sign(SecretKey(dotenv.env["SECRET_TOKEN"]!))}'
-      });
+      final response = await http.get(
+          Uri.parse(
+              '$baseApiUrl/participants?id=${authProvider.reafyUser.companyId}'),
+          headers: {
+            "authorization":
+                'Bearer ${JWT({}).sign(SecretKey(dotenv.env["SECRET_TOKEN"]!))}'
+          });
       if (response.statusCode == 200) {
         final item = await json.decode(response.body);
+        print(item);
         //            await json.decode(utf8.decode(response.body.runes.toList()));
         participantsResponse = Participants.fromJson(item);
         notifyListeners();
@@ -70,9 +74,22 @@ class ExpenseTemplateProvider with ChangeNotifier {
     isLoading = false;
   }
 
+  submitParticipant() async {
+    isLoading = true;
+    await postParticipant();
+    //_newParticipant = NewParticipant();
+    participantsResponse = await getParticipants();
+    _expenseTemplateState.searchResult = participantsResponse;
+    _expenseTemplateState.tempData!.participants = participantsResponse;
+    isLoading = false;
+  }
+
   Future<Participants> postExpenseTemplate(int createdBy) async {
     final Map body = {
-      "expenseIntent": _expenseTemplateState.tempData!.intent!.stringValues,
+      "expenseIntent": _expenseTemplateState.tempData!.intent ==
+              ExpenseTemplateIntentEnum.other
+          ? expenseTemplateState.otherIntent
+          : expenseTemplateState.tempData!.intent!.stringValues,
       "expenseType": _expenseTemplateState.tempData!.type!.stringValues,
       "participants": _expenseTemplateState.tempData?.participants!.participants
           ?.where((item) => item.selected == true)
@@ -96,6 +113,32 @@ class ExpenseTemplateProvider with ChangeNotifier {
     return participantsResponse;
   }
 
+  Future<Participants> postParticipant() async {
+    final Map body = {
+      "participantName": _newParticipant.participantName,
+      "companyName": _newParticipant.companyName == "New company"
+          ? _newParticipant.newCompanyName
+          : _newParticipant.companyName,
+      "relation": _newParticipant.relation,
+      "ownerCompanyId": authProvider.reafyUser.companyId
+    };
+    final encodedBody = json.encode(body);
+
+    try {
+      final response = await http.post(Uri.parse('$baseApiUrl/participant'),
+          body: encodedBody,
+          headers: {
+            "authorization":
+                'Bearer ${JWT({}).sign(key, algorithm: JWTAlgorithm.HS256)}'
+          });
+      print(await json.decode(response.body));
+      print(response.statusCode);
+    } catch (e) {
+      log(e.toString());
+    }
+    return participantsResponse;
+  }
+
   resetSearchResult() {
     _expenseTemplateState.searchResult = participantsResponse!;
     searchFilter = NewExpenseTemplateSearchFilterEnum.none;
@@ -104,12 +147,11 @@ class ExpenseTemplateProvider with ChangeNotifier {
 
   updateSearchResultWithCompany(String company) {
     _expenseTemplateState.searchResult = Participants(
-        participants: participantsResponse!.participants!
+        participants: participantsResponse.participants!
             .where((item) => item.companyName!
                 .toLowerCase()
                 .startsWith(company.toLowerCase()))
             .toList());
-
     searchFilter = NewExpenseTemplateSearchFilterEnum.company;
     notifyListeners();
   }
