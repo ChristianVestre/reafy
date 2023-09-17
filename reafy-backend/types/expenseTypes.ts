@@ -62,5 +62,6 @@ export type PostExpenseTransaction = {
     expenseId: number
     expenseTemplateId: number
     companyId: number
+    role: string
     establishmentId: number
 }

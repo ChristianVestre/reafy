@@ -107,13 +107,16 @@ class NewExpenseTemplateOverview extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                      ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: selectedParticipants?.length,
-                          itemBuilder: ((context, index) => SearchResultTile(
-                                participant: selectedParticipants![index],
-                                selectable: false,
-                              ))),
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height / 3,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: selectedParticipants?.length,
+                            itemBuilder: ((context, index) => SearchResultTile(
+                                  participant: selectedParticipants![index],
+                                  selectable: false,
+                                ))),
+                      )
                     ],
                   ))
             ],

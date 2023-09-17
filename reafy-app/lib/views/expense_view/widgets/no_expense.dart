@@ -7,16 +7,11 @@ class NoExpense extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      const SizedBox(
-        height: 80,
-      ),
-      Container(
-          margin: const EdgeInsets.all(16),
-          child: Text(
-            "You have no expenses to deal with.",
-            style: Theme.of(context).textTheme.headlineMedium,
-          ))
-    ]);
+    return Container(
+        margin: const EdgeInsets.all(16),
+        child: Text(
+          "You have no expenses to deal with.",
+          style: Theme.of(context).textTheme.headlineMedium,
+        ));
   }
 }

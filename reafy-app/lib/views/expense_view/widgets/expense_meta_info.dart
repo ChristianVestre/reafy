@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:reafy/models/expense.dart';
 import 'package:reafy/provider/expense_provider.dart';
 
 class ExpenseMetaInfo extends StatelessWidget {
-  const ExpenseMetaInfo({Key? key}) : super(key: key);
+  const ExpenseMetaInfo({Key? key, required this.expense}) : super(key: key);
+
+  final Expense expense;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +24,7 @@ class ExpenseMetaInfo extends StatelessWidget {
                             Theme.of(context).textTheme.bodyLarge!.fontSize,
                         fontWeight: FontWeight.w600)),
                 Text(
-                  expenseProvider.expense.mva != null
-                      ? expenseProvider.expense.mva.toString()
-                      : "",
+                  expense.mva != null ? expense.mva.toString() : "",
                   style: Theme.of(context).textTheme.bodyLarge,
                 )
               ],
@@ -40,8 +41,8 @@ class ExpenseMetaInfo extends StatelessWidget {
                             Theme.of(context).textTheme.bodyLarge!.fontSize,
                         fontWeight: FontWeight.w600)),
                 Text(
-                  expenseProvider.expense.totalExpense != null
-                      ? expenseProvider.expense.totalExpense.toString()
+                  expense.totalExpense != null
+                      ? expense.totalExpense.toString()
                       : "",
                   style: Theme.of(context).textTheme.bodyLarge,
                 )

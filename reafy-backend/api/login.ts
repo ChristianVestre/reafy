@@ -27,7 +27,8 @@ export default async function login(
             'userId',u.user_id,
             'companyName',c.company_name,
             'companyId', c.company_id,
-            'participantId', u.participant_id)
+            'participantId', u.participant_id,
+            'role',u.company_role)
             FROM user_table AS u
             INNER JOIN company_table AS c ON u.company_id = c.company_id
             WHERE u.user_identifier = ${identifier};
@@ -64,6 +65,7 @@ export default async function login(
             "companyName": user.rows[0].json_build_object.companyName,
             "companyId": user.rows[0].json_build_object.companyId,
             "participantId": user.rows[0].json_build_object.participantId,
+            "role": user.rows[0].json_build_object.role
         }
 
         console.log(data)

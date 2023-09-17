@@ -22,12 +22,12 @@ class ExpenseTransactionLineItems extends StatelessWidget {
               margin: const EdgeInsets.fromLTRB(16, 8, 0, 8),
               child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: expenseProvider.expense.lineItems!.length,
+                  itemCount: expenseProvider.selectedExpense.lineItems!.length,
                   itemBuilder: ((context, index) => ExpenseDetailRow(
-                      leadingText:
-                          expenseProvider.expense.lineItems![index].name!,
+                      leadingText: expenseProvider
+                          .selectedExpense.lineItems![index].name!,
                       trailingText:
-                          '${expenseProvider.expense.lineItems![index].numberPurchased!} x ${(expenseProvider.expense.lineItems![index].costPerItem! / 10).round().toString()} kr'))))
+                          '${expenseProvider.selectedExpense.lineItems![index].numberPurchased!} x ${(expenseProvider.selectedExpense.lineItems![index].costPerItem! / 10).round().toString()} kr'))))
         ]),
       );
     });

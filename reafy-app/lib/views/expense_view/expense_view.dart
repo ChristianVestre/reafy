@@ -32,45 +32,53 @@ class _ExpenseView extends State<ExpenseView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const ReafyAppBar(),
-        body: SafeArea(child: Consumer<ExpenseProvider>(
-            builder: (context, expenseProvider, child) {
-          return expenseProvider.isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : Center(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                      expenseProvider.expense.expenseId != null
-                          ? const ExpenseDetail()
-                          : const NoExpense(),
-                      ReafyTextButton(
-                          plusIcon: true,
-                          onPressed: () => {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ChangeNotifierProxyProvider<
-                                              AuthProvider,
-                                              ExpenseTemplateProvider>(
-                                            create: (BuildContext context) =>
-                                                ExpenseTemplateProvider(
-                                                    Provider.of<AuthProvider>(
-                                                        context,
-                                                        listen: false)),
-                                            update: (BuildContext context,
-                                                    AuthProvider authProvider,
-                                                    ExpenseTemplateProvider?
-                                                        expenseTemplateProvider) =>
-                                                ExpenseTemplateProvider(
-                                                    authProvider),
-                                            child:
-                                                const NewExpenseTemplateView(),
-                                          )),
-                                )
-                              },
-                          text: "Prepare for new expense")
-                    ]));
-        })));
+      appBar: const ReafyAppBar(),
+      body: SafeArea(child:
+          Consumer<ExpenseProvider>(builder: (context, expenseProvider, child) {
+        return expenseProvider.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : expenseProvider.expenses.isEmpty
+                ? const Center(child: NoExpense())
+                : Center(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                        Container(
+                            margin: const EdgeInsets.only(top: 32),
+                            child: Text(
+                              "New Expense",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            )),
+                        Expanded(
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: expenseProvider.expenses.length,
+                                itemBuilder: ((context, index) => ExpenseDetail(
+                                      expense: expenseProvider.expenses[index],
+                                    )))),
+                      ]));
+      })),
+      floatingActionButton: ReafyTextButton(
+          plusIcon: true,
+          onPressed: () => {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => ChangeNotifierProxyProvider<
+                              AuthProvider, ExpenseTemplateProvider>(
+                            create: (BuildContext context) =>
+                                ExpenseTemplateProvider(
+                                    Provider.of<AuthProvider>(context,
+                                        listen: false)),
+                            update: (BuildContext context,
+                                    AuthProvider authProvider,
+                                    ExpenseTemplateProvider?
+                                        expenseTemplateProvider) =>
+                                ExpenseTemplateProvider(authProvider),
+                            child: const NewExpenseTemplateView(),
+                          )),
+                )
+              },
+          text: "Prepare for new expense"),
+    );
   }
 }

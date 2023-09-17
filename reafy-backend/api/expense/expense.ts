@@ -14,28 +14,39 @@ export default async function expense(
     try {
       const params = getUrlParams(request.url)
 
-      const expense = await sql`
+      const expenses = await sql`
          SELECT json_build_object('totalExpense',ex.total_expense,'expenseId',ex.expense_id, 'establishmentName',es.establishment_name, 'establishmentId',es.establishment_id) 
          FROM expense_table ex
          INNER JOIN establishment_table es ON es.establishment_id = ex.establishment_id
          INNER JOIN expense_queue_table eq ON eq.expense_id = ex.expense_id
          WHERE eq.user_id = ${params.id} AND ex.active = true AND eq.queued = true
        `
-      const expenseLineItems = await sql`
-                SELECT row_to_json(expense_line_item_table)
-                FROM expense_line_item_table
-                WHERE expense_id = ${expense.rows[0].json_build_object.expenseId};
-      `
 
-      const data = {
-        totalExpense: expense.rows[0].json_build_object.totalExpense,
-        expenseId: expense.rows[0].json_build_object.expenseId,
-        establishmentName: expense.rows[0].json_build_object.establishmentName,
-        establishmentId: expense.rows[0].json_build_object.establishmentId,
-        lineItems: expenseLineItems.rows.map((i) => {
-          return { "name": i.row_to_json.line_item_name, "numberPurchased": i.row_to_json.number_purchased, "costPerItem": i.row_to_json.cost_per_item }
-        })
+      if (expenses.rowCount == 0) {
+        return new Response(
+          JSON.stringify([])
+        )
       }
+      console.log(expenses)
+      const data = await Promise.all(
+        expenses.rows.map(async (expense) => {
+          const expenseLineItems = await sql`
+                    SELECT row_to_json(expense_line_item_table)
+                    FROM expense_line_item_table
+                    WHERE expense_id = ${expense.json_build_object.expenseId};
+          `
+          return {
+            totalExpense: expense.json_build_object.totalExpense,
+            expenseId: expense.json_build_object.expenseId,
+            establishmentName: expense.json_build_object.establishmentName,
+            establishmentId: expense.json_build_object.establishmentId,
+            lineItems: expenseLineItems.rows.map((i) => {
+              return { "name": i.row_to_json.line_item_name, "numberPurchased": i.row_to_json.number_purchased, "costPerItem": i.row_to_json.cost_per_item }
+            })
+          }
+        })
+      )
+
       console.log(data)
       return new Response(
         JSON.stringify(data)
@@ -50,7 +61,7 @@ export default async function expense(
   if (request.method == "POST") {
     try {
       const body: PostExpense = await request.json();
-
+      console.log("post expense")
       const expense = await sql`
       INSERT INTO expense_table (establishment_id, expense_intent, expense_type, settled_by, expense_timestamp, total_expense, active, tip, currency)
       VALUES (${body!.establishmentId},

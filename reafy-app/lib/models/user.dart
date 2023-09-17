@@ -40,6 +40,7 @@ class ReafyUser {
   int? companyId;
   String? companyName;
   int? participantId;
+  String? role;
 
   ReafyUser(
       {this.email,
@@ -47,7 +48,8 @@ class ReafyUser {
       this.userId,
       this.companyName,
       this.companyId,
-      this.participantId});
+      this.participantId,
+      this.role});
 
   ReafyUser.fromJson(Map<String, dynamic> json) {
     email = json['email'];
@@ -56,6 +58,7 @@ class ReafyUser {
     companyId = json['companyId'];
     companyName = json['companyName'];
     participantId = json['participantId'];
+    role = json['role'];
   }
 
   static Map<String, dynamic> toMap(ReafyUser model) => <String, dynamic>{
@@ -64,7 +67,8 @@ class ReafyUser {
         'userId': model.userId,
         'companyId': model.companyId,
         'companyName': model.companyName,
-        'participantId': model.participantId
+        'participantId': model.participantId,
+        'role': model.role
       };
 
   static String serialize(ReafyUser model) =>

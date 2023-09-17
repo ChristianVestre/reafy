@@ -4,19 +4,22 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:reafy/helpers/constants.dart';
+import 'package:reafy/models/expense_transaction_response.dart';
 import 'package:reafy/models/expense_template.dart';
 import 'package:reafy/models/expense_templates.dart';
 import 'package:reafy/models/user.dart';
-import 'package:reafy/provider/auth_provider.dart';
 import '../models/expense.dart';
 
 class ExpenseProvider with ChangeNotifier {
-  Expense expense = Expense();
+  List<Expense> expenses = [];
   ExpenseTemplates expenseTemplates = ExpenseTemplates();
+  Expense selectedExpense = Expense();
   ExpenseTemplate selectedExpenseTemplate = ExpenseTemplate();
+  ExpenseTransactionResponse expenseTransaction = ExpenseTransactionResponse();
   bool isLoading = false;
 
   Future<bool> getExpense(ReafyUser user) async {
+    expenses = [];
     try {
       isLoading = true;
       final expenseResponse = await http.get(
@@ -25,11 +28,15 @@ class ExpenseProvider with ChangeNotifier {
             "authorization":
                 'Bearer ${JWT({}).sign(key, algorithm: JWTAlgorithm.HS256)}'
           });
+      print("works");
 
       if (expenseResponse.statusCode == 200) {
         final expenseInfoJson = json.decode(expenseResponse.body);
-        expense = Expense.fromJson(expenseInfoJson);
+        expenseInfoJson
+            .forEach((infoJson) => expenses.add(Expense.fromJson(infoJson)));
       }
+      print(expenseResponse.statusCode);
+
       isLoading = false;
       notifyListeners();
       return true;
@@ -62,19 +69,25 @@ class ExpenseProvider with ChangeNotifier {
     }
   }
 
+  updateSelectedExepense(Expense expense) {
+    selectedExpense = expense;
+    notifyListeners();
+  }
+
   Future<bool> submitExpenseTransaction(ReafyUser user) async {
     final Map body = {
-      "establishmentId": expense.establishmentId,
+      "establishmentId": selectedExpense.establishmentId,
       "settledById": user.userId,
-      "expenseId": expense.expenseId,
+      "expenseId": selectedExpense.expenseId,
       "expenseTemplateId": selectedExpenseTemplate.expenseTemplateId,
-      "companyId": user.companyId
+      "companyId": user.companyId,
+      "role": user.role
     };
     final encodedBody = json.encode(body);
 
     try {
       isLoading = true;
-      final expenseResponse = await http.post(
+      final expenseTransactionResponse = await http.post(
           Uri.parse('$baseApiUrl/expense/expense-transaction'),
           body: encodedBody,
           headers: {
@@ -82,9 +95,11 @@ class ExpenseProvider with ChangeNotifier {
                 'Bearer ${JWT({}).sign(key, algorithm: JWTAlgorithm.HS256)}'
           });
 
-      if (expenseResponse.statusCode == 200) {
-        final expenseInfoJson = json.decode(expenseResponse.body);
-        expenseTemplates = ExpenseTemplates.fromJson(expenseInfoJson);
+      if (expenseTransactionResponse.statusCode == 200) {
+        final expenseTransactionJson =
+            json.decode(expenseTransactionResponse.body);
+        expenseTransaction =
+            ExpenseTransactionResponse.fromJson(expenseTransactionJson);
       }
       isLoading = false;
       notifyListeners();
