@@ -1,20 +1,16 @@
 import { sql } from '@vercel/postgres';
-import { jsonToSql } from '../../utils/jsonToSQL';
-import { PostExpense } from '../../types/expenseTypes';
 import { getUrlParams } from '../../helpers/helperFunctions';
-import { PostQueueExpense } from '../../types/establishmentTypes';
 
 export const config = {
     runtime: 'edge',
 };
 
-export default async function expense(
+export default async function expensePaid(
     request: Request
 ) {
     if (request.method == "GET") {
         try {
             const params = getUrlParams(request.url)
-            console.log(params)
             const expense = await sql`
                 SELECT row_to_json(expense_table) FROM expense_table WHERE expense_id = ${params.id}
             `

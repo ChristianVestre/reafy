@@ -1,15 +1,14 @@
 import { error } from '@sveltejs/kit';
 import { SignJWT } from 'jose';
 
-const secret = new TextEncoder().encode('DetteErReafySecurityToken!!');
+const secret = new TextEncoder().encode(process.env.USER_TOKEN);
 const alg = 'HS256';
-
 
 const token = await new SignJWT({})
     .setProtectedHeader({ alg })
     .sign(secret);
 
-const base: string = 'http://localhost:3000/api'
+export const base: string = process.env.VERCEL_ENV == 'production' ? 'https://reafy-backend.vercel.app/api' : 'http://localhost:3000/api'
 
 async function send({ method, path, data }: ({ method: string, path: string, data?: any, token: string })) {
     const opts: {
@@ -29,7 +28,7 @@ async function send({ method, path, data }: ({ method: string, path: string, dat
 
     try {
         const res = await fetch(`${base}/${path}`, opts);
-
+        console.log(`${base}/${path}`)
 
         if (res.ok || res.status === 422) {
             const text = await res.text();

@@ -13,7 +13,9 @@ export const load: PageServerLoad = async (event) => {
 export const actions: Actions = {
     default: async ({ cookies, request }) => {
         const formData = await request.formData()
+        console.log(formData)
         const companyId = formData.get("companyId")?.toString() ?? ""
+        console.log(companyId)
         cookies.set('companyId', companyId);
         return { success: true };
     }

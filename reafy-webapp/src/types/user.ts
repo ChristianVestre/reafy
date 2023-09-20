@@ -1,4 +1,4 @@
-export type User = {
+export type EstablishmentUser = {
     userName: string
     userId: string
     userSub: number

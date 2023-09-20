@@ -22,7 +22,6 @@ export default async function middleware(req: Request,) {
                         "Access-Control-Allow-Headers":
                             "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization"
                     }
-
                 });
         }
     } catch (e) { console.log(e) }

@@ -24,7 +24,7 @@ class ExpenseMetaInfo extends StatelessWidget {
                             Theme.of(context).textTheme.bodyLarge!.fontSize,
                         fontWeight: FontWeight.w600)),
                 Text(
-                  expense.mva != null ? expense.mva.toString() : "",
+                  expense.mva != null ? (expense.mva! / 100).toString() : "",
                   style: Theme.of(context).textTheme.bodyLarge,
                 )
               ],
@@ -42,7 +42,7 @@ class ExpenseMetaInfo extends StatelessWidget {
                         fontWeight: FontWeight.w600)),
                 Text(
                   expense.totalExpense != null
-                      ? expense.totalExpense.toString()
+                      ? (expense.totalExpense! / 100).toString()
                       : "",
                   style: Theme.of(context).textTheme.bodyLarge,
                 )

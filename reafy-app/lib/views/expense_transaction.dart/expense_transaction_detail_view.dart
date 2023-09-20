@@ -43,7 +43,7 @@ class ExpenseTransactionDetailView extends StatelessWidget {
               ExpenseDetailRow(
                   leadingText: "Total cost",
                   trailingText:
-                      '${(expenseProvider.selectedExpense.totalExpense! / 10).round().toString()} kr'),
+                      '${(expenseProvider.selectedExpense.totalExpense! / 100).round().toString()} kr'),
               const SizedBox(height: 32),
               ExpenseDetailRow(
                   leadingText: "Intent",

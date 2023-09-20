@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reafy/provider/auth_provider.dart';
-import 'package:reafy/provider/auth_provider.dart';
 import 'package:reafy/provider/expense_provider.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
 import 'package:reafy/shared_widgets/buttons/reafy_text_button.dart';

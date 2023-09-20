@@ -1,18 +1,18 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { get } from 'app/lib/api';
 	import Title from 'app/lib/components/title.svelte';
 	import { onMount } from 'svelte';
 	export let data;
 	onMount(() => {
 		async function fetchData() {
-			const response = await get({ path: `establishment/expense-paid?id=${data.expenseId}` });
-			console.log(response);
-			if (response == true) {
+			const response = await fetch(`api/expense-sent?id=${data.expenseId}`);
+			const body = await response.json();
+			console.log(body);
+			if (body == true) {
 				goto('/expense-verified');
 			}
 		}
-		const interval = setInterval(fetchData, 30000);
+		const interval = setInterval(fetchData, 15000);
 		fetchData();
 		return () => clearInterval(interval);
 	});

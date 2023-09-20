@@ -18,7 +18,7 @@ class ExpenseLineItem extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           Text(
-              '${item.numberPurchased!.toString()} x ${(item.costPerItem! / 10).round().toString()} kr',
+              '${item.numberPurchased!.toString()} x ${(item.costPerItem! / 100).round().toString()} kr',
               style: Theme.of(context).textTheme.bodyLarge)
         ],
       ),

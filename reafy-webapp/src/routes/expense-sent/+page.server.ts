@@ -1,4 +1,3 @@
-import { get } from '$lib/api'
 import type { PageServerLoad } from '../$types'
 
 

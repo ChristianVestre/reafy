@@ -73,17 +73,17 @@ export default async function createDatabase(
 
         result = await sql`
                 INSERT INTO expense_table ( establishment_id, total_expense, mva, active, currency)
-                VALUES (1 , 6000, 1200, true, 'NOK'),
-                 (1 , 5000, 1000, true, 'NOK'); `
+                VALUES (1 , 60000, 12000, true, 'NOK'),
+                 (1 , 50000, 10000, true, 'NOK'); `
 
         result = await sql`
                 INSERT INTO expense_line_item_table ( line_item_name, number_purchased, cost_per_item, expense_id)
-                VALUES ('Beer' , 2, 700, 1),
-                 ('Sandwich' , 3, 600, 1),
-                 ('Coca cola' , 2, 500, 1),
-                 ('Beer' , 4, 700, 2),
-                 ('Pasta' , 4, 800, 2),
-                 ('Chips' , 5, 300, 2); 
+                VALUES ('Beer' , 2, 7000, 1),
+                 ('Sandwich' , 3, 6000, 1),
+                 ('Coca cola' , 2, 5000, 1),
+                 ('Beer' , 4, 7000, 2),
+                 ('Pasta' , 4, 8000, 2),
+                 ('Chips' , 5, 3000, 2); 
         `
         return new Response(JSON.stringify({ result }));
     } catch (error) {

@@ -4,9 +4,10 @@ import client_secret from '../client_secret.json';
 import { redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import { SignJWT } from "jose";
+import { base } from "./lib/api";
 
 
-const secret = new TextEncoder().encode('DetteErReafySecurityToken!!');
+const secret = new TextEncoder().encode(process.env.USER_TOKEN);
 const alg = 'HS256';
 
 export const handle = sequence(
@@ -18,7 +19,7 @@ export const handle = sequence(
                 const jwt = await new SignJWT({})
                     .setProtectedHeader({ alg })
                     .sign(secret);
-                const response = await fetch('http://localhost:3000/api/establishment/login', {
+                const response = await fetch(`${base}/establishment/login`, {
                     method: 'POST',
                     mode: 'cors',
                     headers: {
@@ -42,12 +43,7 @@ export const handle = sequence(
 
                 return true
             },
-            /*  redirect: async ({ url, baseUrl }) => {
-                  if (url.startsWith("/")) return `${baseUrl}${url}`
-                  // Allows callback URLs on the same origin
-                  else if (new URL(url).origin === baseUrl) return url
-                  return baseUrl
-              },*/
+
             //@ts - ignore 
             session: async ({ session, token }) => {
 

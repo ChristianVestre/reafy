@@ -20,7 +20,7 @@ export const actions: Actions = {
 
         const userId = formData.get("userId")?.toString() ?? ""
         await post({
-            path: "/establishment/expense", data: {
+            path: "establishment/expense", data: {
                 userId: userId,
                 establishmentId: session?.user?.establishmentId,
                 establishmentUserId: session?.user?.userId,

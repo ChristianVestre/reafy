@@ -25,7 +25,14 @@ class ExpenseTransactionRejected extends StatelessWidget {
               "Transaction rejected",
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            Text(expenseProvider.expenseTransaction.rejectionReason!)
+            const SizedBox(height: 16),
+            ListView.builder(
+              itemCount:
+                  expenseProvider.expenseTransaction.rejectionReason!.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) => Text(
+                  '- ${expenseProvider.expenseTransaction.rejectionReason![index]}'),
+            )
           ]),
         ));
       },

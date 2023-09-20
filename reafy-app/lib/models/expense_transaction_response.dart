@@ -6,13 +6,17 @@ import 'package:reafy/models/participants.dart';
 
 class ExpenseTransactionResponse {
   bool? paymentRejected;
-  String? rejectionReason;
+  List<String>? rejectionReason;
 
   ExpenseTransactionResponse({this.paymentRejected, this.rejectionReason});
 
   ExpenseTransactionResponse.fromJson(Map<String, dynamic> json) {
-    print(json);
     paymentRejected = json['paymentRejected'];
-    rejectionReason = json['rejectionReason'];
+    rejectionReason = [];
+    if (json['rejectionReason'].length != 0) {
+      json['rejectionReason'].forEach((v) {
+        rejectionReason!.add(v);
+      });
+    }
   }
 }

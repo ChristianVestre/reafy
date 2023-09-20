@@ -17,6 +17,8 @@ export default async function expenseTransaction(
                 SELECT row_to_json(expense_rule_table) FROM expense_rule_table WHERE employee_role = ${body.role} and company_id = ${body.companyId} and active=true
             `
             let ruleResult;
+            let failedFlag: boolean = false;
+            const failedExplainations: string[] = [];
 
             const checks = await Promise.all(rules.rows.map(async (rule) => {
                 console.log(rule)
@@ -26,19 +28,22 @@ export default async function expenseTransaction(
                     rejectionReason: rule.row_to_json.explaination
                 }
             }))
+
             for (let check of checks) {
                 if (check.result == false) {
-                    console.log(check)
-
-                    return new Response(
-                        JSON.stringify({
-                            paymentRejected: true,
-                            rejectionReason: check.rejectionReason
-                        }), { status: 200 }
-                    )
+                    failedFlag = true
+                    failedExplainations.push(check.rejectionReason)
                 }
             }
 
+            if (failedFlag) {
+                return new Response(
+                    JSON.stringify({
+                        paymentRejected: true,
+                        rejectionReason: failedExplainations
+                    }), { status: 200 }
+                )
+            }
 
             await sql`
             INSERT INTO expense_transaction_table (settled_by_id, settled_timestamp, expense_id, expense_template_id, company_id, establishment_id) 
@@ -56,11 +61,10 @@ export default async function expenseTransaction(
                 SET queued=false
                 WHERE expense_id = ${body.expenseId};
             `
-
             return new Response(
                 JSON.stringify({
                     paymentRejected: false,
-                    rejectionReason: null,
+                    rejectionReason: [],
                 }), { status: 200 }
             )
         } catch (e) {

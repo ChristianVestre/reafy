@@ -24,13 +24,7 @@
 			}}
 		>
 			{#each data.companies as company}
-				<ListTile
-					title={company.companyName}
-					value={company.companyId}
-					onPressed={() => {
-						goto('/employee');
-					}}
-				/>
+				<ListTile title={company.companyName} value={company.companyId} onPressed={() => {}} />
 			{/each}
 		</form>
 	</section>
