@@ -32,6 +32,7 @@ String redirectUrl() {
   return '';
 }
 
-const baseApiUrl = 'http://localhost:3000/api';
+//const baseApiUrl = 'http://localhost:3000/api';
+const baseApiUrl = 'https://reafy-backend.vercel.app/api';
 final pw = dotenv.env['SECRET_TOKEN']!;
 final key = SecretKey(pw);

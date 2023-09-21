@@ -1,8 +1,7 @@
-import { sql } from '@vercel/postgres';
 import { JSONObject } from '../types/jsonTypes';
-import { checkMaxTransaction } from './checks/checkMaxTransaction';
-import { checkMaxMonthlyBudget } from './checks/checkMaxMonthlyBudget';
-import { checkMinParticipants } from './checks/checkMinParticipants';
+import { checkMaxTransaction } from './policyChecks/checkMaxTransaction';
+import { checkMaxMonthlyBudget } from './policyChecks/checkMaxMonthlyBudget';
+import { checkMinParticipants } from './policyChecks/checkMinParticipants';
 
 
 export const ruleChecker = async ({ ruleName, ruleData, userId, expenseId, expenseTemplateId }: { ruleName: string, ruleData: JSONObject, userId: number, expenseId: number, expenseTemplateId: number }) => {

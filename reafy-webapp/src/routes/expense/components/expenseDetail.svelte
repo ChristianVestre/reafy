@@ -3,7 +3,7 @@
 	import type { ExpenseData, ExpenseProcess } from 'app/types/expense';
 	import { LabelEnum } from 'app/types/enums';
 	import ExpenseLineItem from './expenseLineItem.svelte';
-	import ExpenseButtonRow from './expenseButtonRow.svelte';
+	import ReafyButtonRow from '../../../lib/components/reafyButtonRow.svelte';
 	import { convertCurrency } from 'app/lib/components/helpers/currencyConverter';
 	import { goto } from '$app/navigation';
 	import { enhance } from '$app/forms';
@@ -41,7 +41,7 @@
 		}}
 		class="button-row"
 	>
-		<ExpenseButtonRow
+		<ReafyButtonRow
 			secondaryText="Deny"
 			primaryText="Send"
 			primaryOnPressed={() => {}}

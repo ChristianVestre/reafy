@@ -16,6 +16,7 @@ export const actions: Actions = {
         const formData = await request.formData()
         const companyId = cookies.get("companyId")
         const expenseId = cookies.get("expenseId")
+        const licor = cookies.get("licor")
         const session = await locals.getSession()
 
         const userId = formData.get("userId")?.toString() ?? ""
@@ -25,7 +26,8 @@ export const actions: Actions = {
                 establishmentId: session?.user?.establishmentId,
                 establishmentUserId: session?.user?.userId,
                 companyId: companyId,
-                expenseId: expenseId
+                expenseId: expenseId,
+                licor: licor
             }
         })
         cookies.set('userId', userId);

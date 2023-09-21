@@ -4,6 +4,7 @@
 	import { getContext } from 'svelte';
 	import type { EstablishmentUser } from 'app/types/user';
 	import { goto } from '$app/navigation';
+	import Tooltip from './tooltip.svelte';
 	const user: EstablishmentUser = getContext('user');
 </script>
 
@@ -12,7 +13,9 @@
 	{#if user}
 		<h2>{user.establishmentName}</h2>
 	{/if}
-	<Profile onClick={() => signOut({ callbackUrl: '/' })} />
+	<Tooltip title="Logout">
+		<Profile onClick={() => signOut({ callbackUrl: '/' })} />
+	</Tooltip>
 </div>
 
 <style>

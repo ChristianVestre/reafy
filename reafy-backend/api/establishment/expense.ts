@@ -40,6 +40,11 @@ export default async function expense(
     if (request.method == "POST") {
         try {
             let body: PostQueueExpense = await request.json();
+
+            const expense = await sql`
+                UPDATE expense_table SET licor=${body.licor} WHERE expense_id=${body.expenseId}
+            `
+
             const result = await sql`
                 INSERT INTO expense_queue_table (user_id,company_id,establishment_user_id,establishment_id,expense_id,queued) 
                 VALUES (${body.userId},${body.companyId},${body.establishmentUserId},${body.establishmentId},${body.expenseId},true)

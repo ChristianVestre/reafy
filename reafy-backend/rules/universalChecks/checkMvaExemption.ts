@@ -1,6 +1,4 @@
 import { sql } from '@vercel/postgres';
-import { JSONObject } from '../../types/jsonTypes';
-import { MinParticipantsData, ExpenseTemplateData } from "../../types/ruleTypes"
 
 
 export const checkMvaExemption = async ({ expenseId, expenseTemplateId }: { expenseId: number, expenseTemplateId: number }) => {

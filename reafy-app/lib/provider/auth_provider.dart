@@ -128,8 +128,7 @@ class AuthProvider with ChangeNotifier {
 
           final Map data = {"userName": googleUser.name, "sub": googleUser.sub};
 
-          final loginInfo = await http.post(
-              Uri.parse('http://localhost:3000/api/login'),
+          final loginInfo = await http.post(Uri.parse('$baseApiUrl/login'),
               body: json.encode(data),
               headers: {
                 "authorization": 'Bearer ${JWT({

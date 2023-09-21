@@ -27,4 +27,5 @@ export type PostQueueExpense = {
     expenseId: number
     companyId: number
     userId: number
+    licor: boolean
 }
