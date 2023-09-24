@@ -23,6 +23,7 @@ export default async function expense(
 
             const data = {
                 totalExpense: expense.rows[0].row_to_json.total_expense,
+                vat: expense.rows[0].row_to_json.vat,
                 expenseId: expense.rows[0].row_to_json.expense_id,
                 lineItems: expenseLineItems.rows.map((i) => {
                     return { "name": i.row_to_json.line_item_name, "numberPurchased": i.row_to_json.number_purchased, "costPerItem": i.row_to_json.cost_per_item }
@@ -42,7 +43,7 @@ export default async function expense(
             let body: PostQueueExpense = await request.json();
 
             const expense = await sql`
-                UPDATE expense_table SET licor=${body.licor} WHERE expense_id=${body.expenseId}
+                UPDATE expense_table SET liquor=${body.liquor} WHERE expense_id=${body.expenseId}
             `
 
             const result = await sql`

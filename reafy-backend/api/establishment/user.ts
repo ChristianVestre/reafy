@@ -26,11 +26,11 @@ export default async function user(
 
             const establishmentUser = await sql`
                 INSERT INTO establishment_user_table
-                (establishment_user_name, establishment_user_email, establishment_id)
+                (user_name, email, establishment_id)
                 SELECT ${body!.userName}, ${body!.email}, ${establishment.rows[0]?.row_to_json?.establishment_id}
                 WHERE
                     NOT EXISTS (
-                        SELECT establishment_user_name FROM establishment_user_table WHERE establishment_user_name = ${body!.userName}
+                        SELECT user_name FROM establishment_user_table WHERE user_name = ${body!.userName}
                     )
                 RETURNING row_to_json(establishment_user_table);
             `

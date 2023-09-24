@@ -17,21 +17,25 @@ class Expense {
   int? expenseId;
   String? establishmentName;
   int? establishmentId;
-  int? mva;
+  int? vat;
+  bool? liquor;
   List<LineItem>? lineItems;
 
   Expense(
       {this.totalExpense,
       this.expenseId,
-      this.mva,
+      this.vat,
+      this.liquor,
       this.lineItems,
       this.establishmentId,
       this.establishmentName});
 
   Expense.fromJson(Map<String, dynamic> json) {
+    print(json);
     totalExpense = json['totalExpense'];
     expenseId = json['expenseId'];
-    mva = json['mva'];
+    vat = json['vat'];
+    liquor = json['liquor'];
     establishmentName = json['establishmentName'];
     establishmentId = json['establishmentId'];
     lineItems = <LineItem>[];

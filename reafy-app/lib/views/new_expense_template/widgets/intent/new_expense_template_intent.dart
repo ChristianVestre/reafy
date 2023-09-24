@@ -108,8 +108,7 @@ class _NewExpenseTemplateIntentState extends State<NewExpenseTemplateIntent> {
               ReafyNavFooter(
                   backText: "Back",
                   forwardText: "Next",
-                  backOnPressed: () => expenseTemplateProvider
-                      .updateStateStep(NewExpenseTemplateStateEnum.type),
+                  backOnPressed: () => Navigator.pop(context),
                   forwardOnPressed: () => expenseTemplateProvider
                       .updateStateStep(NewExpenseTemplateStateEnum.list))
             ]),

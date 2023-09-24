@@ -12,7 +12,7 @@ class NewExpenseTemplateState {
   String? otherIntent;
 
   NewExpenseTemplateState(
-      {this.step = NewExpenseTemplateStateEnum.type,
+      {this.step = NewExpenseTemplateStateEnum.intent,
       this.tempData,
       this.searchQuery,
       this.otherIntent,

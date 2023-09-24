@@ -15,14 +15,14 @@ export default async function login(
             const body: PostEstablishmentLogin = await request.json()
             let user = await sql`
                 SELECT json_build_object(
-                'userName',u.establishment_user_name,
-                'sub',u.establishment_user_sub,
+                'userName',u.user_name,
+                'sub',u.sub,
                 'userId',u.establishment_user_id,
                 'establishmentName',et.establishment_name,
                 'establishmentId', et.establishment_id)
                 FROM establishment_user_table u
                 INNER JOIN establishment_table et ON u.establishment_id = et.establishment_id
-                WHERE u.establishment_user_name = ${body!.userName};
+                WHERE u.user_name = ${body!.userName};
             `
             if (user.rowCount == 0) {
                 return new Response(
@@ -30,6 +30,7 @@ export default async function login(
                     { status: 403 }
                 )
             }
+
             //add sub if user has not logged in before
             if (user.rows[0].json_build_object.sub == null) {
                 //todo implement adding the sub

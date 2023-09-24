@@ -18,13 +18,15 @@ class ExpenseMetaInfo extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Mva",
+                Text("Vat",
                     style: TextStyle(
                         fontSize:
                             Theme.of(context).textTheme.bodyLarge!.fontSize,
                         fontWeight: FontWeight.w600)),
                 Text(
-                  expense.mva != null ? (expense.mva! / 100).toString() : "",
+                  expense.vat != null
+                      ? '${(expense.vat! / 100).round().toString()} kr'
+                      : "",
                   style: Theme.of(context).textTheme.bodyLarge,
                 )
               ],
@@ -42,7 +44,7 @@ class ExpenseMetaInfo extends StatelessWidget {
                         fontWeight: FontWeight.w600)),
                 Text(
                   expense.totalExpense != null
-                      ? (expense.totalExpense! / 100).toString()
+                      ? '${(expense.totalExpense! / 100).round().toString()} kr'
                       : "",
                   style: Theme.of(context).textTheme.bodyLarge,
                 )

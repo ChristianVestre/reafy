@@ -14,7 +14,7 @@ export default async function expenseTransaction(
             let body: PostExpenseTransaction = await request.json();
             console.log(body);
             const rules = await sql`
-                SELECT row_to_json(expense_rule_table) FROM expense_rule_table WHERE employee_role = ${body.role} and company_id = ${body.companyId} and active=true
+                SELECT row_to_json(expense_rule_table) FROM expense_rule_table WHERE role = ${body.role} and company_id = ${body.companyId} and active=true
             `
             let ruleResult;
             let failedFlag: boolean = false;
@@ -46,8 +46,8 @@ export default async function expenseTransaction(
             }
 
             await sql`
-            INSERT INTO expense_transaction_table (settled_by_id, settled_timestamp, expense_id, expense_template_id, company_id, establishment_id) 
-            VALUES (${body.settledById}, now()::timestamp,${body.expenseId},${body.expenseTemplateId},${body.companyId},${body.establishmentId});
+            INSERT INTO expense_transaction_table (settled_by_id, settled_timestamp, expense_id, expense_template_id, company_id, establishment_id, expense_type) 
+            VALUES (${body.settledById}, now()::timestamp,${body.expenseId},${body.expenseTemplateId},${body.companyId},${body.establishmentId},${body.type});
         `
 
             await sql`

@@ -9,7 +9,7 @@ export type ExpenseData = {
     lineItems: ExpenseLineItem[];
     totalExpense: number;
     establishmentName: string;
-    mva: number;
+    vat: number;
 }
 
 export type ExpenseProcess = {

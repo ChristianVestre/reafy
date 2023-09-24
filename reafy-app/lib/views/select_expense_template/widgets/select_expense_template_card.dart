@@ -46,10 +46,10 @@ class SelectExpenseTemplateCard extends StatelessWidget {
                   Text(expenseTemplate.intent!)
                 ],
               ),
-              const SizedBox(
+              /*   const SizedBox(
                 height: 16,
               ),
-              Row(
+               Row(
                 children: [
                   Text("Type",
                       style: TextStyle(
@@ -59,9 +59,9 @@ class SelectExpenseTemplateCard extends StatelessWidget {
                   const SizedBox(
                     width: 8,
                   ),
-                  Text(expenseTemplate.type!)
+                        Text(expenseTemplate.type!)
                 ],
-              ),
+              ),*/
               const SizedBox(
                 height: 16,
               ),

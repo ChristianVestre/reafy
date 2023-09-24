@@ -4,6 +4,7 @@ import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:reafy/helpers/constants.dart';
+import 'package:reafy/models/expense_check.dart';
 import 'package:reafy/models/expense_transaction_response.dart';
 import 'package:reafy/models/expense_template.dart';
 import 'package:reafy/models/expense_templates.dart';
@@ -16,6 +17,7 @@ class ExpenseProvider with ChangeNotifier {
   Expense selectedExpense = Expense();
   ExpenseTemplate selectedExpenseTemplate = ExpenseTemplate();
   ExpenseTransactionResponse expenseTransaction = ExpenseTransactionResponse();
+  ExpenseCheck expenseCheck = ExpenseCheck();
   bool isLoading = false;
 
   Future<bool> getExpense(ReafyUser user) async {
@@ -28,14 +30,12 @@ class ExpenseProvider with ChangeNotifier {
             "authorization":
                 'Bearer ${JWT({}).sign(key, algorithm: JWTAlgorithm.HS256)}'
           });
-      print("works");
 
       if (expenseResponse.statusCode == 200) {
         final expenseInfoJson = json.decode(expenseResponse.body);
         expenseInfoJson
             .forEach((infoJson) => expenses.add(Expense.fromJson(infoJson)));
       }
-      print(expenseResponse.statusCode);
 
       isLoading = false;
       notifyListeners();
@@ -100,6 +100,36 @@ class ExpenseProvider with ChangeNotifier {
             json.decode(expenseTransactionResponse.body);
         expenseTransaction =
             ExpenseTransactionResponse.fromJson(expenseTransactionJson);
+      }
+      isLoading = false;
+      notifyListeners();
+      return true;
+    } catch (e) {
+      log(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> submitExpenseCheck() async {
+    final Map body = {
+      "expenseId": selectedExpense.expenseId,
+      "expenseTemplateId": selectedExpenseTemplate.expenseTemplateId
+    };
+    final encodedBody = json.encode(body);
+
+    try {
+      isLoading = true;
+      final expenseCheckResponse = await http.post(
+          Uri.parse('$baseApiUrl/expense/expense-check'),
+          body: encodedBody,
+          headers: {
+            "authorization":
+                'Bearer ${JWT({}).sign(key, algorithm: JWTAlgorithm.HS256)}'
+          });
+
+      if (expenseCheckResponse.statusCode == 200) {
+        final expenseCheckJson = json.decode(expenseCheckResponse.body);
+        expenseCheck = ExpenseCheck.fromJson(expenseCheckJson);
       }
       isLoading = false;
       notifyListeners();

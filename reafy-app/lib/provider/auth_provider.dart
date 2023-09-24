@@ -136,8 +136,9 @@ class AuthProvider with ChangeNotifier {
                       "sub": googleUser.sub
                     }).sign(key, algorithm: JWTAlgorithm.HS256)}'
               });
-
+          print(loginInfo);
           final loginInfoJson = json.decode(loginInfo.body);
+          print(loginInfoJson);
           reafyUser = ReafyUser.fromJson(loginInfoJson);
           if (googleUser.name != null && reafyUser.userName != null) {
             await _secureStorage.write(

@@ -52,7 +52,6 @@ export default async function createDatabase(
         result = await sql`create table expense_template_table (
             expense_template_id INT GENERATED ALWAYS AS IDENTITY,
             expense_intent VARCHAR(255),
-            expense_type VARCHAR(255),
             created_by INT references user_table(user_id),
             active bool,
             PRIMARY KEY (expense_template_id)
@@ -83,17 +82,6 @@ export default async function createDatabase(
             PRIMARY KEY (people_whitelist_id)
         );`
         result = await sql`
-        create table expense_rule_table (
-            expense_rule_id INT GENERATED ALWAYS AS IDENTITY,
-            rule_name VARCHAR(255),
-            employee_role VARCHAR(255),
-            company_id INT references company_table(company_id),
-            rule_data json,
-            created_by INT references user_table(user_id),
-            active bool,
-            PRIMARY KEY (expense_rule_id)
-        );`
-        result = await sql`
         create table establishment_table (
             establishment_id INT GENERATED ALWAYS AS IDENTITY,
             establishment_name VARCHAR(255),
@@ -106,11 +94,11 @@ export default async function createDatabase(
         create table establishment_user_table (
             establishment_user_id INT GENERATED ALWAYS AS IDENTITY,
             establishment_id INT references establishment_table(establishment_id),
-            establishment_user_name VARCHAR(255),
-            establishment_user_email VARCHAR(255),
-            establishment_user_device_id VARCHAR(255),
-            establishment_user_sub VARCHAR(30),
-            establishment_user_role VARCHAR(255),
+            user_name VARCHAR(255),
+            email VARCHAR(255),
+            device_id VARCHAR(255),
+            sub VARCHAR(30),
+            role VARCHAR(255),
             PRIMARY KEY (establishment_user_id)
         );`
         result = await sql`
@@ -139,12 +127,13 @@ export default async function createDatabase(
             establishment_id INT references establishment_table(establishment_id),
             settled_by INT references user_table(user_id),
             expense_timestamp timestamp,
-            total_expense INT,
-            mva INT,
-            gross_expense INT,
-            net_expense INT,
+            total_expense BIGINT,
+            vat BIGINT,
+            gross_expense BIGINT,
+            net_expense BIGINT,
             active bool,
-            tip INT,
+            liquor bool,
+            tip BIGINT,
             currency VARCHAR(255),
             PRIMARY KEY (expense_id)
         );`
@@ -153,7 +142,7 @@ export default async function createDatabase(
             line_item_id INT GENERATED ALWAYS AS IDENTITY,
             line_item_name VARCHAR(255),
             number_purchased INT,
-            cost_per_item INT,
+            cost_per_item BIGINT,
             expense_id INT references expense_table(expense_id),
             PRIMARY KEY (line_item_id)
         );
@@ -167,6 +156,7 @@ export default async function createDatabase(
             expense_template_id INT references expense_template_table(expense_template_id),
             establishment_id INT references establishment_table(establishment_id),
             company_id INT references company_table(company_id),
+            expense_type VARCHAR(100),
             PRIMARY KEY (expense_transaction_id)
         );
         `

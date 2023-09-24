@@ -18,6 +18,8 @@ class ExpenseTemplateProvider with ChangeNotifier {
   final AuthProvider authProvider;
 
   Participants participantsResponse = Participants();
+  Participant userParticipant = Participant();
+  Participants _participantsWithoutUser = Participants();
   bool isLoading = false;
   NewExpenseTemplateSearchFilterEnum searchFilter =
       NewExpenseTemplateSearchFilterEnum.none;
@@ -37,8 +39,16 @@ class ExpenseTemplateProvider with ChangeNotifier {
   getParticipantList() async {
     isLoading = true;
     participantsResponse = await getParticipants();
-    _expenseTemplateState.searchResult = participantsResponse;
-    _expenseTemplateState.tempData!.participants = participantsResponse;
+    userParticipant = participantsResponse.participants!.firstWhere(
+        (i) => i.participantName == authProvider.reafyUser.userName);
+    userParticipant.selected = true;
+    _participantsWithoutUser = Participants(
+        participants: participantsResponse.participants!
+            .where((p) => p.participantName != authProvider.reafyUser.userName)
+            .toList(),
+        participantCompanies: participantsResponse.participantCompanies);
+    _expenseTemplateState.searchResult = _participantsWithoutUser;
+    _expenseTemplateState.tempData!.participants = _participantsWithoutUser;
     isLoading = false;
     notifyListeners();
   }
@@ -70,7 +80,7 @@ class ExpenseTemplateProvider with ChangeNotifier {
 
   submitExpenseTemplate(int createdBy) async {
     isLoading = true;
-    participantsResponse = await postExpenseTemplate(createdBy);
+    await postExpenseTemplate(createdBy);
     isLoading = false;
   }
 
@@ -79,8 +89,13 @@ class ExpenseTemplateProvider with ChangeNotifier {
     await postParticipant();
     //_newParticipant = NewParticipant();
     participantsResponse = await getParticipants();
-    _expenseTemplateState.searchResult = participantsResponse;
-    _expenseTemplateState.tempData!.participants = participantsResponse;
+    _participantsWithoutUser = Participants(
+        participants: participantsResponse.participants!
+            .where((p) => p.participantName != authProvider.reafyUser.userName)
+            .toList(),
+        participantCompanies: participantsResponse.participantCompanies);
+    _expenseTemplateState.searchResult = _participantsWithoutUser;
+    _expenseTemplateState.tempData!.participants = _participantsWithoutUser;
     isLoading = false;
   }
 
@@ -90,10 +105,9 @@ class ExpenseTemplateProvider with ChangeNotifier {
               ExpenseTemplateIntentEnum.other
           ? expenseTemplateState.otherIntent
           : expenseTemplateState.tempData!.intent!.stringValues,
-      "expenseType": _expenseTemplateState.tempData!.type!.stringValues,
       "participants": _expenseTemplateState.tempData?.participants!.participants
           ?.where((item) => item.selected == true)
-          .toList(),
+          .followedBy([userParticipant]).toList(),
       "createdBy": authProvider.reafyUser.userId
     };
     final encodedBody = json.encode(body);

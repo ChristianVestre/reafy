@@ -23,7 +23,7 @@ export default async function createDatabase(
                 ('Filip Kolber', 'filipkolber', 2,1); `
 
         result = await sql`
-                INSERT INTO user_table (user_name, user_identifier, user_email, company_id, company_role, participant_id)
+                INSERT INTO user_table (user_name, user_identifier, user_email, company_id, role, participant_id)
                 VALUES ('Christian Vestre', 'christianvestre', 'christian.vestre@gmail.com', 1,'employee',1 ),
                 ('Frederik Vestre', 'frederikvestre', 'frederik.vestre@gmail.com', 1,'employee',2 ),
                 ('Jørn Haukøy', 'jørnhaukøy', 'jørn@code11.com', 2,'management',3 ),
@@ -32,15 +32,15 @@ export default async function createDatabase(
 
 
         result = await sql`
-                INSERT INTO participant_relation_table (company_id, participant_id, relation)
-                VALUES (1, 1,'colleague'),
-                (1, 2,'colleague'),
-                (2, 3,'colleague'),
-                (2, 4,'colleague'); `
+                INSERT INTO participant_relation_table (participant_relation_id,relation_owner_company_id, participant_id, relation)
+                VALUES ('1_1',1, 1,'colleague'),
+                ('1_2',1, 2,'colleague'),
+                ('2_3', 2, 3,'colleague'),
+                ('2_4',2, 4,'colleague'); `
 
         result = await sql`
-                INSERT INTO expense_template_table (expense_intent, expense_type, created_by, active)
-                VALUES ('Møteservering', 'Velferd',1,true);
+                INSERT INTO expense_template_table (expense_intent, created_by, active)
+                VALUES ('Møteservering',1,true);
         `
 
         result = await sql`
@@ -62,7 +62,7 @@ export default async function createDatabase(
                 VALUES ('Mesh', '201230', 'Møllergata 6','hei@mesh.com'); `
 
         result = await sql`
-                INSERT INTO establishment_user_table ( establishment_id, establishment_user_name, establishment_user_email, establishment_user_role)
+                INSERT INTO establishment_user_table ( establishment_id, user_name, email, role)
                 VALUES (1, 'Johan Vorgaarden', 'johan@mesh.com', 'management'),
                  (1, 'Christian Vestre', 'christian.vestre@gmail.com','employee'); `
 
@@ -72,9 +72,9 @@ export default async function createDatabase(
                  (1, 2); `
 
         result = await sql`
-                INSERT INTO expense_table ( establishment_id, total_expense, mva, active, currency)
-                VALUES (1 , 60000, 12000, true, 'NOK'),
-                 (1 , 50000, 10000, true, 'NOK'); `
+                INSERT INTO expense_table ( establishment_id, total_expense, vat, active, currency)
+                VALUES (1 , 600000, 120000, true, 'NOK'),
+                 (1 , 500000, 100000, true, 'NOK'); `
 
         result = await sql`
                 INSERT INTO expense_line_item_table ( line_item_name, number_purchased, cost_per_item, expense_id)
@@ -85,6 +85,13 @@ export default async function createDatabase(
                  ('Pasta' , 4, 8000, 2),
                  ('Chips' , 5, 3000, 2); 
         `
+
+        result = await sql`
+                INSERT INTO expense_rule_table ( rule_data, company_id, created_by, role, rule_name, explaination,active)
+                VALUES ('{ "minParticipants": null, "minAmount": null, "maxAmount": 5000 }', 1, 1,'BDR','Max transaction','',true),
+                ('{ "minParticipants": null, "maxAmount": 25000, "minAmount": null }', 1,1,'BDR','Max monthly budget','',true),
+                ('{ "minParticipants": 5, "minAmount": null, "maxAmount": null }', 1,1,'BDR','Min participants','You need to have atleast 5 participants',true)
+            `
         return new Response(JSON.stringify({ result }));
     } catch (error) {
         console.log(error)

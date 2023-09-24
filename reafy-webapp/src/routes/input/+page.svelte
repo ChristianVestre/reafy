@@ -3,12 +3,11 @@
 	import { goto } from '$app/navigation';
 	import { navigating } from '$app/stores';
 	import PrimaryButton from 'app/lib/components/buttons/primaryButton.svelte';
-	import ReafyButtonRow from 'app/lib/components/reafyButtonRow.svelte';
 	import Title from 'app/lib/components/title.svelte';
 	import Switch from 'app/lib/components/toggle.svelte';
 	import { SpinLine } from 'svelte-loading-spinners';
 
-	let licorValue: string = 'off';
+	let liquorValue: string = 'off';
 </script>
 
 {#if $navigating}
@@ -19,16 +18,16 @@
 	<section>
 		<div class="spacer-s" />
 
-		<Title title="Licor" />
+		<Title title="Liquor" />
 		<div class="spacer-s" />
-		<Switch label="The tab includes licor?" bind:value={licorValue} design="slider" />
+		<Switch label="The tab includes liquor?" bind:value={liquorValue} design="slider" />
 
 		<form
 			method="POST"
 			use:enhance={({ formData }) => {
-				console.log(licorValue);
+				console.log(liquorValue);
 				//@ts-ignore
-				formData.append('licor', licorValue == 'on' ? true : false);
+				formData.append('liquor', liquorValue == 'on' ? true : false);
 				return () => goto('/company');
 			}}
 		>
@@ -47,10 +46,10 @@
 		transform: translate(0, -10%);
 	}
 	.spacer {
-		height: 80px;
+		height: VAR(--spacing-xxlarge);
 	}
 	.spacer-s {
-		height: 20px;
+		height: VAR(--spacing-large);
 	}
 	.loadingWrapper {
 		height: 100vh;

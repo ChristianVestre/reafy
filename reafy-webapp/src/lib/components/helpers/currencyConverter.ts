@@ -1,3 +1,3 @@
 export const convertCurrency = (number: number) => {
-    return number / 10;
+    return number / 100;
 }

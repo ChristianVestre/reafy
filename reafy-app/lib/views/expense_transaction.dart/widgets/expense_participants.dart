@@ -16,9 +16,10 @@ class ExpenseParticipants extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text("Participants:"),
-              Expanded(
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width / 2,
+                height: MediaQuery.sizeOf(context).height / 7.2,
                 child: ListView.builder(
-                    shrinkWrap: true,
                     itemCount: expenseProvider.selectedExpenseTemplate
                         .participants?.participants?.length,
                     itemBuilder: (context, index) => Container(

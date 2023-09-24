@@ -31,7 +31,6 @@ export default async function expensePayed(
                 return {
                     "expenseTemplateId": v.row_to_json.expense_template_id,
                     "intent": v.row_to_json.expense_intent,
-                    "type": v.row_to_json.expense_type,
                     participants: participants.rows
                         .filter((p => p.json_build_object.expenseTemplateId == v.row_to_json.expense_template_id))
                         .map((p) => {
@@ -63,14 +62,13 @@ export default async function expensePayed(
 
             const expense = await sql`
                  INSERT INTO expense_template_table
-                 (expense_intent,expense_type,created_by, active)
-                 SELECT ${body!.expenseIntent}, ${body.expenseType}, ${body!.createdBy}, true
+                 (expense_intent,created_by, active)
+                 SELECT ${body!.expenseIntent}, ${body!.createdBy}, true
                  RETURNING row_to_json(expense_template_table)
              `
 
             //todo make new participant values special for this endpoint : only participantId 
             const participantIds = body.participants.map((i) => i.participantId)
-            console.log(participantIds)
             const participantValues = [participantIds, participantIds.map((i) => expense.rows[0].row_to_json.expense_template_id)]
 
             // const participantValues = jsonToSql(body!.participants, expense.rows[0].row_to_json.expense_template_id, 1)

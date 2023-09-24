@@ -68,6 +68,7 @@ class NewExpenseTemplateOverview extends StatelessWidget {
                             .intent!.stringValues,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
+                      /*
                       const SizedBox(height: 16),
                       Row(
                         children: [
@@ -88,7 +89,7 @@ class NewExpenseTemplateOverview extends StatelessWidget {
                         expenseTemplateProvider
                             .expenseTemplateState.tempData!.type!.stringValues,
                         style: Theme.of(context).textTheme.bodyLarge,
-                      ),
+                      ),*/
                       const SizedBox(height: 32),
                       Row(
                         children: [
@@ -108,7 +109,7 @@ class NewExpenseTemplateOverview extends StatelessWidget {
                         height: 8,
                       ),
                       SizedBox(
-                        height: MediaQuery.sizeOf(context).height / 3,
+                        height: MediaQuery.sizeOf(context).height / 2.5,
                         child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: selectedParticipants?.length,

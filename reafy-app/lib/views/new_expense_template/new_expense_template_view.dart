@@ -51,10 +51,10 @@ class _NewExpenseTemplateViewState extends State<NewExpenseTemplateView> {
                             {
                               return const NewExpenseTemplateIntent();
                             }
-                          case NewExpenseTemplateStateEnum.type:
+                          /* case NewExpenseTemplateStateEnum.type:
                             {
                               return const NewExpenseTemplateType();
-                            }
+                            }*/
                           case NewExpenseTemplateStateEnum.overview:
                             {
                               return NewExpenseTemplateOverview();

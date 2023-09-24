@@ -13,9 +13,8 @@ export default async function expense(
   if (request.method == "GET") {
     try {
       const params = getUrlParams(request.url)
-
       const expenses = await sql`
-         SELECT json_build_object('totalExpense',ex.total_expense,'expenseId',ex.expense_id, 'establishmentName',es.establishment_name, 'establishmentId',es.establishment_id) 
+         SELECT json_build_object('totalExpense',ex.total_expense,'vat',ex.vat, 'expenseId',ex.expense_id, 'establishmentName',es.establishment_name, 'establishmentId',es.establishment_id) 
          FROM expense_table ex
          INNER JOIN establishment_table es ON es.establishment_id = ex.establishment_id
          INNER JOIN expense_queue_table eq ON eq.expense_id = ex.expense_id
@@ -27,7 +26,6 @@ export default async function expense(
           JSON.stringify([])
         )
       }
-      console.log(expenses)
       const data = await Promise.all(
         expenses.rows.map(async (expense) => {
           const expenseLineItems = await sql`
@@ -37,6 +35,7 @@ export default async function expense(
           `
           return {
             totalExpense: expense.json_build_object.totalExpense,
+            vat: expense.json_build_object.vat,
             expenseId: expense.json_build_object.expenseId,
             establishmentName: expense.json_build_object.establishmentName,
             establishmentId: expense.json_build_object.establishmentId,
@@ -63,7 +62,7 @@ export default async function expense(
       const body: PostExpense = await request.json();
       console.log("post expense")
       const expense = await sql`
-      INSERT INTO expense_table (establishment_id, expense_intent, expense_type, settled_by, expense_timestamp, total_expense, active, tip, currency)
+      INSERT INTO expense_table (establishment_id, expense_intent, expense_type, settled_by, expense_timestamp, total_expense, active, tip, currency,vat)
       VALUES (${body!.establishmentId},
         ${body!.expenseIntent}, 
         ${body!.expenseType}, 
@@ -72,7 +71,8 @@ export default async function expense(
         ${body!.totalExpense}, 
         ${body!.active}, 
         ${body!.tip}, 
-        ${body!.currency}
+        ${body!.currency},
+        ${body!.vat},
         )
       RETURNING row_to_json(expense_table)    
       ;

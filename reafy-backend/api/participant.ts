@@ -46,7 +46,7 @@ export default async function participantHandler(
             const participant_relation_id = `${company.rows[0]!.row_to_json!.company_id}_${participant.rows[0]!.row_to_json!.participant_id}`
             const participantRelation = await sql`
                 INSERT INTO participant_relation_table
-                (participant_relation_id, participant_id, company_id, relation)
+                (participant_relation_id, participant_id, relation_owner_company_id, relation)
                 SELECT ${participant_relation_id},${participant.rows[0]!.row_to_json!.participant_id},${company.rows[0]!.row_to_json!.company_id},${body?.relation}
                 WHERE
                     NOT EXISTS (
@@ -61,7 +61,7 @@ export default async function participantHandler(
                     "participantId": participant.rows[0]!.row_to_json!.participant_id,
                     "participantRelationId": participant_relation_id,
                     "participantName": participant.rows[0]!.row_to_json!.participant_name,
-                    "company_id": company.rows[0]!.row_to_json!.company_id,
+                    "company_id": company.rows[0]!.row_to_json!.relation_owner_company_id,
                     "relation": participantRelation.rows[0].row_to_json.relation,
                     "ownerCompanyId": participant.rows[0]!.row_to_json!.owner_company_id
                 })

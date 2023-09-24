@@ -16,7 +16,7 @@ class FilterRow extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           SizedBox(
-              height: 48,
+              height: 40,
               child: ReafyFilterButton(
                 text: "Companies",
                 active: expenseTemplateProvider.searchFilter ==

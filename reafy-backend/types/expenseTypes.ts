@@ -40,6 +40,7 @@ export type PostExpense = {
     tip: number
     currency: string
     lineItems: JSONArray
+    vat: number
 } | null
 
 export type ExpenseLineItem = {
@@ -62,6 +63,12 @@ export type PostExpenseTransaction = {
     expenseId: number
     expenseTemplateId: number
     companyId: number
+    type: string
     role: string
     establishmentId: number
+}
+
+export type PostExpenseCheck = {
+    expenseId: number,
+    expenseTemplateId: number
 }

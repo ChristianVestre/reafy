@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:reafy/models/enums.dart';
-import 'package:reafy/models/new_expense_template.dart';
-import 'package:reafy/models/participant.dart';
-import 'package:reafy/models/participants.dart';
-import 'package:reafy/provider/auth_provider.dart';
 import 'package:reafy/provider/auth_provider.dart';
 import 'package:reafy/provider/expense_provider.dart';
 import 'package:reafy/provider/expense_template_provider.dart';
-import 'package:reafy/shared_widgets/buttons/primary_button.dart';
-import 'package:reafy/shared_widgets/buttons/secondary_button.dart';
 import 'package:reafy/shared_widgets/reafy_appbar.dart';
 import 'package:reafy/shared_widgets/reafy_nav_footer.dart';
 import 'package:reafy/views/new_expense_template/new_expense_template_view.dart';

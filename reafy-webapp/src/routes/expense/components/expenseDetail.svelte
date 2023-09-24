@@ -24,8 +24,8 @@
 			<ExpenseLineItem expenseLineItem={item} />
 		{/each}
 		<div class="line-item">
-			<h4 class="subsection-headline">Mva:</h4>
-			<p>{convertCurrency(data.mva)} kr</p>
+			<h4 class="subsection-headline">VAT:</h4>
+			<p>{convertCurrency(data.vat)} kr</p>
 		</div>
 		<div class="line-item">
 			<h4 class="subsection-headline">Total cost:</h4>
@@ -37,7 +37,7 @@
 		use:enhance={({ formData }) => {
 			//@ts-ignore
 			formData.append('expenseId', data.expenseId);
-			return goto('/company');
+			return goto('/input');
 		}}
 		class="button-row"
 	>

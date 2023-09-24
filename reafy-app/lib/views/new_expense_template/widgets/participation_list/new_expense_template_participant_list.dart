@@ -19,20 +19,6 @@ class NewExpenseTemplateParticipantList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ExpenseTemplateProvider>(
         builder: (context, expenseTemplateProvider, child) {
-      final List<Participant>? searchResults;
-
-      if (expenseTemplateProvider.expenseTemplateState.tempData!.type ==
-          ExpenseTemplateTypeEnum.velferd) {
-        searchResults = expenseTemplateProvider
-            .expenseTemplateState.searchResult!.participants
-            ?.where((item) =>
-                item.companyId ==
-                expenseTemplateProvider.authProvider.reafyUser.companyId)
-            .toList();
-      } else {
-        searchResults = expenseTemplateProvider
-            .expenseTemplateState.searchResult!.participants;
-      }
       return expenseTemplateProvider.isLoading
           ? Center(
               child: CircularProgressIndicator(
@@ -55,27 +41,37 @@ class NewExpenseTemplateParticipantList extends StatelessWidget {
                       height: 8,
                     ),
                     const Search(),
-                    const SizedBox(
+                    const FilterRow(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: SearchResultTile(
+                          participant: expenseTemplateProvider.userParticipant,
+                          selectable: false),
+                    ),
+                    Divider(
                       height: 8,
-                    ),
-                    Visibility(
-                      visible: expenseTemplateProvider
-                                  .expenseTemplateState.tempData!.type !=
-                              ExpenseTemplateTypeEnum.velferd
-                          ? true
-                          : false,
-                      child: const FilterRow(),
-                    ),
-                    const SizedBox(
-                      height: 4,
+                      thickness: 1,
+                      indent: 16,
+                      endIndent: 16,
+                      color: Theme.of(context).primaryColor,
                     ),
                     Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: searchResults!.length,
-                            itemBuilder: ((context, index) => SearchResultTile(
-                                participant: searchResults![index]))))
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        child: SizedBox(
+                            height: MediaQuery.of(context).size.height / 2.35,
+                            child: ListView.builder(
+                                itemCount: expenseTemplateProvider
+                                    .expenseTemplateState
+                                    .searchResult!
+                                    .participants!
+                                    .length,
+                                itemBuilder: ((context, index) =>
+                                    SearchResultTile(
+                                        participant: expenseTemplateProvider
+                                            .expenseTemplateState
+                                            .searchResult!
+                                            .participants![index])))))
                   ]),
                   Column(
                     children: [

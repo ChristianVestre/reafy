@@ -28,7 +28,7 @@ export default async function login(
             'companyName',c.company_name,
             'companyId', c.company_id,
             'participantId', u.participant_id,
-            'role',u.company_role)
+            'role',u.role)
             FROM user_table AS u
             INNER JOIN company_table AS c ON u.company_id = c.company_id
             WHERE u.user_identifier = ${identifier};
